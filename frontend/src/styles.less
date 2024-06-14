@@ -1,0 +1,340 @@
+/* You can add global styles to this file, and also import other style files */
+/*!
+ * Bootstrap v4.4.1 (https://getbootstrap.com/)
+ * Copyright 2011-2019 The Bootstrap Authors
+ * Copyright 2011-2019 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+ :root {
+    --primary: #3e5367;
+    --primary-text: white;
+    --blue: #4680ff;
+    --indigo: #6610f2;
+    --purple: #6f42c1;
+    --pink: #e83e8c;
+    --red: #ff5252;
+    --orange: #fd7e14;
+    --yellow: #ffba57;
+    --green: #9ccc65;
+    --teal: #20c997;
+    --cyan: #00acc1;
+    --white: #fff;
+    --gray: #6c757d;
+    --gray-dark: #343a40;
+    --mdc-filled-text-field-container-color: transparent;
+    /* --primary: #4680ff; */
+    --secondary: #6c757d;//#757575
+    --success: #9ccc65;
+    --info: #00acc1;
+    --warning: #ffba57;
+    --danger: #ff5252;
+    --light: #f8f9fa;
+    --dark: #343a40;
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --font-family-sans-serif: "Open Sans", sans-serif;
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.button-actions > input {
+    margin: 5px;
+    color: var(--white)!important;
+    background-color: var(--primary)!important;
+    border: 0px;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+/* Estilo general para las etiquetas */
+label {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    color: #333; /* Color del texto */
+    font-weight: 500; /* Peso del texto */
+    margin-bottom: 0.5rem; /* Espacio inferior */
+    display: inline-block; /* Para que respete el margen inferior */
+}
+
+/* Variación para etiquetas requeridas */
+label.required::after {
+    content: ' *'; /* Añadir asterisco para campos obligatorios */
+    color: #d32f2f; /* Color rojo para el asterisco */
+}
+
+/* Estilo para etiquetas en formularios */
+.form-group label {
+    font-size: 1.1rem;
+    color: #3f51b5; /* Color principal */
+    font-weight: bold;
+}
+
+/* Estilo específico para etiquetas en configuraciones */
+.config-section label {
+    font-size: 1.2rem;
+    color: #4caf50; /* Color verde */
+    margin-bottom: 1rem;
+    text-transform: uppercase; /* Texto en mayúsculas */
+    letter-spacing: 0.05rem; /* Espaciado entre letras */
+}
+
+h2.title {
+    margin-top: 10px;
+}
+
+// i {
+//     color: "#3E5367";
+// }
+
+
+:host {
+    --bright-blue: oklch(51.01% 0.274 263.83);
+    --electric-violet: oklch(53.18% 0.28 296.97);
+    --french-violet: oklch(47.66% 0.246 305.88);
+    --vivid-pink: oklch(69.02% 0.277 332.77);
+    --hot-red: oklch(61.42% 0.238 15.34);
+    --orange-red: oklch(63.32% 0.24 31.68);
+
+    --gray-900: oklch(19.37% 0.006 300.98);
+    --gray-700: oklch(36.98% 0.014 302.71);
+    --gray-400: oklch(70.9% 0.015 304.04);
+
+    --red-to-pink-to-purple-vertical-gradient: linear-gradient(
+      180deg,
+      var(--orange-red) 0%,
+      var(--vivid-pink) 50%,
+      var(--electric-violet) 100%
+    );
+
+    --red-to-pink-to-purple-horizontal-gradient: linear-gradient(
+      90deg,
+      var(--orange-red) 0%,
+      var(--vivid-pink) 50%,
+      var(--electric-violet) 100%
+    );
+
+    --pill-accent: var(--bright-blue);
+
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+      "Segoe UI Symbol";
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+
+.container-title {
+    margin-bottom: 10px;
+  }
+
+/* Estilo general para los títulos */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700!important;
+    margin: 20px 0;
+    color: var(--primary)!important; /* Color principal */
+}
+
+/* Estilo específico para h1 */
+h1 {
+    font-size: 2.5em;
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 10px;
+}
+
+/* Estilo específico para h2 */
+h2 {
+    font-size: 2em;
+    border-bottom: 1px solid var(--primary);
+    padding-bottom: 8px;
+}
+
+/* Estilo específico para h3 */
+h3 {
+    font-size: 1.75em;
+}
+
+/* Estilo específico para h4 */
+h4 {
+    font-size: 1.5em;
+}
+
+/* Estilo específico para h5 */
+h5 {
+    font-size: 1.25em;
+}
+
+/* Estilo específico para h6 */
+h6 {
+    font-size: 1em;
+}
+
+/* Estilo adicional para mejorar la legibilidad */
+.title {
+    // text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.subtitle {
+    font-size: 0.9em;
+    color: var(--secondary); /* Color secundario */
+    margin-top: -10px;
+    font-weight: 500;
+    margin-top: 5px;
+}
+
+h4 > i, h5 > i {
+    color: var(--primary-text);
+}
+h4.title {
+    // border-bottom: 1px solid;
+    margin-top: 20px;
+}
+
+.btn-info-modal {
+    background: transparent;
+    color: var(--primary);
+    border: 0;
+    vertical-align: middle;
+}
+
+.header-txt-color {
+    background-color: var(--primary);
+    color: white;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.modal-confirm {
+    padding: 20px;
+}
+
+.mat-mdc-button:not(:disabled) {
+    background-color: var(--primary);
+    color: var(--primary-text)!important;
+}
+
+/* Botones de acción */
+.button-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
+  button {
+    margin: 5px;
+    // vertical-align: middle;
+    // color: var(--primary);
+    vertical-align: middle;
+    background: var(--primary);
+    color: white;
+    border-radius: 10px !important;
+    padding: 5px 10px;
+  }
+
+  .btn-panel-options {
+    margin-bottom: 10px;
+}
+
+.btn-panel-options button {
+    background: var(--primary);
+    color: var(--primary-text);
+    border-radius: 5px;
+    margin: 0px 5px;
+}
+
+
+.mat-mdc-form-field {
+    width: 100%;
+}
+
+
+.full-width {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.custom-field .mat-form-field-wrapper {
+    padding: 12px;
+    font-size: 1.2em; /* Tamaño del texto */
+}
+
+.custom-field .mat-form-field-label {
+    color: #3f51b5; /* Color del label */
+    font-size: 1.2em; /* Tamaño del label */
+}
+
+.custom-field .mat-form-field-outline {
+    border-color: #3f51b5; /* Color del borde */
+}
+
+.custom-field .mat-form-field-outline-thick {
+    border-width: 2px; /* Grosor del borde */
+}
+
+.custom-field .mat-form-field-underline {
+    border-bottom-color: #3f51b5; /* Color de la línea inferior */
+}
+
+.custom-field input.mat-input-element {
+    font-size: 1.2em; /* Tamaño del texto en los inputs */
+}
+
+.custom-field .mat-option-text {
+    font-size: 1.2em; /* Tamaño del texto en las opciones del select */
+}
+
+.custom-field .mat-select-arrow {
+    color: #3f51b5; /* Color de la flecha del select */
+}
+
+.custom-field .mat-datepicker-toggle-default-icon {
+    color: #3f51b5; /* Color del icono del datepicker */
+}
+
+.custom-field .mat-checkbox-label {
+    font-size: 1.2em; /* Tamaño del texto en los checkboxes */
+}
+
+.radio-button {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 1.2em; /* Tamaño del texto en los radio buttons */
+    color: #3f51b5; /* Color del texto en los radio buttons */
+}
+
+.custom-checkbox .mat-checkbox-frame {
+    border-color: #3f51b5; /* Cambia este color según tus necesidades */
+}
+
+.custom-checkbox .mat-checkbox-background,
+.custom-checkbox .mat-checkbox-checkmark {
+    background-color: #3f51b5 !important; /* Cambia este color según tus necesidades */
+}
+
+.custom-checkbox .mat-checkbox-ripple .mat-ripple-element {
+    background-color: rgba(63, 81, 181, 0.1); /* Cambia este color según tus necesidades */
+}
+
+.custom-radio-button .mat-radio-inner-circle {
+    background-color: #3f51b5 !important; /* Cambia este color según tus necesidades */
+}
+
+.custom-radio-button .mat-radio-ripple .mat-ripple-element {
+    background-color: rgba(63, 81, 181, 0.1); /* Cambia este color según tus necesidades */
+}
+
+
+.btn-panel-options mat-icon {
+    // margin-top: 5px;
+    vertical-align: top;
+}
+

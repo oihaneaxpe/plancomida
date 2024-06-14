@@ -1,0 +1,66 @@
+<div class="row col-md-12 container-title">
+      <h2>Planificación</h2>
+</div>
+    <div class="col-md-12 text-right btn-panel-options">
+        <button mat-icon-button (click)="toggleViewMode()">
+          <mat-icon>{{ viewMode === 'grid' ? 'grid_view' : 'view_list' }}</mat-icon>
+        </button>
+      </div>
+<div class="meal-planner">
+    <!-- Botón para cambiar entre las visualizaciones -->
+    <!-- <button mat-button (click)="toggleViewMode()">
+      {{ viewMode === 'grid' ? 'Vista Detallada' : 'Vista en Grid' }}
+    </button> -->
+  
+    <!-- Visualización en formato de grid -->
+    <div *ngIf="viewMode === 'grid'">
+      <!-- <div class="meal-grid">
+        <div class="day-card" *ngFor="let day of daysOfWeek">
+          <h3>{{ day }}</h3>
+          <div class="meals">
+            <div class="meal" *ngFor="let meal of mealsPerDay">
+              <h4>{{ meal.name }}</h4>
+              <p>{{ meal.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div> -->
+        <div class="meal-planner-grid">
+            <div class="day-card" *ngFor="let day of daysOfWeek">
+                <h3>{{ day }}</h3>
+                <div class="meals">
+                    <div class="meal" *ngFor="let meal of mealsPerDay">
+                        <h4>{{ meal.name }}</h4>
+                        <p>{{ meal.description }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    <!-- Visualización en formato de detalle -->
+    <div *ngIf="viewMode === 'detail'">
+        <div class="meal-grid">
+            <div class="day-card" *ngFor="let day of daysOfWeek">
+                <h3>{{ day }}</h3>
+                <div class="meals">
+                    <div class="meal" *ngFor="let meal of mealsPerDay">
+                    <h4>{{ meal.name }}</h4>
+                    <p>{{ meal.description }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  
+<div id="buttons" class="col-md-12 col-xs-12 text-right">
+    <div class="row top_tiles" style="margin: 10px 0;">
+        <div class="actionBar2">
+            <div class="col-md-12 col-sm-8 col-xs-12 button-actions">
+                <input id="goBack" type="button" class="btn btn-info" value="Volver" (click)="navService.goBack()">
+            </div>
+        </div>
+    </div>    
+</div>

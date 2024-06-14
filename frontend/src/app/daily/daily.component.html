@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="daily-log-container">
+        <mat-toolbar color="primary">
+          <span>Registro Diario de Hábitos Saludables</span>
+        </mat-toolbar>
+      
+        <mat-card class="daily-log-card">
+          <mat-card-content>
+            <form>
+              <!-- Ingesta de agua -->
+              <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Ingesta de Agua (litros)</mat-label>
+                <input matInput type="number" [(ngModel)]="dailyLog.waterIntake" name="waterIntake">
+                <mat-icon matSuffix>local_drink</mat-icon>
+              </mat-form-field>
+      
+              <!-- Horas de sueño -->
+              <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Horas de Sueño</mat-label>
+                <input matInput type="number" [(ngModel)]="dailyLog.sleepHours" name="sleepHours">
+                <mat-icon matSuffix>hotel</mat-icon>
+              </mat-form-field>
+      
+              <!-- Ejercicio -->
+              <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Tipo de Ejercicio</mat-label>
+                <input matInput type="text" [(ngModel)]="dailyLog.exercise" name="exercise">
+                <mat-icon matSuffix>fitness_center</mat-icon>
+              </mat-form-field>
+      
+              <!-- Meditación -->
+              <mat-checkbox [(ngModel)]="dailyLog.meditation" name="meditation">
+                <mat-icon class="checkbox-icon">self_improvement</mat-icon> Meditación
+              </mat-checkbox>
+      
+              <!-- Comidas Saludables -->
+              <mat-checkbox [(ngModel)]="dailyLog.healthyMeals" name="healthyMeals">
+                <mat-icon class="checkbox-icon">restaurant</mat-icon> Comidas Saludables
+              </mat-checkbox>
+      
+              <!-- Notas -->
+              <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Notas</mat-label>
+                <textarea matInput [(ngModel)]="dailyLog.notes" name="notes"></textarea>
+                <mat-icon matSuffix>note</mat-icon>
+              </mat-form-field>
+      
+              <!-- Botón Guardar -->
+              <div class="form-actions">
+                <button mat-raised-button color="primary" (click)="saveDailyLog()">Guardar</button>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      
+      
+    
+</div>
+<div id="buttons" class="col-md-12 col-xs-12 text-right">
+    <div class="row top_tiles" style="margin: 10px 0;">
+        <div class="actionBar2">
+            <div class="col-md-12 col-sm-8 col-xs-12 button-actions">
+                <input id="goBack" type="button" class="btn btn-info" value="Volver" (click)="navService.goBack()">
+            </div>
+        </div>
+    </div>    
+</div>

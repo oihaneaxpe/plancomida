@@ -1,0 +1,255 @@
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
+<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
+<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * Delete the template below * * * * * * * * * -->
+<!-- * * * * * * * to get started with your project! * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+
+<style>
+  
+  h1 {
+    font-size: 3.125rem;
+    color: var(--gray-900);
+    font-weight: 500;
+    line-height: 100%;
+    letter-spacing: -0.125rem;
+    margin: 0;
+    font-family: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+      "Segoe UI Symbol";
+  }
+
+  p {
+    margin: 0;
+    color: var(--gray-700);
+  }
+
+  main {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    /* padding: 1rem; */
+    padding: 1rem 1rem 1rem 0rem;
+    box-sizing: inherit;
+    position: relative;
+  }
+
+  .angular-logo {
+    max-width: 9.2rem;
+  }
+
+  .content {
+    /* display: flex; */
+    justify-content: space-around;
+    width: 100%;
+    /* max-width: 700px; */
+    margin-bottom: 3rem;
+  }
+
+  .content h1 {
+    margin-top: 1.75rem;
+  }
+
+  .content p {
+    margin-top: 1.5rem;
+  }
+
+  .divider {
+    width: 1px;
+    background: var(--red-to-pink-to-purple-vertical-gradient);
+    margin-inline: 0.5rem;
+  }
+
+  .pill-group {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+  }
+
+  .pill {
+    display: flex;
+    align-items: center;
+    --pill-accent: var(--bright-blue);
+    background: color-mix(in srgb, var(--pill-accent) 5%, transparent);
+    color: var(--pill-accent);
+    padding-inline: 0.75rem;
+    padding-block: 0.375rem;
+    border-radius: 2.75rem;
+    border: 0;
+    transition: background 0.3s ease;
+    font-family: var(--inter-font);
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.4rem;
+    letter-spacing: -0.00875rem;
+    text-decoration: none;
+  }
+
+  .pill:hover {
+    background: color-mix(in srgb, var(--pill-accent) 15%, transparent);
+  }
+
+  .pill-group .pill:nth-child(6n + 1) {
+    --pill-accent: var(--bright-blue);
+  }
+  .pill-group .pill:nth-child(6n + 2) {
+    --pill-accent: var(--french-violet);
+  }
+  .pill-group .pill:nth-child(6n + 3),
+  .pill-group .pill:nth-child(6n + 4),
+  .pill-group .pill:nth-child(6n + 5) {
+    --pill-accent: var(--hot-red);
+  }
+
+  .pill-group svg {
+    margin-inline-start: 0.25rem;
+  }
+
+  .social-links {
+    display: flex;
+    align-items: center;
+    gap: 0.73rem;
+    margin-top: 1.5rem;
+  }
+
+  .social-links path {
+    transition: fill 0.3s ease;
+    fill: var(--gray-400);
+  }
+
+  .social-links a:hover svg path {
+    fill: var(--gray-900);
+  }
+
+  @media screen and (max-width: 650px) {
+    .content {
+      flex-direction: column;
+      width: max-content;
+    }
+
+    .divider {
+      height: 1px;
+      width: 100%;
+      background: var(--red-to-pink-to-purple-horizontal-gradient);
+      margin-block: 1.5rem;
+    }
+  }
+</style>
+<main class="main">
+  <mat-toolbar color="primary">
+    <button mat-icon-button class="btn-toggle" (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span class="toolbar-title">My Application</span>
+    <span class="spacer"></span>
+    <!-- Mostrar icono y nombre de usuario cuando el menú no está desplegado -->
+    <button mat-button *ngIf="!authService.isLoggedIn()" (click)="navigateToLogin()">Login</button>
+    <!-- <div *ngIf="!isMenuOpen">
+      <mat-icon>account_circle</mat-icon>
+      <span>{{ userName }}</span>
+    </div> -->
+    <!-- Mostrar el menú desplegable cuando se hace clic -->
+    <div *ngIf="authService.isLoggedIn()" [matMenuTriggerFor]="menu" class="btn-account">
+      <!-- <span>Usuario 1 </span> -->
+      <span>{{ userName }}</span>
+      <button mat-icon-button style="background: white;">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+    </div>
+    
+  </mat-toolbar>
+
+<mat-menu #menu="matMenu">
+  <!-- Opciones del menú -->
+  <button mat-menu-item (click)="navigateToUserPreferences()">
+    <mat-icon>account_circle</mat-icon>
+    <span>Preferencias</span>
+  </button>
+  <button mat-menu-item (click)="logout()">
+    <mat-icon>logout</mat-icon>
+    <span>Cerrar sesión</span>
+  </button>
+</mat-menu>
+<!-- 
+    <button mat-button *ngIf="!authService.isLoggedIn()" (click)="navigateToLogin()">Login</button>
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item (click)="navigateToUserPreferences()">
+        <mat-icon>account_circle</mat-icon>
+        <span>Mi Cuenta</span>
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Cerrar Sesión</span>
+      </button>
+    </mat-menu>
+    <button mat-icon-button *ngIf="authService.isLoggedIn()" [matMenuTriggerFor]="userMenu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+  </mat-toolbar>
+   -->
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav mode="side" opened>
+      <mat-nav-list>
+        <a mat-list-item [routerLink]="['/home']" routerLinkActive="active-menu-item">
+          <mat-icon>home</mat-icon>
+          <span> Home</span>
+        </a>
+        <a mat-list-item [routerLink]="['/food-plan']" routerLinkActive="active-menu-item" *ngIf="authService.isLoggedIn()">
+          <mat-icon>event_note</mat-icon>
+          <span> Planificación</span>
+        </a>
+        <a mat-list-item [routerLink]="['/shopping-list']" routerLinkActive="active-menu-item" *ngIf="authService.isLoggedIn()">
+          <mat-icon>shopping_bag</mat-icon>
+          <span> Lista de la compra</span>
+        </a>
+        <a mat-list-item [routerLink]="['/recipies']" routerLinkActive="active-menu-item">
+          <mat-icon>restaurant_menu</mat-icon>
+          <span> Recetas</span>
+        </a>
+        <a mat-list-item [routerLink]="['/daily']" routerLinkActive="active-menu-item" *ngIf="authService.isLoggedIn()">
+          <mat-icon>assignment</mat-icon>
+          <span> Registro diario</span>
+        </a>
+        <a mat-list-item [routerLink]="['/reports']" routerLinkActive="active-menu-item" *ngIf="authService.isLoggedIn()">
+          <mat-icon>bar_chart</mat-icon>
+          <span> Informes</span>
+        </a>
+        <a mat-list-item [routerLink]="['/blog']" routerLinkActive="active-menu-item">
+          <mat-icon>book</mat-icon>
+          <span> Blog</span>
+        </a>
+        <a mat-list-item [routerLink]="['/tips']" routerLinkActive="active-menu-item">
+          <mat-icon>lightbulb</mat-icon>
+          <span> Consejos y Trucos</span>
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+  
+    <mat-sidenav-content>
+      <!-- Aquí va el contenido principal de la aplicación -->
+      <div class="content">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  
+  
+</main>
+
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * * -->
+<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * End of Placeholder  * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+
+
+<!-- <router-outlet /> -->

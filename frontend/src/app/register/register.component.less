@@ -1,0 +1,140 @@
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('../../images/background/Background1.jpg');
+    background-size: cover;
+  }
+  
+  mat-card {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+  
+  mat-card-header {
+    text-align: center;
+  }
+  
+  mat-form-field {
+    width: 100%;
+  }
+  
+  .login-link {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+
+
+  /* FILTER PANEL */
+
+.filter-panel {
+    margin-bottom: 20px;
+  }
+  
+  .card-title {
+    margin-bottom: 15px;
+  }
+  
+  .btn-search {
+    margin-top: 15px;
+  }
+  
+  /* styles.css */
+
+
+  /* Estilos generales para el contenedor de filtros */
+.filters-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100%;
+    background-color: white;
+    z-index: 1000;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+    transform: translateX(100%);
+  }
+  
+  .filters-container.show {
+    transform: translateX(0);
+  }
+  
+  /* Estilos para el overlay */
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+  
+  /* Estilos adicionales para mejorar la presentación */
+  
+  
+  /* Estilos generales para el contenedor de filtros */
+.filters-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100%;
+    background-color: white;
+    z-index: 1000;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+  }
+  
+  .filters-container.show {
+    transform: translateX(0);
+  }
+  
+  /* Estilos para el overlay */
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+  
+  /* Estilos adicionales para mejorar la presentación */
+  .filters-container .mat-card {
+    box-shadow: none;
+    border-radius: 0;
+  }
+  
+  .mat-form-field {
+    width: 100%;
+  }
+  
+  .full-width {
+    width: 100%;
+  }
+  
+  .btn-recipies-options {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+
+  .filter-panel {
+    position: absolute!important;
+    z-index: 2!important;
+    width: 100%;
+}

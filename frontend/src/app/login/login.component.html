@@ -1,0 +1,36 @@
+<!-- login.component.html -->
+<div class="login-background">
+  <div class="login-container">
+    <mat-card class="login-card">
+      <mat-card-header>
+        <mat-card-title>Iniciar Sesión</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Correo Electrónico</mat-label>
+            <mat-icon matPrefix>person</mat-icon>
+            <input matInput type="email" [(ngModel)]="email" name="email" required>
+            <!-- <mat-error *ngIf="loginForm.controls.email?.invalid && loginForm.controls.email?.touched">
+              Por favor, introduce un correo electrónico válido.
+            </mat-error> -->
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Contraseña</mat-label>
+            <mat-icon matPrefix>lock</mat-icon>
+            <input matInput type="password" [(ngModel)]="password" name="password" required>
+            <!-- <mat-error *ngIf="loginForm.controls.password?.invalid && loginForm.controls.password?.touched">
+              Por favor, introduce una contraseña.
+            </mat-error> -->
+          </mat-form-field>
+          <div class="button-container">
+            <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">Entrar</button>
+          </div>
+        </form>
+        <div class="register-link">
+          <p>¿No tienes una cuenta? <a [routerLink]="['/register']">Regístrate</a></p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

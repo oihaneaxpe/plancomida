@@ -1,0 +1,170 @@
+<div class="row col-md-12 container-title">
+  <h2>Recetas</h2>
+</div>
+<div class="row col-md-12">
+  <div class="text-right btn-panel-options">
+    <!-- <button mat-icon-button (click)="openAddRecipeDialog()"> -->
+    <button mat-icon-button [routerLink]="['/add-recipe']">
+        <mat-icon>add</mat-icon>
+    </button>
+    <button mat-icon-button (click)="toggleSortOrder()">
+      <mat-icon>{{ isAscOrder ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
+    </button>
+    <button mat-icon-button (click)="toggleView()">
+      <mat-icon>{{ isList ? 'grid_view' : 'view_list' }}</mat-icon>
+    </button>
+    <!-- <span class="container"> -->
+      <button mat-icon-button (click)="toggleFilters()">
+        <mat-icon>filter_list</mat-icon>
+      </button>
+      <div class="overlay" *ngIf="filtersVisible" (click)="toggleFilters()"></div>
+      <div class="filters-container" *ngIf="filtersVisible">
+        <mat-card class="filter-panel">
+          <mat-card-header>
+            <mat-card-title><h2>Filtros Avanzados</h2></mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <!-- Filtro de Búsqueda -->
+            <!-- <mat-form-field appearance="fill">
+              <mat-label>Ingrediente</mat-label>
+              <input matInput placeholder="Buscar" [(ngModel)]="searchQuery">
+              <button mat-button *ngIf="searchQuery" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field> -->
+      
+            <!-- DIFICULTAD - Filtros de Opciones Múltiples -->
+            <div class="form-group col-md-12">
+              <div class="row">
+                  <label for="select">Dificultad:</label>
+                  <mat-form-field appearance="outline" class="full-width custom-field">
+                      <mat-label>Selecciona</mat-label>
+                      <mat-select [(ngModel)]="selectedDifficulties" multiple>
+                        <mat-option *ngFor="let difficulty of difficulties" [value]="difficulty">{{ difficulty }}</mat-option>
+                      </mat-select>
+                  </mat-form-field>
+              </div>
+            </div>
+      
+            <!-- CATEGORÍA - Filtros de Opciones Múltiples -->
+            <div class="form-group col-md-12">
+              <div class="row">
+                  <label for="select">Categoría:</label>
+                  <mat-form-field appearance="outline" class="full-width custom-field">
+                      <mat-label>Selecciona</mat-label>
+                      <mat-select [(ngModel)]="selectedCategories" multiple>
+                        <mat-option *ngFor="let category of categories" [value]="category">{{ category }}</mat-option>
+                      </mat-select>
+                  </mat-form-field>
+              </div>
+            </div>
+      
+            <!-- CATEGORÍA - Filtros de Opciones Múltiples -->
+            <div class="form-group col-md-12">
+              <div class="row">
+                  <label for="select">Momento del día:</label>
+                  <mat-form-field appearance="outline" class="full-width custom-field">
+                      <mat-label>Selecciona</mat-label>
+                      <mat-select [(ngModel)]="selectedMoment" multiple>
+                        <mat-option *ngFor="let moment of moments" [value]="moment">{{ moment }}</mat-option>
+                      </mat-select>
+                  </mat-form-field>
+              </div>
+            </div>
+            <!-- Botón de Búsqueda -->
+            <button mat-raised-button color="primary" (click)="search()">Buscar</button>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    <!-- </span> -->
+  </div>
+</div>
+
+<div *ngIf="isList; else gridLayout">
+    <!-- Aquí va tu diseño para la vista de lista -->
+    <div class="row" style="margin: 0px 20px;">
+        <div class="card support-bar overflow-hidden col-md-6 col-xs-12 card-list"
+             *ngFor="let recipe of recipes" (click)="viewRecipeDetails(recipe.id)">
+            <div class="row">
+              <div class="col-md-2 col-sm-2 col-xs-12" style="padding: 0px;">
+                  <img class="img-responsive img-card-list" style="width: 100%;" [src]="recipe.imageUrl" />
+              </div>
+              <div class="card-body pb-0 col-md-5 col-sm-5 col-xs-6" style="padding: 0px 10px; margin: auto;">
+                  <h5 class="m-0">{{ recipe.titulo }}</h5>
+              </div>
+              <div class="card-footer col-md-5 col-sm-5 col-xs-6">
+                  <div class="row text-center">
+                      <div class="col-md-4 col-sm-4 col-xs-4">
+                          <h4 class="m-0">
+                              <i class="fa fa-clock" aria-hidden="true"></i>
+                          </h4>
+                          <span>{{ recipe.tiempoPreparacionNbr }} min</span>
+                      </div>
+                      <div class="col-md-4 col-sm-4 col-xs-4">
+                          <h4 class="m-0">
+                              <i class="fa fa-user" aria-hidden="true"></i>
+                          </h4>
+                          <span>{{ recipe.cantidadComensalNbr }} pers</span>
+                      </div>
+                      <div class="col-md-4 col-sm-4 col-xs-4">
+                          <h4 class="m-0">
+                              <i class="fa fa-cutlery" aria-hidden="true"></i>
+                          </h4>
+                          <span>{{ recipe.categoriaNombre }}</span>
+                      </div>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="buttons" class="row col-md-12 col-xs-12 text-right">
+  <div class="row top_tiles" style="margin: 10px 0;">
+      <div class="actionBar2">
+          <div class="col-md-12 col-sm-8 col-xs-12 button-actions">
+              <input id="goBack" type="button" class="btn btn-info" value="Volver" (click)="navService.goBack()">
+          </div>
+      </div>
+  </div>    
+</div>
+
+<ng-template #gridLayout>
+    <!-- Aquí va tu diseño para la vista de cuadrícula -->
+    <div class="row">      
+        <div class="col-md-4 col-sm-6 col-xs-6" *ngFor="let recipe of recipes" (click)="viewRecipeDetails(recipe.id)">
+          <div class="card support-bar overflow-hidden">
+            <div>
+              <img class="img-responsive" style="width: 100%;" [src]="recipe.imageUrl" />
+            </div>
+            <div class="card-body pb-0" style="padding: 10px;">
+              <h5 class="m-0">{{ recipe.titulo }}</h5>
+            </div>
+            <div class="card-footer">
+              <div class="row text-center">
+                <div class="col-md-4 col-sm-4">
+                  <h5 class="m-0">
+                    <i class="fa fa-clock" aria-hidden="true"></i>
+                  </h5>
+                  <span>{{ recipe.tiempoPreparacionNbr }} min</span>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                  <h5 class="m-0">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                  </h5>
+                  <span>{{ recipe.cantidadComensalNbr }} pers</span>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                  <h5 class="m-0">
+                    <i class="fa fa-cutlery" aria-hidden="true"></i>
+                  </h5>
+                  <span>{{ recipe.categoriaNombre }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <!-- <router-outlet></router-outlet> -->
+</ng-template>
+

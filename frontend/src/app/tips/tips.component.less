@@ -1,0 +1,68 @@
+.tips-tricks {
+  padding: 20px;
+  // max-width: 800px;
+  margin: 0 auto;
+  font-family: 'Inter', sans-serif;
+}
+
+h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+  // text-align: center;
+}
+
+.tip {
+  display: flex;
+  align-items: start;
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.tip:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tip-icon {
+  margin-right: 15px;
+  color: #ff9800;
+  font-size: 2rem;
+}
+
+// .tip-content {
+//   max-width: calc(100% - 50px);
+// }
+
+.tip-content h3 {
+  margin: 0 0 10px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.tip-content p {
+  margin: 0;
+  font-size: 1rem;
+  color: #666;
+}
+
+@media (max-width: 600px) {
+  .tip {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tip-icon {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .tip-content {
+    text-align: center;
+    max-width: 100%;
+  }
+}

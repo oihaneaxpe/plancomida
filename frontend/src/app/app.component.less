@@ -1,0 +1,88 @@
+// .sidenav-container {
+//     height: 100%;
+//   }
+  
+//   .mat-toolbar {
+//     position: fixed;
+//     top: 0;
+//     left: 0;
+//     right: 0;
+//     z-index: 2;
+//   }
+  
+//   .mat-sidenav-container {
+//     margin-top: 64px; /* Altura de la barra de herramientas */
+//   }
+  
+//   .content {
+//     padding: 20px;
+//   }
+  
+  .mat-toolbar.mat-primary {
+    --mat-toolbar-container-background-color: var(--primary);
+    --mat-toolbar-container-text-color: white;
+  }
+
+  .menu-icon {
+    color: white;
+  }
+  .mat-icon {
+    color: var(--primary);
+    vertical-align: middle;
+  }
+
+.sidenav-container {
+  height: 100%;
+  width: 100%;
+}
+
+.mat-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
+.toolbar-title {
+  flex: 1;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.mat-sidenav-container {
+  margin-top: 64px; /* Altura de la barra de herramientas */
+}
+
+.content {
+  padding: 20px;
+  overflow: hidden;
+}
+
+
+.active-menu-item {
+  background-color: var(--primary); /* Fondo azul claro */
+}
+
+.active-menu-item span {
+  color: white; /* Texto en blanco */
+}
+.active-menu-item mat-icon {
+  color: white; /* Icono en blanco */
+}
+
+.btn-toggle > .mat-icon {
+  color: white !important;
+  vertical-align: top;
+}
+
+.btn-account {
+  vertical-align: top; 
+  border-radius: 10px; 
+  padding: 0px 10px; 
+  background-color: white; 
+  color: var(--primary);
+}
+
