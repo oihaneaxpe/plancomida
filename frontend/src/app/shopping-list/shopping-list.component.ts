@@ -93,8 +93,9 @@ export class ShoppingListComponent implements OnInit {
   }
 
   saveShoppingList(): void {
+    console.log(this.shoppingList)
     this.deleteShoppingList();
-    //this.addShoppingList();
+    this.addShoppingList();
   }
   addShoppingList(): void {
     this.shoppingListService.saveShoppingList(this.shoppingList)

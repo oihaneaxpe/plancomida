@@ -14,9 +14,12 @@ exports.getAllShoppingList = (req, res) => {
 exports.deleteShoppingList = (req, res) => {
   ShoppingList.deleteShoppingList((err, result) => {
     if (err) {
+      console.error('Error deleting shopping list:', err);
       res.status(500).json({ error: 'Error removing shopping list' });
       return;
     }
+    console.log('Shopping list deleted successfully:', result);
+
     res.json({ message: 'Shopping list deleted successfully', affectedRows: result.affectedRows });
   });
 };

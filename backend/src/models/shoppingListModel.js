@@ -2,7 +2,7 @@ const db = require('../database');
 
 class ShoppingList {
   static getAllShoppingList(callback) {
-    db.query('SELECT producto as item, 0 as checked FROM talistacompra WHERE bajaInd = 0;', (err, results) => {
+    db.query('SELECT producto as item, 0 as checked FROM talistacompra WHERE bajaInd = 0 AND idUsuario = 1;', (err, results) => {
       if (err) {
         callback(err, null);
         return;
@@ -14,7 +14,7 @@ class ShoppingList {
   }
 
   static saveShoppingList(shoppingListData, callback) {
-    const sql = 'INSERT INTO talistacompra (producto) VALUES (?)';
+    const sql = 'INSERT INTO talistacompra (producto, idUsuario) VALUES (?, 1)';
     
     const promises = shoppingListData.map(itemData => {
       return new Promise((resolve, reject) => {
@@ -34,45 +34,8 @@ class ShoppingList {
       .catch(err => callback(err, null));
   }
 
-  static deleteShoppingList2(callback) {
-    console.log(2)
-    db.query('DELETE FROM talistacompra WHERE bajaInd = 0 AND idUsuario IS NULL;', (err, results) => {
-      console.log(err, results)
-      if (err) {
-        callback(err, null);
-        return;
-      }
-      console.log(results);
-
-      callback(null, results);
-    });
-  }
-
-  static deleteShoppingList3(callback) {
- 
-    // Verifica que la conexión a la base de datos está establecida
-    if (!db) {
-      console.error('No database connection.');
-      callback(new Error('No database connection.'), null);
-      return;
-    }
-  
-    // Ejecuta la consulta DELETE
-    db.query('DELETE FROM talistacompra WHERE bajaInd = 0 AND idUsuario IS NULL;', (err, results) => {
-      if (err) {
-        console.error('Error executing query:', err);
-        callback(err, null);
-        return;
-      }
-  
-      console.log('Delete query results:', results);
-      callback(null, results);
-    });
-  }
-  
   static deleteShoppingList(callback) {
-    const sql = 'DELETE FROM talistacompra WHERE bajaInd = 0 AND idUsuario IS NULL;';
-  
+    const sql = 'DELETE FROM talistacompra WHERE bajaInd = 0 AND idUsuario = 1;';
     db.query(sql, (err, results) => {
       if (err) {
         callback(err, null);
