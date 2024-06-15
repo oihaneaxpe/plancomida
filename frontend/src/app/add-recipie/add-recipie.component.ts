@@ -52,6 +52,7 @@ export class AddRecipieComponent {
   recipe = {
     image: '',
     title: '',
+    subtitle: '',
     preparationTime: '',
     servings: '',
     idCategory: '',
@@ -152,6 +153,7 @@ export class AddRecipieComponent {
     this.recipe = {
       image: '',
       title: '',
+      subtitle: '',
       preparationTime: '',
       servings: '',
       idCategory: '',

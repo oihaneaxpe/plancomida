@@ -11,8 +11,6 @@ class Recipe {
         callback(err, null);
         return;
       }
-      console.log("aa")
-      console.log(results);
 
       callback(null, results);
     });
@@ -51,19 +49,19 @@ class Recipe {
 
       // Insertamos la receta en tmreceta
       const insertRecipeSql = `
-        INSERT INTO tmreceta (titulo, tiempoPreparacionNbr, cantidadComensalNbr, idCategoria, idDificultad)
-        VALUES (?, ?, ?, ?, ?)
+        INSERT INTO tmreceta (titulo, subtitulo, tiempoPreparacionNbr, cantidadComensalNbr, idCategoria, idDificultad)
+        VALUES (?, ?, ?, ?, ?, ?)
       `;
 
       const params = [
         recipeData.title,
+        recipeData.subtitle,
         recipeData.preparationTime,
         recipeData.servings,
         idCategoria,
         idDificultad
       ];
 
-      console.log(params)
       db.query(insertRecipeSql, params, (err, result) => {
         if (err) {
           callback(err, null);
@@ -93,14 +91,92 @@ class Recipe {
     const sql = 'INSERT INTO tmrecetastep (idReceta, descripcion) VALUES ?';
     const values = steps.map(step => [recipeId, step.item]);
   
-    db.query(sql, [values], (err, results) => {
+    if (steps.length > 0) {
+      db.query(sql, [values], (err, results) => {
+        if (err) {
+          callback(err, null);
+          return;
+        }
+        callback(null, results);
+      });
+    }
+    
+  }
+
+  // static getRecipeById(id, callback) {
+  //   const sql = `SELECT tmreceta.*, tmcategoria.nombre as categoriaNombre, tmdificultad.nombre as dificultadNombre
+  //   FROM tmreceta 
+  //     INNER JOIN tmcategoria ON tmreceta.idCategoria = tmcategoria.idtmCategoria
+  //     INNER JOIN tmdificultad ON tmreceta.idDificultad = tmdificultad.idtmDificultad
+  //   WHERE tmreceta.BajaInd = 0 AND tmreceta.idtmReceta = ?;`;
+  //     console.log(sql, id)
+  //   db.query(sql, [id], (err, results) => {
+  //     if (err) {
+  //       callback(err, null);
+  //       return;
+  //     }
+  //     callback(null, results[0]); // Suponiendo que `id` es único, solo devolverá una fila
+  //   });
+  // }
+
+  static getRecipeById(id, callback) {
+    // Query para obtener la información generica de la receta seleccionada
+    const queryGeneric = `SELECT tmreceta.*, tmcategoria.nombre as categoriaNombre, tmdificultad.nombre as dificultadNombre
+    FROM tmreceta 
+      INNER JOIN tmcategoria ON tmreceta.idCategoria = tmcategoria.idtmCategoria
+      INNER JOIN tmdificultad ON tmreceta.idDificultad = tmdificultad.idtmDificultad
+    WHERE tmreceta.BajaInd = 0 AND tmreceta.idtmReceta = ?;`;
+
+
+    // Query para obtener los ingredientes de la receta seleccionada
+    const queryIngredients = `SELECT *
+    FROM tmrecetaingrediente
+    WHERE bajaInd = 0 AND idReceta = ?;`;
+
+    // Query para obtener los stepts de la receta seleccionada
+    const querySteps = `SELECT *
+    FROM tmrecetastep
+    WHERE bajaInd = 0 AND idReceta = ?;`;
+
+    // Ejecutar las consultas en paralelo
+    db.query(queryGeneric, [id], (err, resultsRecipeInfoGeneric) => {
       if (err) {
         callback(err, null);
         return;
       }
-      callback(null, results);
+
+      db.query(queryIngredients, [id], (err, resultsRecipeIngredients) => {
+        if (err) {
+          callback(err, null);
+          return;
+        }
+
+        db.query(querySteps, [id], (err, resultsRecipeSteps) => {
+          if (err) {
+            callback(err, null);
+            return;
+          }
+
+          const responseData = {
+            ...resultsRecipeInfoGeneric[0],
+            ingredients: resultsRecipeIngredients,
+            steps: resultsRecipeSteps,
+          };
+
+          callback(null, responseData);
+        });
+      });
     });
   }
+  //   db.query(sql, [id], (err, results) => {
+  //     if (err) {
+  //       callback(err, null);
+  //       return;
+  //     }
+  //     callback(null, results[0]); // Suponiendo que `id` es único, solo devolverá una fila
+  //   });
+  // }
+  
 }
 
 module.exports = Recipe;

@@ -22,6 +22,16 @@
           </mat-form-field>
         </div>
       </div>
+
+      <!-- Subtítulo de la receta -->
+      <div class="form-group col-md-12 col-sm-12 col-xs-12">
+        <div class="row">
+          <label for="title">Subtitulo:</label>
+          <mat-form-field appearance="outline" class="full-width custom-field">
+            <input matInput [(ngModel)]="recipe.subtitle" name="subtitle">
+          </mat-form-field>
+        </div>
+      </div>
   
       <!-- Tiempo de preparación -->
       <div class="form-group col-md-6 col-sm-12 col-xs-12">

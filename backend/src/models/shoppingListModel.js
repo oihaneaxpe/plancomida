@@ -18,7 +18,6 @@ class ShoppingList {
     
     const promises = shoppingListData.map(itemData => {
       return new Promise((resolve, reject) => {
-        console.log(itemData)
         db.query(sql, [itemData.item/*, itemData.checked ? 1 : 0*/], (err, result) => {
           if (err) {
             reject(err);

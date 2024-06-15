@@ -14,6 +14,10 @@ export class RecipeService {
     return this.http.get(this.apiUrl);
   }
 
+  getRecipeById(idRecipe: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${idRecipe}`);
+  }
+
   saveRecipe(recipe: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, recipe);
   }

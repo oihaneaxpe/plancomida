@@ -19,7 +19,6 @@ export class ShoppingListService {
     return this.http.get(this.apiUrlDelete);
   }
   saveShoppingList(shoppingList: any): Observable<any> {
-    console.log(shoppingList)
     return this.http.post<any>(this.apiUrl, shoppingList);
   }
 }

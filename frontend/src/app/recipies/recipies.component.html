@@ -19,24 +19,25 @@
       </button>
       <div class="overlay" *ngIf="filtersVisible" (click)="toggleFilters()"></div>
       <div class="filters-container" *ngIf="filtersVisible">
+        <mat-toolbar color="primary">
+          <span>Filtros Avanzados</span>
+        </mat-toolbar>
+        
         <mat-card class="filter-panel">
-          <mat-card-header>
-            <mat-card-title><h2>Filtros Avanzados</h2></mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
+          <mat-card-content> 
             <!-- Filtro de Búsqueda -->
-            <!-- <mat-form-field appearance="fill">
-              <mat-label>Ingrediente</mat-label>
+            <mat-form-field appearance="fill">
+              <mat-label>Búsqueda por título</mat-label>
               <input matInput placeholder="Buscar" [(ngModel)]="searchQuery">
-              <button mat-button *ngIf="searchQuery" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+              <!-- <button mat-button name="btn-search" *ngIf="searchQuery" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
                 <mat-icon>close</mat-icon>
-              </button>
-            </mat-form-field> -->
+              </button> -->
+            </mat-form-field> 
       
             <!-- DIFICULTAD - Filtros de Opciones Múltiples -->
             <div class="form-group col-md-12">
               <div class="row">
-                  <label for="select">Dificultad:</label>
+                  <label for="select" class="text-left">Dificultad:</label>
                   <mat-form-field appearance="outline" class="full-width custom-field">
                       <mat-label>Selecciona</mat-label>
                       <mat-select [(ngModel)]="selectedDifficulties" multiple>
@@ -49,7 +50,7 @@
             <!-- CATEGORÍA - Filtros de Opciones Múltiples -->
             <div class="form-group col-md-12">
               <div class="row">
-                  <label for="select">Categoría:</label>
+                  <label for="select" class="text-left">Categoría:</label>
                   <mat-form-field appearance="outline" class="full-width custom-field">
                       <mat-label>Selecciona</mat-label>
                       <mat-select [(ngModel)]="selectedCategories" multiple>
@@ -60,9 +61,10 @@
             </div>
       
             <!-- CATEGORÍA - Filtros de Opciones Múltiples -->
-            <div class="form-group col-md-12">
+            <!-- TODO: Pendiente de implementar -->
+            <!-- <div class="form-group col-md-12">
               <div class="row">
-                  <label for="select">Momento del día:</label>
+                  <label for="select" class="text-left">Momento del día:</label>
                   <mat-form-field appearance="outline" class="full-width custom-field">
                       <mat-label>Selecciona</mat-label>
                       <mat-select [(ngModel)]="selectedMoment" multiple>
@@ -70,7 +72,8 @@
                       </mat-select>
                   </mat-form-field>
               </div>
-            </div>
+            </div> -->
+
             <!-- Botón de Búsqueda -->
             <button mat-raised-button color="primary" (click)="search()">Buscar</button>
           </mat-card-content>
@@ -84,7 +87,7 @@
     <!-- Aquí va tu diseño para la vista de lista -->
     <div class="row" style="margin: 0px 20px;">
         <div class="card support-bar overflow-hidden col-md-6 col-xs-12 card-list"
-             *ngFor="let recipe of recipes" (click)="viewRecipeDetails(recipe.id)">
+             *ngFor="let recipe of filteredRecipes" (click)="viewRecipeDetails(recipe.idtmReceta)">
             <div class="row">
               <div class="col-md-2 col-sm-2 col-xs-12" style="padding: 0px;">
                   <img class="img-responsive img-card-list" style="width: 100%;" [src]="recipe.imageUrl" />
@@ -132,7 +135,7 @@
 <ng-template #gridLayout>
     <!-- Aquí va tu diseño para la vista de cuadrícula -->
     <div class="row">      
-        <div class="col-md-4 col-sm-6 col-xs-6" *ngFor="let recipe of recipes" (click)="viewRecipeDetails(recipe.id)">
+        <div class="col-md-4 col-sm-6 col-xs-6" *ngFor="let recipe of filteredRecipes" (click)="viewRecipeDetails(recipe.idtmReceta)">
           <div class="card support-bar overflow-hidden">
             <div>
               <img class="img-responsive" style="width: 100%;" [src]="recipe.imageUrl" />

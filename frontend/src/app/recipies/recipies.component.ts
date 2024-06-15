@@ -3,7 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 // import { SearchDialogComponent } from './search-dialog/search-dialog.component'; // Asegúrate de tener un componente para la búsqueda
 import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet, RouterLink } from '@angular/router';
-import { RecipiesDetailComponent } from '../recipies-detail/recipies-detail.component';
 import { MatMenu } from '@angular/material/menu';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -13,11 +12,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatToolbarModule } from '@angular/material/toolbar';
+
 import { AddRecipieComponent } from '../add-recipie/add-recipie.component';
+import { RecipiesDetailComponent } from '../recipies-detail/recipies-detail.component';
 
 import { NavigationService } from '../services/navigation.service';
-
 import { RecipeService } from '../services/recipe.service';
+
 import { HttpClientModule } from '@angular/common/http'; // Importar HttpClientModule
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
@@ -38,6 +40,7 @@ import { throwError } from 'rxjs';
               , MatButtonModule
               , MatSelectModule
               , MatChipsModule
+              , MatToolbarModule
               , AddRecipieComponent
               , HttpClientModule
               // , BrowserAnimationsModule
@@ -47,12 +50,18 @@ import { throwError } from 'rxjs';
 })
 export class RecipiesComponent implements OnInit {
   isList = true;
-  recipes: { id: number, titulo: string, tiempoPreparacionNbr: number, cantidadComensalNbr: number
+  recipesAll: { idtmReceta: number, titulo: string, tiempoPreparacionNbr: number, cantidadComensalNbr: number
     , idCategoria: number, idDificultad: number, baja: boolean
     , categoriaNombre: string, dificultadNombre: string, imageUrl: string }[] = [];
 
-  //filteredRecipes = [];
+  filteredRecipes: { idtmReceta: number, titulo: string, tiempoPreparacionNbr: number, cantidadComensalNbr: number
+      , idCategoria: number, idDificultad: number, baja: boolean
+      , categoriaNombre: string, dificultadNombre: string, imageUrl: string }[] = [];
+  // filteredRecipes = [];
   constructor(private router: Router, public dialog: MatDialog, public navService: NavigationService, private recipeService: RecipeService) {}
+
+  filtersVisible: boolean = false;
+  isAscOrder = true; // Variable para controlar el orden ascendente o descendente
 
   searchQuery: string = '';
   selectedCategories: string[] = [];
@@ -61,8 +70,8 @@ export class RecipiesComponent implements OnInit {
   // Agrega más variables para otros filtros según sea necesario
 
   categories: string[] = ['Entrante', 'Primero', 'Segundo', 'Postre']; 
-  difficulties: string[] = ['Fácil', 'Intermedio', 'Dificil', 'Muy dificil']; 
-  moments: string[] = ['Desayuno', 'Comida', 'Cena', 'Almuerzo', 'Snack']; 
+  difficulties: string[] = ['Fácil', 'Intermedio', 'Difícil', 'Muy difícil']; 
+  moments: string[] = ['Desayuno', 'Comida', 'Cena', 'Almuerzo', 'Snack']; //TODO: Pendiente de implementar
 
   clearSearch() {
     this.searchQuery = '';
@@ -76,6 +85,21 @@ export class RecipiesComponent implements OnInit {
     console.log('Momentos seleccionadas:', this.selectedMoment);
     console.log('Dificultad seleccionadas:', this.selectedDifficulties);
     // Agrega aquí la lógica para realizar la búsqueda en función de los filtros seleccionados
+
+    // Filtrar las recetas según los filtros seleccionados
+    this.filteredRecipes = this.recipesAll.filter(receta =>
+      // Filtrar por nombre de receta (si se implementa)
+      (!this.searchQuery || receta.titulo.toLowerCase().includes(this.searchQuery.toLowerCase())) &&
+      // Filtrar por categoría
+      (this.selectedCategories.length === 0 || this.selectedCategories.includes(receta.categoriaNombre)) &&
+      // Filtrar por momento del día
+      // (this.selectedMoment.length === 0 || this.selectedMoment.includes(receta.momento)) &&
+      // Filtrar por dificultad
+      (this.selectedDifficulties.length === 0 || this.selectedDifficulties.includes(receta.dificultadNombre))
+    );
+      
+    // Aquí puedes hacer algo con las recetas filtradas, como mostrarlas en la interfaz
+    console.log('Recetas encontradas:', this.filteredRecipes);
   }
 
   searchCriteria = {
@@ -93,8 +117,9 @@ export class RecipiesComponent implements OnInit {
     this.recipeService.getRecipes()
       .pipe(
         tap(data => {
-          this.recipes = data;
-          console.log('Recipes fetched:', data);
+          this.recipesAll = data;
+          this.filteredRecipes = this.recipesAll;
+          console.log('Recipes fetched:', data, this.filteredRecipes);
         }),
         catchError(error => {
           console.error('Error fetching recipes:', error);
@@ -124,14 +149,10 @@ export class RecipiesComponent implements OnInit {
   //   });
   // }
   
-  filtersVisible: boolean = false;
-
+  
   toggleFilters() {
     this.filtersVisible = !this.filtersVisible;
   }
-
-  isAscOrder = true; // Variable para controlar el orden ascendente o descendente
-
 
   goToRecipeDetail(recipeId: number) {
     console.log("aa", recipeId)
@@ -139,17 +160,17 @@ export class RecipiesComponent implements OnInit {
   }
 
   viewRecipeDetails(id: number) {
-    console.log(id)
+    console.log("id", id)
     this.router.navigate(['/recipies-detail', id]);
   }
 
   sortRecipesByTitle() {
     if (this.isAscOrder) {
-      this.recipes.sort((a, b) => {
+      this.filteredRecipes.sort((a, b) => {
         return a.titulo.localeCompare(b.titulo);
       });
     } else {
-      this.recipes.sort((a, b) => {
+      this.filteredRecipes.sort((a, b) => {
         return b.titulo.localeCompare(a.titulo);
       });
     }
@@ -161,7 +182,7 @@ export class RecipiesComponent implements OnInit {
     this.sortRecipesByTitle(); // Volver a ordenar las recetas alfabéticamente
   }
 
-  filtersDifficulty: string[] = ['Fácil', 'Dificil', 'Muy difícil'];
+  filtersDifficulty: string[] = ['Fácil', 'Difícil', 'Muy difícil'];
 
   selectedFilters: string[] = [];
 
@@ -187,7 +208,7 @@ export class RecipiesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.recipes.push(result);
+        this.filteredRecipes.push(result);
       }
     });
   }
