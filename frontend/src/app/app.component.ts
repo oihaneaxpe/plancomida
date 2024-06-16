@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterModule, Routes, RouterLink, RouterLinkActive, RouterOutlet, Router } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { RecipiesComponent } from './recipies/recipies.component';
-import { RecipiesDetailComponent } from './recipies-detail/recipies-detail.component';
-import { UserPreferencesComponent } from './user-preferences/user-preferences.component';
-import { DailyComponent } from './daily/daily.component';
-import { ShoppingListComponent } from './shopping-list/shopping-list.component';
+import { HomeComponent } from './components/home/home.component';
+import { RecipiesComponent } from './components/recipies/recipies.component';
+import { RecipiesDetailComponent } from './components/recipies-detail/recipies-detail.component';
+import { UserPreferencesComponent } from './components/user-preferences/user-preferences.component';
+import { DailyComponent } from './components/daily/daily.component';
+import { ShoppingListComponent } from './components/shopping-list/shopping-list.component';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
