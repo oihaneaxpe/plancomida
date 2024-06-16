@@ -6,6 +6,7 @@ const categoryRoutes = require('./routes/categoryRoutes');
 const difficultyRoutes = require('./routes/difficultyRoutes');
 const shoppingListRoutes = require('./routes/shoppingListRoutes');
 const userPreferenceRoutes = require('./routes/userPreferenceRoutes');
+const foodPlanRoutes = require('./routes/foodPlanRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -21,6 +22,7 @@ app.use('/api', recipeRoutes);
 app.use('/api', categoryRoutes);
 app.use('/api', difficultyRoutes);
 app.use('/api', shoppingListRoutes);
+app.use('/api', foodPlanRoutes);
 // app.use('/api', userPreferenceRoutes);
 app.use('/api/user-preference', userPreferenceRoutes);
 
