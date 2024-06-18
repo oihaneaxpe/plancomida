@@ -43,6 +43,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './home.component.less'
 })
 export class HomeComponent {
+  title = 'Health Planner';
 
   constructor(public authService: AuthService) {
     // Simula la lógica de inicio de sesión

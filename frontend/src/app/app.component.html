@@ -147,7 +147,7 @@
     <button mat-icon-button class="btn-toggle" (click)="sidenav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    <span class="toolbar-title">My Application</span>
+    <span class="toolbar-title"> {{ title }}</span>
     <span class="spacer"></span>
     <!-- Mostrar icono y nombre de usuario cuando el menú no está desplegado -->
     <button mat-button *ngIf="!authService.isLoggedIn()" (click)="navigateToLogin()">Login</button>
@@ -219,11 +219,14 @@
         </a>
         <a mat-list-item [routerLink]="['/reports']" routerLinkActive="active-menu-item" *ngIf="authService.isLoggedIn()">
           <mat-icon>bar_chart</mat-icon>
-          <span> Informes</span>
+          <span> Informes </span>
+          <mat-icon style="color: red;">warning</mat-icon>
+
         </a>
         <a mat-list-item [routerLink]="['/blog']" routerLinkActive="active-menu-item">
           <mat-icon>book</mat-icon>
-          <span> Blog</span>
+          <span> Blog </span>
+          <mat-icon style="color: red;">warning</mat-icon>
         </a>
         <a mat-list-item [routerLink]="['/tips']" routerLinkActive="active-menu-item">
           <mat-icon>lightbulb</mat-icon>

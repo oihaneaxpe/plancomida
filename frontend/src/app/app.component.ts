@@ -51,7 +51,7 @@ declare const $: any;
 })
 // , NavbarComponent, SidebarComponent, FoodPlanComponent
 export class AppComponent {
-  title = 'frontend';
+  title = 'Health Planner';
 
   isMenuOpen = false;
   userName: string | null = null;

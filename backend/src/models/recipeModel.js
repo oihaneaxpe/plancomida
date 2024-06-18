@@ -103,22 +103,6 @@ class Recipe {
     
   }
 
-  // static getRecipeById(id, callback) {
-  //   const sql = `SELECT tmreceta.*, tmcategoria.nombre as categoriaNombre, tmdificultad.nombre as dificultadNombre
-  //   FROM tmreceta 
-  //     INNER JOIN tmcategoria ON tmreceta.idCategoria = tmcategoria.idtmCategoria
-  //     INNER JOIN tmdificultad ON tmreceta.idDificultad = tmdificultad.idtmDificultad
-  //   WHERE tmreceta.BajaInd = 0 AND tmreceta.idtmReceta = ?;`;
-  //     console.log(sql, id)
-  //   db.query(sql, [id], (err, results) => {
-  //     if (err) {
-  //       callback(err, null);
-  //       return;
-  //     }
-  //     callback(null, results[0]); // Suponiendo que `id` es único, solo devolverá una fila
-  //   });
-  // }
-
   static getRecipeById(id, callback) {
     // Query para obtener la información generica de la receta seleccionada
     const queryGeneric = `SELECT tmreceta.*, tmcategoria.nombre as categoriaNombre, tmdificultad.nombre as dificultadNombre
@@ -167,16 +151,7 @@ class Recipe {
         });
       });
     });
-  }
-  //   db.query(sql, [id], (err, results) => {
-  //     if (err) {
-  //       callback(err, null);
-  //       return;
-  //     }
-  //     callback(null, results[0]); // Suponiendo que `id` es único, solo devolverá una fila
-  //   });
-  // }
-  
+  }  
 }
 
 module.exports = Recipe;
