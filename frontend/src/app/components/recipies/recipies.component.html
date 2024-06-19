@@ -4,9 +4,12 @@
 <div class="row col-md-12">
   <div class="text-right btn-panel-options">
     <!-- <button mat-icon-button (click)="openAddRecipeDialog()"> -->
-    <button mat-icon-button [routerLink]="['/add-recipe']">
+    <span *ngIf="authService.isLoggedIn()">
+      <button mat-icon-button [routerLink]="['/add-recipe']">
         <mat-icon>add</mat-icon>
-    </button>
+      </button>
+    </span> 
+    
     <button mat-icon-button (click)="toggleSortOrder()">
       <mat-icon>{{ isAscOrder ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
     </button>
@@ -90,13 +93,13 @@
              *ngFor="let recipe of filteredRecipes" (click)="viewRecipeDetails(recipe.idtmReceta)">
             <div class="row">
               <div class="col-md-2 col-sm-2 col-xs-12" style="padding: 0px;">
-                  <img class="img-responsive img-card-list" style="width: 100%;" [src]="recipe.imageUrl" />
+                  <img class="img-responsive img-card-list" style="width: 100%;" [src]="recipe.imgPath" />
               </div>
               <div class="card-body pb-0 col-md-5 col-sm-5 col-xs-6" style="padding: 0px 10px; margin: auto;">
                   <h5 class="m-0">{{ recipe.titulo }}</h5>
               </div>
               <div class="card-footer col-md-5 col-sm-5 col-xs-6">
-                  <div class="row text-center">
+                  <div class="row text-center recipe-detail">
                       <div class="col-md-4 col-sm-4 col-xs-4">
                           <h4 class="m-0">
                               <i class="fa fa-clock" aria-hidden="true"></i>
@@ -138,7 +141,7 @@
         <div class="col-md-4 col-sm-6 col-xs-6" *ngFor="let recipe of filteredRecipes" (click)="viewRecipeDetails(recipe.idtmReceta)">
           <div class="card support-bar overflow-hidden">
             <div>
-              <img class="img-responsive" style="width: 100%;" [src]="recipe.imageUrl" />
+              <img class="img-responsive" style="width: 100%;" [src]="recipe.imgPath" />
             </div>
             <div class="card-body pb-0" style="padding: 10px;">
               <h5 class="m-0">{{ recipe.titulo }}</h5>

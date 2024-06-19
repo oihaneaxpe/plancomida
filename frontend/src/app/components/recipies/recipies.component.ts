@@ -16,6 +16,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { AddRecipieComponent } from '../add-recipie/add-recipie.component';
 import { RecipiesDetailComponent } from '../recipies-detail/recipies-detail.component';
 
+import { AuthService } from '../../services/auth.service';
 import { NavigationService } from '../../services/navigation.service';
 import { RecipeService } from '../../services/recipe.service';
 
@@ -65,14 +66,14 @@ export class RecipiesComponent implements OnInit {
   
   recipesAll: { idtmReceta: number, titulo: string, tiempoPreparacionNbr: number, cantidadComensalNbr: number
     , idCategoria: number, idDificultad: number, baja: boolean
-    , categoriaNombre: string, dificultadNombre: string, imageUrl: string }[] = [];
+    , categoriaNombre: string, dificultadNombre: string, imgPath: string }[] = [];
 
   filteredRecipes: { idtmReceta: number, titulo: string, tiempoPreparacionNbr: number, cantidadComensalNbr: number
       , idCategoria: number, idDificultad: number, baja: boolean
-      , categoriaNombre: string, dificultadNombre: string, imageUrl: string }[] = [];
+      , categoriaNombre: string, dificultadNombre: string, imgPath: string }[] = [];
 
 
-  constructor(private router: Router, public dialog: MatDialog, public navService: NavigationService, private recipeService: RecipeService) {}
+  constructor(private router: Router, public dialog: MatDialog, public navService: NavigationService, public authService: AuthService, private recipeService: RecipeService) {}
 
   ngOnInit(): void {
     this.fetchRecipes();
