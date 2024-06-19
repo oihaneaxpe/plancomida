@@ -20,7 +20,7 @@ import { AuthService } from '../../services/auth.service';
 import { NavigationService } from '../../services/navigation.service';
 import { RecipeService } from '../../services/recipe.service';
 
-import { HttpClientModule } from '@angular/common/http'; 
+// import { HttpClientModule } from '@angular/common/http'; 
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
@@ -42,7 +42,7 @@ import { throwError } from 'rxjs';
               , MatChipsModule
               , MatToolbarModule
               , AddRecipieComponent
-              , HttpClientModule
+              // , HttpClientModule
           ],
   templateUrl: './recipies.component.html',
   styleUrl: './recipies.component.less'
