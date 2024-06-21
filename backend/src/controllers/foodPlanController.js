@@ -6,7 +6,7 @@ exports.getPlanification = (req, res) => {
       res.status(500).json({ error: 'Error fetching planification' });
       return;
     }
-    res.json(category);
+    res.json(foodplan);
   });
 };
 

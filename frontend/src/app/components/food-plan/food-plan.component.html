@@ -7,52 +7,131 @@
         </button>
       </div>
 <div class="meal-planner">
-    <!-- Botón para cambiar entre las visualizaciones -->
-    <!-- <button mat-button (click)="toggleViewMode()">
-      {{ viewMode === 'grid' ? 'Vista Detallada' : 'Vista en Grid' }}
-    </button> -->
-  
     <!-- Visualización en formato de grid -->
     <div *ngIf="viewMode === 'grid'">
-      <!-- <div class="meal-grid">
+      <div class="meal-planner-grid">
         <div class="day-card" *ngFor="let day of daysOfWeek">
-          <h3>{{ day }}</h3>
+          <h3>{{ day.nombre }}</h3>
           <div class="meals">
-            <div class="meal" *ngFor="let meal of mealsPerDay">
-              <h4>{{ meal.name }}</h4>
-              <p>{{ meal.description }}</p>
-            </div>
+            <ng-container *ngFor="let mealGroup of groupMealsByMomento(filterByDay(planification, day.idDia))">
+              <div class="meal-group">
+                <div class="meal">
+                  <h4>{{ mealGroup[0]?.momentoNombre || 'No planificado' }}</h4>
+                  <div  *ngFor="let meal of mealGroup">
+                    <ng-container *ngIf="mealGroup.length > 0; else noPlan">
+                      <a [routerLink]="['/recipies-detail', meal.idReceta]">
+                        <p>{{ meal.titulo }}</p>
+                      </a>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!hasMealsForMomento(filterByDay(planification, day.idDia), 1)">
+              <div class="meal-group">
+                <div class="meal">
+                  <h4>Desayuno</h4>
+                  <p>No planificado</p>
+                </div>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!hasMealsForMomento(filterByDay(planification, day.idDia), 2)">
+              <div class="meal-group">
+                <div class="meal">
+                  <h4>Almuerzo</h4>
+                  <p>No planificado</p>
+                </div>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!hasMealsForMomento(filterByDay(planification, day.idDia), 3)">
+              <div class="meal-group">
+                <div class="meal">
+                  <h4>Cena</h4>
+                  <p>No planificado</p>
+                </div>
+              </div>
+            </ng-container>
           </div>
         </div>
-      </div> -->
-        <div class="meal-planner-grid">
+      </div>
+      
+      
+        <!-- <div class="meal-planner-grid">
             <div class="day-card" *ngFor="let day of daysOfWeek">
-                <h3>{{ day }}</h3>
+                <h3>{{ day.nombre }}</h3>
                 <div class="meals">
-                    <div class="meal" *ngFor="let meal of mealsPerDay">
-                        <h4>{{ meal.name }}</h4>
-                        <p>{{ meal.description }}</p>
-                    </div>
-                </div>
+                  <div class="meal" *ngFor="let meal of filterByDay(planification, day.idDia)">
+                    <h4>{{ meal.momentoNombre }}</h4>
+                      <a [routerLink]="['/recipies-detail', meal.idReceta]">
+                        <p>{{ meal.titulo }}</p>
+                      </a>
+                  </div>
+              </div>
             </div>
-        </div>
+        </div> -->
     </div>
   
     <!-- Visualización en formato de detalle -->
     <div *ngIf="viewMode === 'detail'">
-        <div class="meal-grid">
+      <div class="meal-grid">
+        <div class="day-card" *ngFor="let day of daysOfWeek">
+          <h3>{{ day.nombre }}</h3>
+          <div class="meals">
+            <ng-container *ngFor="let mealGroup of groupMealsByMomento(filterByDay(planification, day.idDia))">
+              <div class="meal">
+                <h4>{{ mealGroup[0]?.momentoNombre || 'No planificado' }}</h4>
+                <ng-container *ngIf="mealGroup.length > 0; else noPlan">
+                  <ng-container *ngFor="let meal of mealGroup">
+                    <a [routerLink]="['/recipies-detail', meal.idReceta]">
+                      <p>{{ meal.titulo }}</p>
+                    </a>
+                  </ng-container>
+                </ng-container>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!hasMealsForMomento(filterByDay(planification, day.idDia), 1)">
+              <div class="meal">
+                <h4>Desayuno</h4>
+                <p>No planificado</p>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!hasMealsForMomento(filterByDay(planification, day.idDia), 2)">
+              <div class="meal">
+                <h4>Almuerzo</h4>
+                <p>No planificado</p>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!hasMealsForMomento(filterByDay(planification, day.idDia), 3)">
+              <div class="meal">
+                <h4>Cena</h4>
+                <p>No planificado</p>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      
+        <!-- <div class="meal-grid">
             <div class="day-card" *ngFor="let day of daysOfWeek">
-                <h3>{{ day }}</h3>
+                <h3>{{ day.nombre }}</h3>
                 <div class="meals">
-                    <div class="meal" *ngFor="let meal of mealsPerDay">
-                    <h4>{{ meal.name }}</h4>
-                    <p>{{ meal.description }}</p>
+                    <div class="meal" *ngFor="let meal of filterByDay(planification, day.idDia)">
+                      <h4>{{ meal.momentoNombre }}</h4>
+                      <a [routerLink]="['/recipies-detail', meal.idReceta]">
+                        <p>{{ meal.titulo }}</p>
+                      </a>                     
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
   </div>
+
+  <ng-template #noPlan>
+    <div class="meal">
+      <p>No planificado</p>
+    </div>
+  </ng-template>
 
   
 <div id="buttons" class="col-md-12 col-xs-12 text-right">
