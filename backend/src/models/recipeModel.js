@@ -152,6 +152,21 @@ class Recipe {
       });
     });
   }  
+
+  static getIngredientsForPlan(userId, callback) {
+    db.query(`SELECT DISTINCT tmrecetaingrediente.nombre as item, 0 as checked 
+              FROM tmrecetaingrediente 
+                INNER JOIN taplanificacion ON tmrecetaingrediente.idReceta = taplanificacion.idReceta
+              WHERE tmrecetaingrediente.bajaInd = 0 AND taplanificacion.idUsuario = ?
+              ORDER BY 1;
+    `, [userId], (err, results) => {
+      if (err) {
+        callback(err, null);
+        return;
+      }
+      callback(null, results);
+    });
+  }
 }
 
 module.exports = Recipe;

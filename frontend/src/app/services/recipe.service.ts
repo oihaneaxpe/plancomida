@@ -21,4 +21,9 @@ export class RecipeService {
   saveRecipe(recipe: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, recipe);
   }
+
+  getAllIngredients(idUser: number): Observable<any> {
+    console.log("iduser", idUser)
+    return this.http.get(`${this.apiUrl}/ingredients/${idUser}`);
+  }
 }

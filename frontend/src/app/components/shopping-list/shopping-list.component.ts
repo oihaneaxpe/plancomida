@@ -15,6 +15,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { NavigationService } from '../../services/navigation.service';
 import { ShoppingListService } from '../../services/shopping-list.service';
+import { RecipeService } from '../../services/recipe.service';
 
 import { HttpClientModule } from '@angular/common/http'; // Importar HttpClientModule
 import { catchError, tap } from 'rxjs/operators';
@@ -47,7 +48,7 @@ export class ShoppingListComponent implements OnInit {
   @ViewChild('confirmClearDialog') confirmClearDialog!: TemplateRef<any>;
 
   constructor(public dialog: MatDialog, public navService: NavigationService
-    , private shoppingListService: ShoppingListService) { }
+    , private shoppingListService: ShoppingListService, private recipeService: RecipeService) { }
 
   shoppingListVisible: boolean = true;
   newItem: string = '';
@@ -55,10 +56,7 @@ export class ShoppingListComponent implements OnInit {
   confirmClearDialogVisible: boolean = false;
   confirmIndex!: number;
   shoppingList: { item: string, checked: boolean }[] = [];
-  //   [{ item: 'Leche', checked: false },
-  //   { item: 'Huevos', checked: false },
-  //   { item: 'Pan', checked: false }
-  // ];
+
   sidebarVisible = false;
 
   ngOnInit(): void {
@@ -164,6 +162,22 @@ export class ShoppingListComponent implements OnInit {
   }
   generateShoppingList() {
     // Lógica para generar automáticamente la lista de la compra
+    this.fetchAllIngredientsForFoodPaln(1);
   }
 
+  fetchAllIngredientsForFoodPaln(userId: number): void {
+    this.recipeService.getAllIngredients(userId)
+      .pipe(
+        tap(data => {
+          console.log("data",data)
+          this.shoppingList = data;
+          console.log('All ingredients:', this.shoppingList);
+        }),
+        catchError(error => {
+          console.error('Error fetching food plan ingredients:', error);
+          return throwError(error); // Re-throw the error to keep it observable chain
+        })
+      )
+      .subscribe();
+  }
 }

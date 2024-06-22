@@ -2,7 +2,9 @@ const db = require('../database');
 
 class ShoppingList {
   static getAllShoppingList(callback) {
-    db.query('SELECT producto as item, 0 as checked FROM talistacompra WHERE bajaInd = 0 AND idUsuario = 1;', (err, results) => {
+    db.query(`SELECT producto as item, CAST(compradoInd AS UNSIGNED) AS checked 
+              FROM talistacompra WHERE bajaInd = 0 AND idUsuario = 1;
+              `, (err, results) => {
       if (err) {
         callback(err, null);
         return;
@@ -14,14 +16,16 @@ class ShoppingList {
   }
 
   static saveShoppingList(shoppingListData, callback) {
-    const sql = 'INSERT INTO talistacompra (producto, idUsuario) VALUES (?, 1)';
+    const sql = 'INSERT INTO talistacompra (producto, compradoInd, idUsuario) VALUES (?, ?, 1)';
     
     const promises = shoppingListData.map(itemData => {
       return new Promise((resolve, reject) => {
-        db.query(sql, [itemData.item/*, itemData.checked ? 1 : 0*/], (err, result) => {
+        console.log("itemData", itemData.checked)
+        db.query(sql, [itemData.item, itemData.checked], (err, result) => {
           if (err) {
             reject(err);
           } else {
+            console.log(result)
             resolve(result);
           }
         });
@@ -43,7 +47,6 @@ class ShoppingList {
       callback(null, results);
     });
   }
-  
 }
 
 module.exports = ShoppingList;
