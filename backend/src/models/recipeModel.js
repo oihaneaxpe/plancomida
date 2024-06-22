@@ -31,7 +31,6 @@ class Recipe {
 
     const idCategoria = categoryResult[0].idtmCategoria;
 
-    console.log(idCategoria)
     // Luego, obtenemos el id de la dificultad
     const getDifficultySql = `SELECT idtmDificultad FROM tmDificultad WHERE nombre = ?`;
     db.query(getDifficultySql, [recipeData.difficulty], (err, difficultyResult) => {

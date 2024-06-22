@@ -7,18 +7,17 @@ import { Observable } from 'rxjs';
 })
 export class ShoppingListService {
   private apiUrl = 'http://localhost:3000/api/shopping-list';
-  private apiUrlDelete = 'http://localhost:3000/api/shopping-list/deleteAll';
 
   constructor(private http: HttpClient) { }
 
-  getAllShoppingList(): Observable<any> {
-    return this.http.get(this.apiUrl);
+  getAllShoppingList(idUser: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${idUser}`);
   }
 
-  deleteShoppingList(): Observable<any> {
-    return this.http.get(this.apiUrlDelete);
+  deleteShoppingList(idUser: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/deleteAll/${idUser}`);
   }
-  saveShoppingList(shoppingList: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, shoppingList);
+  saveShoppingList(idUser: number, shoppingList: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/${idUser}`, shoppingList);
   }
 }

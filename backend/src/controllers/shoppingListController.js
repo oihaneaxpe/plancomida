@@ -1,7 +1,8 @@
 const ShoppingList = require('../models/shoppingListModel');
 
 exports.getAllShoppingList = (req, res) => {
-  ShoppingList.getAllShoppingList((err, shoppingList) => {
+  const userId = req.params.id;
+  ShoppingList.getAllShoppingList(userId, (err, shoppingList) => {
     if (err) {
       res.status(500).json({ error: 'Error fetching shopping list' });
       return;
@@ -12,7 +13,8 @@ exports.getAllShoppingList = (req, res) => {
 };
 
 exports.deleteShoppingList = (req, res) => {
-  ShoppingList.deleteShoppingList((err, result) => {
+  const userId = req.params.id;
+  ShoppingList.deleteShoppingList(userId, (err, result) => {
     if (err) {
       console.error('Error deleting shopping list:', err);
       res.status(500).json({ error: 'Error removing shopping list' });
@@ -25,8 +27,9 @@ exports.deleteShoppingList = (req, res) => {
 };
 
 exports.saveShoppingList = (req, res) => {
+  const userId = req.params.id;
   const shoppingListData = req.body;
-  ShoppingList.saveShoppingList(shoppingListData, (err, result) => {
+  ShoppingList.saveShoppingList(userId, shoppingListData, (err, result) => {
     if (err) {
       res.status(500).json({ error: 'Error adding shopping list' });
       return;

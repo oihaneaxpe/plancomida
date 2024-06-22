@@ -60,7 +60,7 @@ export class ShoppingListComponent implements OnInit {
   sidebarVisible = false;
 
   ngOnInit(): void {
-    this.fetchShoppingList();
+    this.fetchShoppingList(1);//todo
   }
 
   toggleSidebar() {
@@ -75,8 +75,8 @@ export class ShoppingListComponent implements OnInit {
     this.shoppingListVisible = false;
   }
 
-  fetchShoppingList(): void {
-    this.shoppingListService.getAllShoppingList()
+  fetchShoppingList(userId: number): void {
+    this.shoppingListService.getAllShoppingList(userId)
       .pipe(
         tap(data => {
           this.shoppingList = data;
@@ -92,11 +92,11 @@ export class ShoppingListComponent implements OnInit {
 
   saveShoppingList(): void {
     console.log(this.shoppingList)
-    this.deleteShoppingList();
-    this.addShoppingList();
+    this.deleteShoppingList(1); // todo
+    this.addShoppingList(1); // todo
   }
-  addShoppingList(): void {
-    this.shoppingListService.saveShoppingList(this.shoppingList)
+  addShoppingList(userId: number): void {
+    this.shoppingListService.saveShoppingList(userId, this.shoppingList)
       .pipe(
         tap(response => {
           console.log('Shopping list saved successfully:', response);
@@ -109,8 +109,8 @@ export class ShoppingListComponent implements OnInit {
       .subscribe();
   }
 
-  deleteShoppingList(): void {
-    this.shoppingListService.deleteShoppingList()
+  deleteShoppingList(userId: number): void {
+    this.shoppingListService.deleteShoppingList(userId)
       .pipe(
         tap(response => {
           console.log('Shopping list removed successfully:', response);
@@ -169,7 +169,6 @@ export class ShoppingListComponent implements OnInit {
     this.recipeService.getAllIngredients(userId)
       .pipe(
         tap(data => {
-          console.log("data",data)
           this.shoppingList = data;
           console.log('All ingredients:', this.shoppingList);
         }),
