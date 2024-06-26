@@ -7,15 +7,10 @@ export class AuthService {
 
   constructor() { }
   
-  login(email: string, password: string): boolean {
-    // Lógica de autenticación ficticia
-    if (email === 'test@test.com' && password === 'password') {
-      localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('userName', email);
-      return true;
-    } else {
-      return false;
-    }
+  login(email: string, token: string): void {
+    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('userName', email);
+    localStorage.setItem('token', token); // Guarda el token en el almacenamiento local
   }
 
   logout(): void {

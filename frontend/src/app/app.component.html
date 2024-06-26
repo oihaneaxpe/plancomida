@@ -147,7 +147,10 @@
     <button mat-icon-button class="btn-toggle" (click)="sidenav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    <span class="toolbar-title"> {{ title }}</span>
+    <a [routerLink]="['/']">
+      <span class="toolbar-title"> {{ title }}</span>
+    </a>
+    
     <span class="spacer"></span>
     <!-- Mostrar icono y nombre de usuario cuando el menú no está desplegado -->
     <button mat-button *ngIf="!authService.isLoggedIn()" (click)="navigateToLogin()">Login</button>
@@ -157,8 +160,8 @@
     </div> -->
     <!-- Mostrar el menú desplegable cuando se hace clic -->
     <div *ngIf="authService.isLoggedIn()" [matMenuTriggerFor]="menu" class="btn-account">
-      <!-- <span>Usuario 1 </span> -->
-      <span>{{ userName }}</span>
+      <!-- <span>{{ userName }}</span> -->
+      <span>MI CUENTA</span>
       <button mat-icon-button style="background: white;">
         <mat-icon>account_circle</mat-icon>
       </button>

@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, RouterLink, RouterOutlet, Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -11,9 +10,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from '../../services/auth.service';
-
+import { UserService } from '../../services/user.service';
+import { catchError, tap } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -29,34 +31,53 @@ import { AuthService } from '../../services/auth.service';
             , MatIconModule
             , MatToolbarModule
             , MatSidenavModule
-            , MatListModule],
+            , MatListModule
+            , ReactiveFormsModule
+          ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.less'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+  loginForm!: FormGroup;
 
-  email: string = '';
-  password: string = '';
+  constructor(private router: Router,
+              private userService: UserService,
+              private fb: FormBuilder,
+              private authService: AuthService) {}
 
-  // constructor(private router: Router) {}
+  ngOnInit(): void {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    });
+  }
+  
+  login(): void {
+    if (this.loginForm.invalid) {
+      return;
+    }
+    const loginData = this.loginForm.value;
 
+    this.userService.login(loginData)
+      .pipe(
+        tap(data => {
+          console.log('User logged in successfully', data);
+          this.authService.login(loginData.email, data.token);
+          this.router.navigate(['/home']);
+        }),
+        catchError(error => {
+          console.error('Error logging in', error);
+          return throwError(error); // Re-throw the error to keep it observable chain
+        })
+      )
+      .subscribe();
+  }
   // onLogin() {
-  //   // Aquí puedes añadir la lógica de autenticación real
-  //   if (this.email === 'test@test.com' && this.password === 'password') {
-  //     // Guardar el estado de login, podría ser un token en el local storage
-  //     localStorage.setItem('isLoggedIn', 'true');
-  //     this.router.navigate(['/home']);
+  //   if (this.authService.login(this.email, this.password)) {
+  //     
   //   } else {
   //     alert('Credenciales incorrectas');
   //   }
   // }
-  constructor(private authService: AuthService, private router: Router) {}
-
-  onLogin() {
-    if (this.authService.login(this.email, this.password)) {
-      this.router.navigate(['/home']);
-    } else {
-      alert('Credenciales incorrectas');
-    }
-  }
+  
 }
