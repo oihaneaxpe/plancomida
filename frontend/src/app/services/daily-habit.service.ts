@@ -11,7 +11,9 @@ export class DailyHabitService {
   constructor(private http: HttpClient) { }
 
   getActualHabit(idUser: number): Observable<any> {
-    console.log("service")
     return this.http.get(`${this.apiUrl}/actual/${idUser}`);
+  }  
+  updateActualHabit(idUser: number, dailyHabitData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/update/${idUser}`, dailyHabitData);
   }
 }

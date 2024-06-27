@@ -1,23 +1,26 @@
+<div class="row col-md-12 container-title">
+  <h2>Registro Diario de Hábitos Saludables</h2>
+</div>
 <div class="row">
     <div class="daily-log-container">
         <mat-toolbar color="primary">
-          <span>Registro Diario de Hábitos Saludables</span>
+          <span>Registro</span>
         </mat-toolbar>
       
         <mat-card class="daily-log-card">
           <mat-card-content>
-            <form>
+            <form [formGroup]="dailyHabitForm" (ngSubmit)="saveDailyLog()">
               <!-- Ingesta de agua -->
               <mat-form-field appearance="fill" class="full-width" for="agua">
                 <mat-label>Ingesta de Agua (litros)</mat-label>
-                <input matInput type="number" [(ngModel)]="actualHabit[0].aguaNbr" name="waterIntake">
+                <input matInput type="number" formControlName="aguaNbr" name="waterIntake">
                 <mat-icon matSuffix>local_drink</mat-icon>
               </mat-form-field>
       
               <!-- Horas de sueño -->
               <mat-form-field appearance="fill" class="full-width">
                 <mat-label>Horas de Sueño</mat-label>
-                <input matInput type="number" [(ngModel)]="actualHabit[0].horasSueno" name="sleepHours">
+                <input matInput type="number" formControlName="horasSueno" name="sleepHours">
                 <mat-icon matSuffix>hotel</mat-icon>
               </mat-form-field>
       
@@ -26,7 +29,7 @@
                 <mat-label>Tipo de Ejercicio</mat-label>
                 <!-- <input matInput type="text" [(ngModel)]="actualHabit[0].idTipoEjercicio" name="exercise">
                 <mat-icon matSuffix>fitness_center</mat-icon> -->
-                <mat-select [(ngModel)]="actualHabit[0].nombreEjercicio" name="exercise">
+                <mat-select formControlName="nombreEjercicio" name="exercise">
                     <mat-option *ngFor="let exerc of exercise" [value]="exerc.nombre">
                         {{ exerc.nombre }}
                     </mat-option>
@@ -35,37 +38,32 @@
               </mat-form-field>
       
               <!-- Meditación -->
-              <mat-checkbox [(ngModel)]="actualHabit[0].meditacionInd" name="meditation">
+              <mat-checkbox formControlName="meditacionInd" name="meditation">
                 <mat-icon class="checkbox-icon">self_improvement</mat-icon> Meditación
               </mat-checkbox>
       
               <!-- Comidas Saludables -->
-              <mat-checkbox [(ngModel)]="actualHabit[0].comidaSaludableInd" name="healthyMeals">
+              <mat-checkbox formControlName="comidaSaludableInd" name="healthyMeals">
                 <mat-icon class="checkbox-icon">restaurant</mat-icon> Comidas Saludables
               </mat-checkbox>
       
               <!-- Notas -->
               <mat-form-field appearance="fill" class="full-width">
                 <mat-label>Notas</mat-label>
-                <textarea matInput [(ngModel)]="actualHabit[0].notas" name="notes"></textarea>
+                <textarea matInput formControlName="notas" name="notes"></textarea>
                 <mat-icon matSuffix>note</mat-icon>
               </mat-form-field>
-      
-              <!-- Botón Guardar -->
-              <div class="form-actions">
-                <button mat-raised-button color="primary" (click)="saveDailyLog()">Guardar</button>
-              </div>
             </form>
           </mat-card-content>
         </mat-card>
-      </div>
-    
+      </div>    
 </div>
 <div id="buttons" class="col-md-12 col-xs-12 text-right">
     <div class="row top_tiles" style="margin: 10px 0;">
         <div class="actionBar2">
-            <div class="col-md-12 col-sm-8 col-xs-12 button-actions">
-                <input id="goBack" type="button" class="btn btn-info" value="Volver" (click)="navService.goBack()">
+            <div class="col-md-12 col-sm-12 col-xs-12 button-actions">
+              <input id="save" type="button" class="btn btn-info" value="Guardar"  (click)="saveDailyLog()">
+              <input id="goBack" type="button" class="btn btn-info" value="Volver" (click)="navService.goBack()">
             </div>
         </div>
     </div>    
