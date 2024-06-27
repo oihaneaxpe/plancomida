@@ -220,13 +220,15 @@
           <mat-icon>assignment</mat-icon>
           <span> Registro diario</span>
         </a>
-        <a mat-list-item [routerLink]="['/reports']" routerLinkActive="active-menu-item" *ngIf="authService.isLoggedIn()">
+        <!-- <a mat-list-item [routerLink]="['/reports']" routerLinkActive="active-menu-item" *ngIf="authService.isLoggedIn()"> -->
+        <a mat-list-item routerLinkActive="active-menu-item" *ngIf="authService.isLoggedIn()">
           <mat-icon>bar_chart</mat-icon>
           <span> Informes </span>
           <mat-icon style="color: red;">warning</mat-icon>
 
         </a>
-        <a mat-list-item [routerLink]="['/blog']" routerLinkActive="active-menu-item">
+        <!-- <a mat-list-item [routerLink]="['/blog']" routerLinkActive="active-menu-item"> -->
+        <a mat-list-item routerLinkActive="active-menu-item">
           <mat-icon>book</mat-icon>
           <span> Blog </span>
           <mat-icon style="color: red;">warning</mat-icon>

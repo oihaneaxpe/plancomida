@@ -3,7 +3,6 @@
 </div>
 <div class="row col-md-12">
   <div class="text-right btn-panel-options">
-    <!-- <button mat-icon-button (click)="openAddRecipeDialog()"> -->
     <span *ngIf="authService.isLoggedIn()">
       <button mat-icon-button [routerLink]="['/add-recipe']">
         <mat-icon>add</mat-icon>
@@ -131,7 +130,7 @@
 <div id="buttons" class="row col-md-12 col-xs-12 text-right">
   <div class="row top_tiles" style="margin: 10px 0;">
       <div class="actionBar2">
-          <div class="col-md-12 col-sm-8 col-xs-12 button-actions">
+          <div class="col-md-12 col-sm-12 col-xs-12 button-actions">
               <input id="goBack" type="button" class="btn btn-info" value="Volver" (click)="navService.goBack()">
           </div>
       </div>
@@ -174,6 +173,5 @@
           </div>
         </div>
     </div>
-    <!-- <router-outlet></router-outlet> -->
 </ng-template>
 

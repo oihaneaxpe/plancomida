@@ -54,21 +54,6 @@
           </div>
         </div>
       </div>
-      
-      
-        <!-- <div class="meal-planner-grid">
-            <div class="day-card" *ngFor="let day of daysOfWeek">
-                <h3>{{ day.nombre }}</h3>
-                <div class="meals">
-                  <div class="meal" *ngFor="let meal of filterByDay(planification, day.idDia)">
-                    <h4>{{ meal.momentoNombre }}</h4>
-                      <a [routerLink]="['/recipies-detail', meal.idReceta]">
-                        <p>{{ meal.titulo }}</p>
-                      </a>
-                  </div>
-              </div>
-            </div>
-        </div> -->
     </div>
   
     <!-- Visualización en formato de detalle -->
@@ -110,20 +95,6 @@
           </div>
         </div>
       </div>
-      
-        <!-- <div class="meal-grid">
-            <div class="day-card" *ngFor="let day of daysOfWeek">
-                <h3>{{ day.nombre }}</h3>
-                <div class="meals">
-                    <div class="meal" *ngFor="let meal of filterByDay(planification, day.idDia)">
-                      <h4>{{ meal.momentoNombre }}</h4>
-                      <a [routerLink]="['/recipies-detail', meal.idReceta]">
-                        <p>{{ meal.titulo }}</p>
-                      </a>                     
-                    </div>
-                </div>
-            </div>
-        </div> -->
     </div>
   </div>
 
@@ -137,7 +108,7 @@
 <div id="buttons" class="col-md-12 col-xs-12 text-right">
     <div class="row top_tiles" style="margin: 10px 0;">
         <div class="actionBar2">
-            <div class="col-md-12 col-sm-8 col-xs-12 button-actions">
+            <div class="col-md-12 col-sm-12 col-xs-12 button-actions">
                 <input id="goBack" type="button" class="btn btn-info" value="Volver" (click)="navService.goBack()">
             </div>
         </div>
