@@ -4,10 +4,12 @@ const bodyParser = require('body-parser');
 const recipeRoutes = require('./routes/recipeRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const difficultyRoutes = require('./routes/difficultyRoutes');
+const exerciseRoutes = require('./routes/exerciseRoutes');
 const shoppingListRoutes = require('./routes/shoppingListRoutes');
 const userPreferenceRoutes = require('./routes/userPreferenceRoutes');
 const foodPlanRoutes = require('./routes/foodPlanRoutes');
-const userRoutes = require('./routes/userRoutes'); 
+const dailyHabitRoutes = require('./routes/userRoutes'); 
+const userRoutes = require('./routes/dailyHabitRoutes'); 
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -22,11 +24,14 @@ app.use(bodyParser.json());
 app.use('/api', recipeRoutes);
 app.use('/api', categoryRoutes);
 app.use('/api', difficultyRoutes);
+app.use('/api', exerciseRoutes);
 app.use('/api', shoppingListRoutes);
 app.use('/api', foodPlanRoutes);
 // app.use('/api', userPreferenceRoutes);
 app.use('/api/user-preference', userPreferenceRoutes);
+app.use('/api', dailyHabitRoutes);
 app.use('/api', userRoutes);
+
 
 // Ruta de prueba
 app.get('/', (req, res) => {

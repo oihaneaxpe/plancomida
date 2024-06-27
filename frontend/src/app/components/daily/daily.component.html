@@ -8,40 +8,46 @@
           <mat-card-content>
             <form>
               <!-- Ingesta de agua -->
-              <mat-form-field appearance="fill" class="full-width">
+              <mat-form-field appearance="fill" class="full-width" for="agua">
                 <mat-label>Ingesta de Agua (litros)</mat-label>
-                <input matInput type="number" [(ngModel)]="dailyLog.waterIntake" name="waterIntake">
+                <input matInput type="number" [(ngModel)]="actualHabit[0].aguaNbr" name="waterIntake">
                 <mat-icon matSuffix>local_drink</mat-icon>
               </mat-form-field>
       
               <!-- Horas de sueño -->
               <mat-form-field appearance="fill" class="full-width">
                 <mat-label>Horas de Sueño</mat-label>
-                <input matInput type="number" [(ngModel)]="dailyLog.sleepHours" name="sleepHours">
+                <input matInput type="number" [(ngModel)]="actualHabit[0].horasSueno" name="sleepHours">
                 <mat-icon matSuffix>hotel</mat-icon>
               </mat-form-field>
       
               <!-- Ejercicio -->
               <mat-form-field appearance="fill" class="full-width">
                 <mat-label>Tipo de Ejercicio</mat-label>
-                <input matInput type="text" [(ngModel)]="dailyLog.exercise" name="exercise">
+                <!-- <input matInput type="text" [(ngModel)]="actualHabit[0].idTipoEjercicio" name="exercise">
+                <mat-icon matSuffix>fitness_center</mat-icon> -->
+                <mat-select [(ngModel)]="actualHabit[0].nombreEjercicio" name="exercise">
+                    <mat-option *ngFor="let exerc of exercise" [value]="exerc.nombre">
+                        {{ exerc.nombre }}
+                    </mat-option>
+                </mat-select>
                 <mat-icon matSuffix>fitness_center</mat-icon>
               </mat-form-field>
       
               <!-- Meditación -->
-              <mat-checkbox [(ngModel)]="dailyLog.meditation" name="meditation">
+              <mat-checkbox [(ngModel)]="actualHabit[0].meditacionInd" name="meditation">
                 <mat-icon class="checkbox-icon">self_improvement</mat-icon> Meditación
               </mat-checkbox>
       
               <!-- Comidas Saludables -->
-              <mat-checkbox [(ngModel)]="dailyLog.healthyMeals" name="healthyMeals">
+              <mat-checkbox [(ngModel)]="actualHabit[0].comidaSaludableInd" name="healthyMeals">
                 <mat-icon class="checkbox-icon">restaurant</mat-icon> Comidas Saludables
               </mat-checkbox>
       
               <!-- Notas -->
               <mat-form-field appearance="fill" class="full-width">
                 <mat-label>Notas</mat-label>
-                <textarea matInput [(ngModel)]="dailyLog.notes" name="notes"></textarea>
+                <textarea matInput [(ngModel)]="actualHabit[0].notas" name="notes"></textarea>
                 <mat-icon matSuffix>note</mat-icon>
               </mat-form-field>
       
