@@ -1,37 +1,69 @@
 const UserPreference = require('../models/userPreferenceModel');
 
-exports.getUserPreference = (req, res) => {
-  UserPreference.getUserPreference((err, userpreference) => {
-    if (err) {
-      res.status(500).json({ error: 'Error fetching user preference' });
-      return;
-    }
-    res.json(userpreference);
-  });
-};
-
 // Controlador para obtener las preferencias del usuario con detalles de alergias y problemas de salud
+// exports.getUserPreferenceWithDetails = (req, res) => {
+//   const userId = req.params.userId; // Suponiendo que el userId se pasa como parámetro en la URL
+// console.log("userId", userId)
+//   UserPreference.getUserPreferenceWithDetails(userId, (err, result) => {
+//     if (err) {
+//       console.error('Error al obtener preferencias del usuario:', err);
+//       res.status(500).json({ error: 'Error al obtener preferencias del usuario' });
+//       return;
+//     }
+
+//     res.json(result); // Devuelve la respuesta con las preferencias, alergias y problemas de salud
+//   });
+// };
+
 exports.getUserPreferenceWithDetails = (req, res) => {
-  const userId = req.params.userId; // Suponiendo que el userId se pasa como parámetro en la URL
-console.log("sss", userId)
-  UserPreference.getUserPreferenceWithDetails(userId, (err, result) => {
+  const userId = req.params.userId;
+  
+  UserPreference.getUserPreference(userId, (err, userPreference) => {
     if (err) {
-      console.error('Error al obtener preferencias del usuario:', err);
-      res.status(500).json({ error: 'Error al obtener preferencias del usuario' });
-      return;
+      return res.status(500).json({ error: 'Error getting user preference' });
     }
 
-    res.json(result); // Devuelve la respuesta con las preferencias, alergias y problemas de salud
+    UserPreference.getAlergias(userId, (err, alergias) => {
+      if (err) {
+        return res.status(500).json({ error: 'Error getting alergias' });
+      }
+
+      UserPreference.getHealthProblems(userId, (err, problemasSalud) => {
+        if (err) {
+          return res.status(500).json({ error: 'Error getting health problems' });
+        }
+
+        UserPreference.getCheckedAlergias(userId, (err, activoAlergias) => {
+          if (err) {
+            return res.status(500).json({ error: 'Error getting health problems' });
+          }
+
+          UserPreference.getCheckedHealthProblems(userId, (err, activoProblemasSalud) => {
+              if (err) {
+                  return res.status(500).json({ error: 'Error getting health problems' });
+              }
+  
+              res.json({
+                  userPreference: userPreference[0], // Asumiendo que userPreference es un array con un único elemento
+                  alergias: alergias,
+                  problemasSalud: problemasSalud,
+                  activoProblemasSalud: activoProblemasSalud,
+                  activoAlergias: activoAlergias
+              });
+          });
+      });
+    });
   });
+});
 };
 
 
 // Controlador para actualizar las preferencias del usuario
 exports.saveUserPreference = (req, res) => {
-  const userId =1; // Asegúrate de que el ID del usuario viene en el cuerpo de la solicitud
+  const userId = req.params.userId;
   const userPreference = req.body;
 
-  UserPreference.saveUserPreference(userId, userPreference, (err, result) => {
+  UserPreference.saveUserPreferenceProperties(userId, userPreference, (err, result) => {
     if (err) {
       console.error('Error updating user preference:', err);
       res.status(500).json({ error: 'Error updating user preference' });

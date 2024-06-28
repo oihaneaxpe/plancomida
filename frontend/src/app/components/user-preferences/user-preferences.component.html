@@ -1,98 +1,111 @@
 <div class="col-md-12 container-title">
     <h2>Preferencias de usuario</h2>
   </div>
-<div class="row">
+<form [formGroup]="userPreferenceForm">
     <div class="row">
-        <h4 class="title">Características</h4>        
-        <div class="form-group col-md-6">
-            <div class="row">
-                <label for="select">
-                    Nivel de actividad:
-                    <button mat-icon-button class="btn-info-modal" (click)="openInfoModal()" style="padding: 0px; margin: -10px 0px;">
-                        <mat-icon (click)="openInfoModal()">info</mat-icon>
-                    </button>
-                </label>
-                
-                <mat-form-field appearance="outline" class="full-width custom-field">
-                    <mat-label>Opción</mat-label>
-                    <mat-select [(ngModel)]="this.userPreference.tipoEjercicioNombre">
-                        <mat-option *ngFor="let option of activityOptions" [value]="option" name="exerciseType">
-                            {{option}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
+        <div class="row">
+            <h4 class="title">Características</h4>        
+                <div class="form-group col-md-6">
+                    <div class="row">
+                        <label for="select">
+                            Nivel de actividad:
+                            <button mat-icon-button class="btn-info-modal" (click)="openInfoModal()" style="padding: 0px; margin: -10px 0px;">
+                                <mat-icon (click)="openInfoModal()">info</mat-icon>
+                            </button>
+                        </label>
+                        
+                        <mat-form-field appearance="outline" class="full-width custom-field">
+                            <mat-label>Opción</mat-label>
+                            <mat-select formControlName="tipoEjercicioNombre">
+                                <mat-option *ngFor="let option of activityOptions" [value]="option" name="exerciseType">
+                                    {{option}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <div class="row">
+                        <label for="select">Altura:</label>
+                        <mat-form-field appearance="outline" class="full-width custom-field">
+                            <input matInput placeholder="Altura (cm)" type="number" formControlName="alturaNbr" name="height" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="select">Sexo:</label>
+                    <mat-form-field appearance="outline" class="full-width custom-field">
+                        <mat-label>Opción</mat-label>
+                        <mat-select name="option" formControlName="sexo">
+                            <mat-option *ngFor="let option of sexOptions" [value]="option" name="sex">
+                                {{option}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="form-group col-md-6">
+                    <div class="row">
+                        <label for="date">Fecha de nacimiento:</label>
+                        <mat-form-field appearance="outline" class="full-width custom-field">
+                            <mat-label>Fecha</mat-label>
+                            <input matInput [matDatepicker]="picker"formControlName="fechaNacimientoDte" name="date">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>           
+                <div class="form-group col-md-6">
+                    <div class="row">
+                        <label for="select">Peso:</label>
+                        <mat-form-field appearance="outline" class="full-width custom-field">
+                            <input matInput placeholder="Peso (kg)" type="number"  formControlName="pesoNbr" name="weight" required>
+                        </mat-form-field>
+                    </div>
+                </div>
         </div>
-        <div class="form-group col-md-6">
-            <div class="row">
-                <label for="select">Altura:</label>
-                <mat-form-field appearance="outline" class="full-width custom-field">
-                    <input matInput placeholder="Altura (cm)" type="number" [value]="this.userPreference.alturaNbr" name="height" required>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="form-group col-md-6">
-            <label for="select">Sexo:</label>
-            <mat-form-field appearance="outline" class="full-width custom-field">
-                <mat-label>Opción</mat-label>
-                <!-- <mat-select [(ngModel)]="selectedOption" name="option"> -->
-                <mat-select name="option" [(ngModel)]="this.userPreference.sexo">
-                    <mat-option *ngFor="let option of sexOptions" [value]="option" name="sex">
-                        {{option}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div class="form-group col-md-6">
-            <div class="row">
-                <label for="date">Fecha de nacimiento:</label>
-                <mat-form-field appearance="outline" class="full-width custom-field">
-                    <mat-label>Fecha</mat-label>
-                    <input matInput [matDatepicker]="picker" [(ngModel)]="this.userPreference.fechaNacimientoDte" name="date">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-            </div>
-        </div>           
-        <div class="form-group col-md-6">
-            <div class="row">
-                <label for="select">Peso:</label>
-                <mat-form-field appearance="outline" class="full-width custom-field">
-                    <input matInput placeholder="Peso (kg)" type="number"  [value]="this.userPreference.pesoNbr" name="weight" required>
-                </mat-form-field>
-            </div>
-        </div>    
-    </div>
     
-    <div class="col-lg-6 col-md-6 col-sm-6">
-        <div class="row">
-            <h4 class="title">Problemas de salud de dieta</h4>
-            <div class="custom-field" *ngFor="let healthcondition of this.userPreference.healthConditions" >
-                <mat-checkbox [(ngModel)]="healthcondition.checked" name="healthconditionoption">{{ healthcondition.nombre }}</mat-checkbox>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="row">
+                <h4 class="title">Problemas de salud de dieta</h4>
+                <div formArrayName="healthConditions">
+                    <div *ngFor="let healthCondition of healthConditionsArray.controls; let i = index" [formGroupName]="i">
+                      <mat-checkbox formControlName="checked">{{ healthCondition.value.nombre }}</mat-checkbox>
+                    </div>
+                </div>
+                <!-- <div class="custom-field" *ngFor="let healthcondition of this.userPreference.healthConditions" >
+                    <mat-checkbox [(ngModel)]="healthcondition.checked" name="healthconditionoption">{{ healthcondition.nombre }}</mat-checkbox>
+                </div> -->
+            </div>
+       
+            <div class="row">
+                <!-- <h2><label for="dietType">Tipo de Dieta:</label></h2> -->
+                <h4 class="title">Tipo de Dieta</h4>
+                <h6 class="subtitle">Selecciona tu tipo de dieta</h6>
+                <div class="custom-field">
+                    <mat-radio-group formControlName="tipoDietaNombre" name="dietType">
+                        <mat-radio-button class="radio-button" *ngFor="let option of dietOptions" [value]="option">
+                            {{option}}
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <!-- <h2><label for="dietType">Tipo de Dieta:</label></h2> -->
-            <h4 class="title">Tipo de Dieta</h4>
-            <h6 class="subtitle">Selecciona tu tipo de dieta</h6>
-            <div class="custom-field">
-                <mat-radio-group [(ngModel)]="this.userPreference.tipoDietaNombre" name="dietType">
-                    <mat-radio-button class="radio-button" *ngFor="let option of dietOptions" [value]="option">
-                        {{option}}
-                    </mat-radio-button>
-                </mat-radio-group>
+        <!-- Checkboxes para Alergias / Intolerancias -->
+        <div class="col-md-6">
+            <h4 class="title">Alergias / Intolerancias:</h4>
+            <h6 class="subtitle">Selecciona las alergias y/o intolerancias</h6>
+            <div formArrayName="allergies">
+                <div *ngFor="let allergies of allergiesArray.controls; let i = index" [formGroupName]="i">
+                  <mat-checkbox formControlName="checked">{{ allergies.value.nombre }}</mat-checkbox>
+                </div>
             </div>
+
+            <!-- <div class="custom-field" *ngFor="let allergie of this.userPreference.allergies" >
+                <mat-checkbox [(ngModel)]="allergie.checked" name="allergieoption">{{ allergie.nombre }}</mat-checkbox>
+            </div> -->
         </div>
     </div>
-    <!-- Checkboxes para Alergias / Intolerancias -->
-    <div class="col-md-6">
-        <h4 class="title">Alergias / Intolerancias:</h4>
-        <h6 class="subtitle">Selecciona las alergias y/o intolerancias</h6>
-        <div class="custom-field" *ngFor="let allergie of this.userPreference.allergies" >
-            <mat-checkbox [(ngModel)]="allergie.checked" name="allergieoption">{{ allergie.nombre }}</mat-checkbox>
-        </div>
-    </div>
- </div>
+</form>
 
  
 

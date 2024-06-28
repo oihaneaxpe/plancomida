@@ -4,13 +4,12 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { MatLabel } from '@angular/material/form-field';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { NavigationService } from '../../services/navigation.service';
 import { DailyHabitService } from '../../services/daily-habit.service';
