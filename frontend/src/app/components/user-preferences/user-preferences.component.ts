@@ -119,7 +119,6 @@ export class UserPreferencesComponent implements OnInit {
           tap(data => {
             // this.userPreference = data.userPreference;
             this.userPreferenceForm.patchValue(data.userPreference);
-
             // PROBLEMAS DE SALUD
             const combinedProblemasSalud = data.problemasSalud.map((problema: { idtmProblemasSalud: any; }) => {
               var checked = 0;
@@ -132,8 +131,6 @@ export class UserPreferencesComponent implements OnInit {
                 checked: checked
               };              
             });
-            // this.userPreference.healthConditions = combinedProblemasSalud;
-            // this.userPreferenceForm.setControl('healthConditions', this.fb.array(combinedProblemasSalud));
 
             // PROBLEMAS DE SALUD
             const combinedAlergias = data.alergias.map((alergia: { idtmAlergia: any; }) => {
@@ -147,14 +144,10 @@ export class UserPreferencesComponent implements OnInit {
                 checked: checked
               };              
             });
-            // this.userPreference.allergies = combinedAlergias;
-            // this.userPreferenceForm.setControl('allergies', this.fb.array(combinedAlergias));
+        
+            this.setHealthConditions(combinedProblemasSalud);
+            this.setAllergies(combinedAlergias);
 
-            // this.userPreferenceForm.patchValue(preferences);
-        this.setHealthConditions(combinedProblemasSalud);
-        this.setAllergies(combinedAlergias);
-
-            console.log("this.userPreferenceForm.value;", this.userPreferenceForm.value)
             console.log('User preference data fetched:', data);
           }),
           catchError(error => {
@@ -169,7 +162,8 @@ export class UserPreferencesComponent implements OnInit {
     const healthConditionsFGs = conditions.map(condition =>
       this.fb.group({
         checked: condition.checked,
-        nombre: condition.nombre
+        nombre: condition.nombre,
+        id: condition.idtmProblemasSalud
       }));
     const healthConditionsFormArray = this.fb.array(healthConditionsFGs);
     this.userPreferenceForm.setControl('healthConditions', healthConditionsFormArray);
@@ -179,7 +173,8 @@ export class UserPreferencesComponent implements OnInit {
     const allergiesFGs = allergies.map(allergie =>
       this.fb.group({
         checked: allergie.checked,
-        nombre: allergie.nombre
+        nombre: allergie.nombre,
+        id: allergie.idtmAlergia
       }));
     const allergiesFormArray = this.fb.array(allergiesFGs);
     this.userPreferenceForm.setControl('allergies', allergiesFormArray);
@@ -192,7 +187,6 @@ export class UserPreferencesComponent implements OnInit {
       return;
     }
     const preferences = this.userPreferenceForm.value;
-    console.log("preferences", preferences)
 
     this.userPreferenceService.saveUserPreference(userId, preferences)
       .pipe(

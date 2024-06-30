@@ -1,20 +1,5 @@
 const UserPreference = require('../models/userPreferenceModel');
 
-// Controlador para obtener las preferencias del usuario con detalles de alergias y problemas de salud
-// exports.getUserPreferenceWithDetails = (req, res) => {
-//   const userId = req.params.userId; // Suponiendo que el userId se pasa como parámetro en la URL
-// console.log("userId", userId)
-//   UserPreference.getUserPreferenceWithDetails(userId, (err, result) => {
-//     if (err) {
-//       console.error('Error al obtener preferencias del usuario:', err);
-//       res.status(500).json({ error: 'Error al obtener preferencias del usuario' });
-//       return;
-//     }
-
-//     res.json(result); // Devuelve la respuesta con las preferencias, alergias y problemas de salud
-//   });
-// };
-
 exports.getUserPreferenceWithDetails = (req, res) => {
   const userId = req.params.userId;
   
@@ -23,7 +8,7 @@ exports.getUserPreferenceWithDetails = (req, res) => {
       return res.status(500).json({ error: 'Error getting user preference' });
     }
 
-    UserPreference.getAlergias(userId, (err, alergias) => {
+    UserPreference.getAllergies(userId, (err, alergias) => {
       if (err) {
         return res.status(500).json({ error: 'Error getting alergias' });
       }
@@ -33,7 +18,7 @@ exports.getUserPreferenceWithDetails = (req, res) => {
           return res.status(500).json({ error: 'Error getting health problems' });
         }
 
-        UserPreference.getCheckedAlergias(userId, (err, activoAlergias) => {
+        UserPreference.getCheckedAllergies(userId, (err, activoAlergias) => {
           if (err) {
             return res.status(500).json({ error: 'Error getting health problems' });
           }
@@ -54,7 +39,7 @@ exports.getUserPreferenceWithDetails = (req, res) => {
       });
     });
   });
-});
+  });
 };
 
 
@@ -63,16 +48,30 @@ exports.saveUserPreference = (req, res) => {
   const userId = req.params.userId;
   const userPreference = req.body;
 
+  
   UserPreference.saveUserPreferenceProperties(userId, userPreference, (err, result) => {
     if (err) {
-      console.error('Error updating user preference:', err);
       res.status(500).json({ error: 'Error updating user preference' });
       return;
     }
 
-    res.status(200).json({
-      message: 'User Preference updated successfully',
-      data: result
+    UserPreference.saveHealthProblems(1, userPreference.healthConditions, (err, result) => {
+      if (err) {
+        res.status(500).json({ error: 'Error updating health problem' });
+        return;
+      }
+  
+      UserPreference.saveAllergies(1, userPreference.allergies, (err, result) => {
+        if (err) {
+          res.status(500).json({ error: 'Error updating allergies' });
+          return;
+        }
+    
+        res.status(200).json({
+          message: 'User Preference updated successfully',
+          data: result
+        });
+      });
     });
   });
 };

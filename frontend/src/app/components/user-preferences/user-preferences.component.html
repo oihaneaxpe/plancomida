@@ -72,13 +72,9 @@
                       <mat-checkbox formControlName="checked">{{ healthCondition.value.nombre }}</mat-checkbox>
                     </div>
                 </div>
-                <!-- <div class="custom-field" *ngFor="let healthcondition of this.userPreference.healthConditions" >
-                    <mat-checkbox [(ngModel)]="healthcondition.checked" name="healthconditionoption">{{ healthcondition.nombre }}</mat-checkbox>
-                </div> -->
             </div>
        
             <div class="row">
-                <!-- <h2><label for="dietType">Tipo de Dieta:</label></h2> -->
                 <h4 class="title">Tipo de Dieta</h4>
                 <h6 class="subtitle">Selecciona tu tipo de dieta</h6>
                 <div class="custom-field">
@@ -99,10 +95,6 @@
                   <mat-checkbox formControlName="checked">{{ allergies.value.nombre }}</mat-checkbox>
                 </div>
             </div>
-
-            <!-- <div class="custom-field" *ngFor="let allergie of this.userPreference.allergies" >
-                <mat-checkbox [(ngModel)]="allergie.checked" name="allergieoption">{{ allergie.nombre }}</mat-checkbox>
-            </div> -->
         </div>
     </div>
 </form>
