@@ -143,6 +143,7 @@
   }
 </style>
 <main class="main">
+  
   <mat-toolbar color="primary">
     <button mat-icon-button class="btn-toggle" (click)="sidenav.toggle()">
       <mat-icon>menu</mat-icon>
@@ -153,11 +154,13 @@
     
     <span class="spacer"></span>
     <!-- Mostrar icono y nombre de usuario cuando el menú no está desplegado -->
-    <button mat-button *ngIf="!authService.isLoggedIn()" (click)="navigateToLogin()">Login</button>
-    <!-- <div *ngIf="!isMenuOpen">
-      <mat-icon>account_circle</mat-icon>
-      <span>{{ userName }}</span>
-    </div> -->
+    <div *ngIf="!authService.isLoggedIn()" class="btn-account" (click)="navigateToLogin()">
+      <span>ACCEDER</span>
+      <button mat-icon-button style="background: white;">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+    </div>
+
     <!-- Mostrar el menú desplegable cuando se hace clic -->
     <div *ngIf="authService.isLoggedIn()" [matMenuTriggerFor]="menu" class="btn-account">
       <!-- <span>{{ userName }}</span> -->
@@ -166,37 +169,20 @@
         <mat-icon>account_circle</mat-icon>
       </button>
     </div>
-    
   </mat-toolbar>
 
-<mat-menu #menu="matMenu">
-  <!-- Opciones del menú -->
-  <button mat-menu-item (click)="navigateToUserPreferences()">
-    <mat-icon>account_circle</mat-icon>
-    <span>Preferencias</span>
-  </button>
-  <button mat-menu-item (click)="logout()">
-    <mat-icon>logout</mat-icon>
-    <span>Cerrar sesión</span>
-  </button>
-</mat-menu>
-<!-- 
-    <button mat-button *ngIf="!authService.isLoggedIn()" (click)="navigateToLogin()">Login</button>
-    <mat-menu #userMenu="matMenu">
-      <button mat-menu-item (click)="navigateToUserPreferences()">
-        <mat-icon>account_circle</mat-icon>
-        <span>Mi Cuenta</span>
-      </button>
-      <button mat-menu-item (click)="logout()">
-        <mat-icon>logout</mat-icon>
-        <span>Cerrar Sesión</span>
-      </button>
-    </mat-menu>
-    <button mat-icon-button *ngIf="authService.isLoggedIn()" [matMenuTriggerFor]="userMenu">
+  <mat-menu #menu="matMenu">
+    <!-- Opciones del menú -->
+    <button mat-menu-item (click)="navigateToUserPreferences()">
       <mat-icon>account_circle</mat-icon>
+      <span>Preferencias</span>
     </button>
-  </mat-toolbar>
-   -->
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Cerrar sesión</span>
+    </button>
+  </mat-menu>
+
   <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #sidenav mode="side" opened>
       <mat-nav-list>
@@ -247,7 +233,6 @@
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
-  
   
 </main>
 
