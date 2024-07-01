@@ -62,6 +62,7 @@ export class LoginComponent implements OnInit {
       .pipe(
         tap(data => {
           this.authService.login(loginData.email, data.token);
+          localStorage.setItem('userId', data.userId);
           this.router.navigate(['/home']);
         }),
         catchError(error => {

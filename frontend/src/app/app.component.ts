@@ -50,12 +50,9 @@ export class AppComponent implements OnInit {
   title = 'Health Planner';
   isSmallScreen!: boolean;
 
-  userName: string | null = null;
-
   constructor(public authService: AuthService
                 , private router: Router
                 , private breakpointObserver: BreakpointObserver) {
-    this.userName = localStorage.getItem('userName');
   }
 
   ngOnInit(): void {

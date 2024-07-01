@@ -1,5 +1,4 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-
 import { CommonModule } from '@angular/common';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -48,6 +47,7 @@ export class UserPreferencesComponent implements OnInit {
   modalTitle!: string;
   modalContent!: string;
 
+  userId: any;
   userPreferenceForm!: FormGroup;
 
   sexOptions: string[] = ['No Selección', 'Hombre', 'Mujer'];
@@ -80,11 +80,12 @@ export class UserPreferencesComponent implements OnInit {
                 , private fb: FormBuilder,
                 ) {
     this.selectedDate = new Date(); // Inicializa con la fecha actual si lo deseas
+    this.userId = localStorage.getItem('userId');
   }
   
   ngOnInit(): void {
     this.initForm();    
-    this.fetchUserPreferences(1);
+    this.fetchUserPreferences(this.userId);
   }
 
   initForm(): void {
@@ -113,7 +114,6 @@ export class UserPreferencesComponent implements OnInit {
       this.userPreferenceService.getUserPreferenceWithDetails(userId)
         .pipe(
           tap(data => {
-            // this.userPreference = data.userPreference;
             this.userPreferenceForm.patchValue(data.userPreference);
             // PROBLEMAS DE SALUD
             const combinedProblemasSalud = data.problemasSalud.map((problema: { idtmProblemasSalud: any; }) => {
@@ -175,7 +175,7 @@ export class UserPreferencesComponent implements OnInit {
   }
 
   saveUserPreference(): void {
-    const userId = 1; // Reemplaza con el ID del usuario actual
+    const userId = this.userId; // Reemplaza con el ID del usuario actual
     if (this.userPreferenceForm.invalid) {
       console.error('Form is invalid');
       return;

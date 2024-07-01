@@ -30,19 +30,19 @@ export class RecipiesDetailComponent implements OnInit {
   };
   recipeId: number | null = null; 
 
-  constructor(public navService: NavigationService, private recipeService: RecipeService, private route: ActivatedRoute,) { 
+  constructor(public navService: NavigationService
+    , private recipeService: RecipeService
+    , private route: ActivatedRoute,) { 
     
   }
 
   ngOnInit(): void {
-    //this.recipeId = +this.route.snapshot.paramMap.get('id'); // El símbolo '+' convierte el string a number
     const id = this.route.snapshot.paramMap.get('id');
     if (id !== null) {
       this.recipeId = +id; // El símbolo '+' convierte el string a number
       this.fetchRecipeById(this.recipeId);
     } else {
       console.error('ID is null');
-      // Aquí puedes manejar el caso donde el ID no esté presente en la URL
     }    
   }
 

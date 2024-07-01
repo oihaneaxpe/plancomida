@@ -39,15 +39,20 @@ import { ExerciseService } from '../../services/exercise.service';
   styleUrl: './daily.component.less'
 })
 export class DailyComponent implements OnInit {
+
+  userId: any;
+  dailyHabitForm!: FormGroup;
+
+  exercise: { id: number, nombre: string, baja: boolean }[] = [];
+
   constructor(public navService: NavigationService
               , private dailyHabitService: DailyHabitService
               , private exerciseService: ExerciseService
               , private fb: FormBuilder,
-              ) { }
-
-  dailyHabitForm!: FormGroup;
-
-  exercise: { id: number, nombre: string, baja: boolean }[] = [];
+              ) 
+  {                               
+      this.userId = localStorage.getItem('userId');
+  }
 
   ngOnInit(): void {
     this.dailyHabitForm = this.fb.group({
@@ -61,7 +66,7 @@ export class DailyComponent implements OnInit {
     });
     
     this.fetchExercise();
-    this.fetchDailyHabit(1);//todo
+    this.fetchDailyHabit(this.userId);
   }
 
   fetchExercise(): void {
@@ -110,7 +115,7 @@ export class DailyComponent implements OnInit {
 
     const actualHabit = this.dailyHabitForm.value;
 
-    this.dailyHabitService.updateActualHabit(1, actualHabit)
+    this.dailyHabitService.updateActualHabit(this.userId, actualHabit)
       .pipe(
         tap(data => {
           console.log('Daily habit updated:', data);

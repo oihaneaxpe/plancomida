@@ -75,7 +75,7 @@ export class HomeComponent {
       title: 'Resumen diario',
       description: 'Registra tu consumo diario para obtener recomendaciones.',
       icon: 'assignment',
-      link: '/food-plan',
+      link: '/daily',
       disponible: true,
       anonimous: false
     },

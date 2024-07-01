@@ -49,6 +49,7 @@ interface Step {
   styleUrl: './add-recipie.component.less'
 })
 export class AddRecipieComponent {
+  userId: any;
   recipe = {
     image: '',
     title: '',
@@ -74,8 +75,9 @@ export class AddRecipieComponent {
   constructor(public navService: NavigationService
     , private recipeService: RecipeService
     , private categoryService: CategoryService
-    , private difficultyService: DifficultyService) {}
-
+    , private difficultyService: DifficultyService) {
+      this.userId = localStorage.getItem('userId');
+    }
 
   ngOnInit(): void {
     this.fetchCategory();
@@ -122,7 +124,7 @@ export class AddRecipieComponent {
   }
 
   saveRecipe(): void {
-    this.recipeService.saveRecipe(this.recipe)
+    this.recipeService.saveRecipe(this.userId, this.recipe)
       .pipe(
         tap(response => {
           console.log('Recipe saved successfully:', response);

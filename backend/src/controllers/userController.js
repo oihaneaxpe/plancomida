@@ -43,11 +43,16 @@ exports.loginUser = (req, res) => {
         res.status(400).json({ error: 'Invalid password' });
         return;
       }
-
+console.log("user", user)
       const token = jwt.sign({ id: user.id, email: user.email }, secretKey, { expiresIn: '0.25h' });
 
       // Contraseña válida, proceder con el login
-      res.status(200).json({ message: 'Login successful', token });
+      res.status(200).json({ 
+        message: 'Login successful', 
+        token: token,
+        userId: user.idtmUsuario 
+      });
+      console.log(res)
     });
   });
 };

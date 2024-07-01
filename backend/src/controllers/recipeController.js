@@ -1,7 +1,7 @@
 const Recipe = require('../models/recipeModel');
 
-exports.getAllRecipes = (req, res) => {
-  Recipe.getAllRecipes((err, recipes) => {
+exports.getAllStandardRecipes = (req, res) => {
+  Recipe.getAllStandardRecipes((err, recipes) => {
     if (err) {
       res.status(500).json({ error: 'Error fetching recipes' });
       return;
@@ -24,10 +24,11 @@ exports.getRecipeById = (req, res) => {
 };
 
 exports.addRecipe = (req, res) => {
+  const userId = req.params.id;
   const recipeData = req.body;
 
   // Step 1: Add the recipe
-  Recipe.addRecipe(recipeData, (err, recipeResult) => {
+  Recipe.addRecipe(userId, recipeData, (err, recipeResult) => {
     if (err) {
       console.error('Error adding recipe:', err);
       res.status(500).json({ error: 'Error adding recipe' });

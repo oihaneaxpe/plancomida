@@ -46,10 +46,16 @@ export class ShoppingListComponent implements OnInit {
   @ViewChild('confirmDialog') confirmDialog!: TemplateRef<any>;
   @ViewChild('confirmClearDialog') confirmClearDialog!: TemplateRef<any>;
 
+  userId: any;
+
   constructor(public dialog: MatDialog
               , public navService: NavigationService
               , private shoppingListService: ShoppingListService
-              , private recipeService: RecipeService) { }
+              , private recipeService: RecipeService) { 
+                
+      this.userId = localStorage.getItem('userId');
+
+  }
 
   shoppingListVisible: boolean = true;
   newItem: string = '';
@@ -61,7 +67,7 @@ export class ShoppingListComponent implements OnInit {
   sidebarVisible = false;
 
   ngOnInit(): void {
-    this.fetchShoppingList(1);//todo
+    this.fetchShoppingList(this.userId);
   }
 
   toggleSidebar() {
@@ -91,8 +97,8 @@ export class ShoppingListComponent implements OnInit {
   }
 
   saveShoppingList(): void {
-    this.deleteShoppingList(1); // todo
-    this.addShoppingList(1); // todo
+    this.deleteShoppingList(this.userId); 
+    this.addShoppingList(this.userId); 
   }
   addShoppingList(userId: number): void {
     this.shoppingListService.saveShoppingList(userId, this.shoppingList)

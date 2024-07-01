@@ -11,7 +11,7 @@ export class FoodPalnService {
 
   constructor(private http: HttpClient) { }
 
-  getFoodPlan(): Observable<any> {
-    return this.http.get(this.apiUrl);
+  getFoodPlan(userId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${userId}`);
   }
 }

@@ -26,12 +26,11 @@ class User {
   static findByEmail(email, callback) {
     const query = `SELECT * FROM tmusuario WHERE email = ? AND bajaInd = 0`;
     db.query(query, [email], (err, results) => {
-      console.log(err, results)
       if (err || results.length === 0) {
         callback(err || new Error('User not found'), null);
         return;
       }
-
+      console.log(results)
       callback(null, results[0]);
     });
   }

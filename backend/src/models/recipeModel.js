@@ -1,12 +1,14 @@
 const db = require('../database');
 
 class Recipe {
-  static getAllRecipes(callback) {
-    db.query('SELECT tmreceta.*, tmcategoria.nombre as categoriaNombre, tmdificultad.nombre as dificultadNombre'
-    +' FROM tmreceta '
-      +' INNER JOIN tmcategoria ON tmreceta.idCategoria = tmcategoria.idtmCategoria'
-      +' INNER JOIN tmdificultad ON tmreceta.idDificultad = tmdificultad.idtmDificultad'
-      +' WHERE tmreceta.BajaInd = 0;', (err, results) => {
+  static getAllRecipesByUserId(userId, callback) {
+    db.query(`SELECT tmreceta.*, tmcategoria.nombre as categoriaNombre, tmdificultad.nombre as dificultadNombre
+              FROM tmreceta 
+                INNER JOIN tmcategoria ON tmreceta.idCategoria = tmcategoria.idtmCategoria
+                INNER JOIN tmdificultad ON tmreceta.idDificultad = tmdificultad.idtmDificultad
+              WHERE tmreceta.BajaInd = 0
+                AND tmreceta.esEstandar = 0
+                AND tmreceta.idUsuario = ?;`, [userId], (err, results) => {
       if (err) {
         callback(err, null);
         return;
@@ -16,7 +18,23 @@ class Recipe {
     });
   }
 
-  static addRecipe(recipeData, callback) {
+  static getAllStandardRecipes(callback) {
+    db.query(`SELECT tmreceta.*, tmcategoria.nombre as categoriaNombre, tmdificultad.nombre as dificultadNombre
+              FROM tmreceta 
+                INNER JOIN tmcategoria ON tmreceta.idCategoria = tmcategoria.idtmCategoria
+                INNER JOIN tmdificultad ON tmreceta.idDificultad = tmdificultad.idtmDificultad
+              WHERE tmreceta.BajaInd = 0
+                AND tmreceta.esEstandar = 1;`, (err, results) => {
+      if (err) {
+        callback(err, null);
+        return;
+      }
+
+      callback(null, results);
+    });
+  }
+
+  static addRecipe(userId, recipeData, callback) {
     const getCategorySql = `SELECT idtmCategoria FROM tmCategoria WHERE nombre = ?`;
     db.query(getCategorySql, [recipeData.category], (err, categoryResult) => {
       if (err) {
@@ -48,8 +66,8 @@ class Recipe {
 
         // Insertamos la receta en tmreceta
         const insertRecipeSql = `
-          INSERT INTO tmreceta (titulo, subtitulo, tiempoPreparacionNbr, cantidadComensalNbr, idCategoria, idDificultad)
-          VALUES (?, ?, ?, ?, ?, ?)
+          INSERT INTO tmreceta (titulo, subtitulo, tiempoPreparacionNbr, cantidadComensalNbr, idCategoria, idDificultad, idUsuario, esEstandar)
+          VALUES (?, ?, ?, ?, ?, ?, ?, 0)
         `;
 
         const params = [
@@ -58,7 +76,8 @@ class Recipe {
           recipeData.preparationTime,
           recipeData.servings,
           idCategoria,
-          idDificultad
+          idDificultad,
+          userId
         ];
 
         db.query(insertRecipeSql, params, (err, result) => {

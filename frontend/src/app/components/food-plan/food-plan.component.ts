@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
-
-import { Router, RouterOutlet, RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { NavigationService } from '../../services/navigation.service';
-import { FoodPalnService } from '../../services/food-paln.service';
+import { FoodPalnService } from '../../services/food-plan.service';
 
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
@@ -21,7 +20,7 @@ import { throwError } from 'rxjs';
   styleUrl: './food-plan.component.less'
 })
 export class FoodPlanComponent implements OnInit {
-
+  userId: any;
   planification = [];
   viewMode: 'grid' | 'detail' = 'grid'; // Por defecto, la visualización será en formato de grid
 
@@ -47,14 +46,18 @@ export class FoodPlanComponent implements OnInit {
     { name: 'Cena', description: 'Descripción de la cena' }
   ];
  
-  constructor(private router: Router, public navService: NavigationService, private foodPlanService: FoodPalnService) { }
-
-  ngOnInit(): void {
-    this.fetchFoodPlan();
+  constructor(private router: Router
+              , public navService: NavigationService
+              , private foodPlanService: FoodPalnService) {
+      this.userId = localStorage.getItem('userId');
   }
 
-  fetchFoodPlan(): void {
-    this.foodPlanService.getFoodPlan()
+  ngOnInit(): void {
+    this.fetchFoodPlan(this.userId);
+  }
+
+  fetchFoodPlan(userId: number): void {
+    this.foodPlanService.getFoodPlan(userId)
       .pipe(
         tap(data => {
           this.planification = data;
