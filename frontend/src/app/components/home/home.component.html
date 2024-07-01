@@ -4,188 +4,33 @@
         <p>Aquí puedes planificar tus comidas, buscar recetas, registrar tu dieta diaria y obtener recomendaciones personalizadas. ¡Empecemos!</p>
         <p>Explora nuestras funcionalidades:</p>
     </div>
-      
-    <div class="row col-md-12">
-        <div class="col-md-6">
-            <mat-card>
-                <mat-card-header>
-                  <mat-card-title>Planificación</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                  <mat-list>
-                    <mat-list-item>
-                      <p mat-line>
-                        <mat-icon mat-list-icon class="card-inline-icon">event_note</mat-icon>
-                        Planifica tus menús semanales
-                      </p>
-                    </mat-list-item>
-                    <mat-list-item class="mt-card-btn" *ngIf="authService.isLoggedIn()">
-                        <a [routerLink]="['/food-plan']">
-                          <button mat-raised-button color="primary">Ir a Planificación</button>
-                        </a>
-                    </mat-list-item>
-                    <mat-list-item class="mt-card-btn" *ngIf="!authService.isLoggedIn()">
-                      <a [routerLink]="['/login']">
-                        <button mat-raised-button color="primary">Login para consultar</button>
-                      </a>
-                  </mat-list-item>               
-                  </mat-list>
-                </mat-card-content>
-            </mat-card>
-        </div>
 
-        <div class="col-md-6">
-            <mat-card>
-                <mat-card-header>
-                  <mat-card-title>Recetas</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                  <mat-list>
-                    <mat-list-item>
-                        <p mat-line>
-                          <mat-icon mat-list-icon class="card-inline-icon">restaurant_menu</mat-icon>
-                          Descubre nuevas recetas
-                        </p>
-                    </mat-list-item> 
-                    <mat-list-item class="mt-card-btn">
-                      <a [routerLink]="['/recipies']">
-                        <button mat-raised-button color="primary">Ir a Recetas</button>
-                      </a>
-                    </mat-list-item>             
-                  </mat-list>
-                </mat-card-content>
-            </mat-card>
-        </div>
-
-        <div class="col-md-6">
-            <mat-card>
-                <mat-card-header>
-                  <mat-card-title>Informes</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                  <mat-list>
-                    <mat-list-item>
-                        <p mat-line>
-                          <mat-icon mat-list-icon class="card-inline-icon">bar_chart</mat-icon>
-                          Analiza tu progreso
-                        </p>
-                    </mat-list-item>
-                    <mat-list-item class="mt-card-btn">
-                      <a>
-                        <button mat-raised-button color="primary">
-                          <mat-icon style="color: red;">warning</mat-icon> NO DISPONIBLE
-                        </button>
-                      </a>
-                    </mat-list-item>  
-                    <!-- <mat-list-item class="mt-card-btn" *ngIf="authService.isLoggedIn()">
-                      <a [routerLink]="['/reports']">
-                        <button mat-raised-button color="primary">Ir a Informes</button>
-                        </a>
-                    </mat-list-item>  
-                    <mat-list-item class="mt-card-btn" *ngIf="!authService.isLoggedIn()">
-                      <a [routerLink]="['/login']">
-                        <button mat-raised-button color="primary">Login para consultar</button>
-                      </a>
-                    </mat-list-item>             -->
-                  </mat-list>
-                </mat-card-content>
-            </mat-card>
-        </div>
-        
-        <div class="col-md-6">
-            <mat-card>
-                <mat-card-header>
-                  <mat-card-title>Blog</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                  <mat-list>
-                    <mat-list-item>
-                        <p mat-line>
-                          <mat-icon mat-list-icon class="card-inline-icon">book</mat-icon>
-                          Lee nuestros consejos y recomendaciones
-                        </p>
-                    </mat-list-item>
-                    <mat-list-item class="mt-card-btn">
-                      <a>
-                        <button mat-raised-button color="primary">
-                          <mat-icon style="color: red;">warning</mat-icon> NO DISPONIBLE
-                        </button>
-                      </a>
-                      <!-- <a [routerLink]="['/blog']">
-                        <button mat-raised-button color="primary">Ir a Blog</button>
-                        </a> -->
-                    </mat-list-item>            
-                  </mat-list>
-                </mat-card-content>
-            </mat-card>
-        </div>
-
-        <div class="col-md-6">
-            <mat-card class="daily-summary-card">
-                <mat-card-header>
-                    <mat-card-title>Resumen Diario</mat-card-title>
-                  </mat-card-header>
-                  <mat-card-content>
-                    <mat-list>
-                      <mat-list-item>
-                          <p mat-line>
-                            <mat-icon mat-list-icon class="card-inline-icon">assignment</mat-icon>
-                            Registra tu consumo diario para 
-                            obtener recomendaciones.
-                          </p>
-                      </mat-list-item>
-                      <mat-list-item class="mt-card-btn" *ngIf="authService.isLoggedIn()">
-                        <a [routerLink]="['/daily']">
-                          <button mat-raised-button color="primary">Ir a Resumen diario</button>
-                          </a>
-                      </mat-list-item>  
-                      <mat-list-item class="mt-card-btn" *ngIf="!authService.isLoggedIn()">
-                        <a [routerLink]="['/login']">
-                          <button mat-raised-button color="primary">Login para consultar</button>
-                        </a>
-                      </mat-list-item>              
-                    </mat-list>
-                  </mat-card-content>
-              </mat-card>              
-        </div>
-
-        <div class="col-md-6">
-            <mat-card class="tips-card">
-                <mat-card-header>
-                    <mat-card-title>Consejos y Trucos</mat-card-title>
-                </mat-card-header>
-                  <mat-card-content>
-                    <mat-list>  
-                        <mat-list-item>  
-                            <p mat-line>
-                              <mat-icon class="card-inline-icon">lightbulb</mat-icon>
-                              Lee nuestros consejos y recomendaciones
-                            </p>
-                        </mat-list-item>                        
-                        <mat-list-item class="mt-card-btn">
-                          <a [routerLink]="['/tips']">
-                            <button mat-raised-button color="primary">Ir a Consejos y Trucos</button>
-                            </a>
-                        </mat-list-item>
-                    </mat-list>
-                  </mat-card-content>
-              </mat-card>              
-        </div>
+    <div class="row container-body">      
+      <div class="col-md-4 col-sm-6 col-xs-12" *ngFor="let home of homeButtons">
+          <a [routerLink]="authService.isLoggedIn() && home.disponible ? home.link : '/login'" [class.disabled]="!home.disponible">
+          <div class="card support-bar overflow-hidden">
+            <div>
+              <img class="img-responsive" style="width: 100%; height: 220px;" [src]="home.imgPath" />
+            </div>
+            <div class="card-body pb-0" style="padding: 10px;">
+              <h5 class="m-0"> 
+                {{ home.title }} 
+                <span *ngIf="!home.disponible" class="text-right">
+                  <mat-icon style="color: red;">warning</mat-icon> 
+                </span>
+              </h5>              
+            </div>
+            <div class="card-footer">
+                <div class="col-md-12 col-sm-12">
+                  <mat-icon mat-list-icon class="card-inline-icon"> {{ home.icon }} </mat-icon>
+                  <span> {{ home.description }} </span>
+                </div>
+            </div>
+          </div>
+        </a>
+      </div>
     </div>
-
-    <!-- <div class="col-md-12">
-        <mat-card class="resources-card">
-            <mat-card-title>Recursos Útiles</mat-card-title>
-            <mat-card-content>
-              <mat-list>
-                <mat-list-item *ngFor="let resource of externalResources">
-                  <a [href]="resource.url" target="_blank">{{ resource.title }}</a>
-                </mat-list-item>
-              </mat-list>
-            </mat-card-content>
-          </mat-card>
-          
-    </div> -->
+      
     <router-outlet></router-outlet>
   </div>
   
