@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule, RouterLink, RouterLinkActive, RouterOutlet, Router } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { RecipiesComponent } from './components/recipies/recipies.component';
@@ -13,6 +13,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu'; // Añade esta línea
+
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http'; // Importar HttpClientModule
@@ -44,18 +46,23 @@ declare const $: any;
             ]
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Health Planner';
+  isSmallScreen!: boolean;
 
-  isMenuOpen = false;
   userName: string | null = null;
 
-  constructor(public authService: AuthService, private router: Router) {
+  constructor(public authService: AuthService
+                , private router: Router
+                , private breakpointObserver: BreakpointObserver) {
     this.userName = localStorage.getItem('userName');
   }
 
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
+  ngOnInit(): void {
+    this.breakpointObserver.observe([Breakpoints.Handset])
+      .subscribe(result => {
+        this.isSmallScreen = result.matches;
+      });
   }
   
   isLoggedIn(): boolean {
@@ -65,14 +72,7 @@ export class AppComponent {
   navigateToUserPreferences() {
     this.router.navigate(['/user-preferences']);
   }
-
-  isMobileMenu() {
-    if ($(window).width() > 991) {
-        return false;
-    }
-    return true;
-  };
-
+  
   navigateToLogin() {
     this.router.navigate(['/login']);
   }
