@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { AuthService } from '../../services/auth.service';
 
@@ -24,6 +25,7 @@ import { AuthService } from '../../services/auth.service';
       , MatToolbarModule
       , MatButtonModule
       , MatCardModule
+      , MatTooltipModule
     ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.less'
@@ -55,7 +57,7 @@ export class HomeComponent {
       title: 'Informes',
       description: 'Analiza tu progreso.',
       icon: 'bar_chart',
-      link: '/reports',
+      link: '',//'/reports',
       disponible: false,
       anonimous: false
     },
@@ -64,7 +66,7 @@ export class HomeComponent {
       title: 'Blog',
       description: 'Lee nuestros consejos y recomendaciones.',
       icon: 'book',
-      link: '/blog',
+      link: '',//'/blog',
       disponible: false,
       anonimous: true
     },
@@ -82,11 +84,27 @@ export class HomeComponent {
       title: 'Consejos y trucos',
       description: 'Lee nuestros consejos y recomendaciones.',
       icon: 'lightbulb',
-      link: '/food-plan',
+      link: '/tips',
       disponible: true,
       anonimous: true
     },
   ];
   constructor(public authService: AuthService) {
+  }
+
+  getLink(home: any): string {
+    if (!home.disponible) {
+      return ''; // No navegar a ningún sitio
+    }
+
+    if (this.authService.isLoggedIn()) {
+      return home.link;
+    } 
+    else if (home.anonimous) {
+      return home.link;
+    } 
+    else {
+      return '/login';
+    }
   }
 }
