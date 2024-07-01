@@ -7,7 +7,6 @@ exports.getAllShoppingList = (req, res) => {
       res.status(500).json({ error: 'Error fetching shopping list' });
       return;
     }
-    console.log("shoppingList",shoppingList);
     res.json(shoppingList);
   });
 };
@@ -20,7 +19,6 @@ exports.deleteShoppingList = (req, res) => {
       res.status(500).json({ error: 'Error removing shopping list' });
       return;
     }
-    console.log('Shopping list deleted successfully:', result);
 
     res.json({ message: 'Shopping list deleted successfully', affectedRows: result.affectedRows });
   });

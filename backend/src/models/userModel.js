@@ -21,15 +21,6 @@ class User {
         callback(null, results);
       });
     });
-
-    // const query = `INSERT INTO tmusuario (nombre, email, password) VALUES (?, ?, ?)`;
-    // db.query(query, [username, email, password], (err, results) => {
-    //   if (err) {
-    //     callback(err, null);
-    //     return;
-    //   }
-    //   callback(null, results);
-    // });
   } 
 
   static findByEmail(email, callback) {
@@ -40,7 +31,7 @@ class User {
         callback(err || new Error('User not found'), null);
         return;
       }
-      console.log(results)
+
       callback(null, results[0]);
     });
   }

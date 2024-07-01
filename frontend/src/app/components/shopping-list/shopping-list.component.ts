@@ -17,7 +17,6 @@ import { NavigationService } from '../../services/navigation.service';
 import { ShoppingListService } from '../../services/shopping-list.service';
 import { RecipeService } from '../../services/recipe.service';
 
-import { HttpClientModule } from '@angular/common/http'; // Importar HttpClientModule
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
@@ -47,8 +46,10 @@ export class ShoppingListComponent implements OnInit {
   @ViewChild('confirmDialog') confirmDialog!: TemplateRef<any>;
   @ViewChild('confirmClearDialog') confirmClearDialog!: TemplateRef<any>;
 
-  constructor(public dialog: MatDialog, public navService: NavigationService
-    , private shoppingListService: ShoppingListService, private recipeService: RecipeService) { }
+  constructor(public dialog: MatDialog
+              , public navService: NavigationService
+              , private shoppingListService: ShoppingListService
+              , private recipeService: RecipeService) { }
 
   shoppingListVisible: boolean = true;
   newItem: string = '';
@@ -80,7 +81,6 @@ export class ShoppingListComponent implements OnInit {
       .pipe(
         tap(data => {
           this.shoppingList = data;
-          console.log('Shopping list fetched:', data);
         }),
         catchError(error => {
           console.error('Error fetching shopping list:', error);
@@ -91,7 +91,6 @@ export class ShoppingListComponent implements OnInit {
   }
 
   saveShoppingList(): void {
-    console.log(this.shoppingList)
     this.deleteShoppingList(1); // todo
     this.addShoppingList(1); // todo
   }
@@ -161,7 +160,6 @@ export class ShoppingListComponent implements OnInit {
     this.dialog.closeAll();
   }
   generateShoppingList() {
-    // Lógica para generar automáticamente la lista de la compra
     this.fetchAllIngredientsForFoodPaln(1);
   }
 

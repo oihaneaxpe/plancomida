@@ -48,26 +48,6 @@ export class DailyComponent implements OnInit {
   dailyHabitForm!: FormGroup;
 
   exercise: { id: number, nombre: string, baja: boolean }[] = [];
-  // actualHabit: { aguaNbr: number
-  //                 , horasSueno: number
-  //                 , meditacionInd: boolean
-  //                 , comidaSaludableInd: boolean 
-  //                 , notas: string
-  //                 , idUsuario: number
-  //                 , idTipoEjercicio: number
-  //                 , nombreEjercicio: string
-  //                 , bajaInd: boolean
-  //               } = { 
-  //                 aguaNbr: 0, 
-  //                 horasSueno: 0, 
-  //                 meditacionInd: false, 
-  //                 comidaSaludableInd: false, 
-  //                 notas: '', 
-  //                 idUsuario: 0, 
-  //                 idTipoEjercicio: 0, 
-  //                 nombreEjercicio: '',
-  //                 bajaInd: false 
-  //               };
 
   ngOnInit(): void {
     this.dailyHabitForm = this.fb.group({
@@ -89,7 +69,6 @@ export class DailyComponent implements OnInit {
       .pipe(
         tap(data => {
           this.exercise = data;
-          console.log('Exercise fetched:', data);
         }),
         catchError(error => {
           console.error('Error fetching exercise:', error);
@@ -114,7 +93,6 @@ export class DailyComponent implements OnInit {
               nombreEjercicio: data[0].nombreEjercicio || ''
             });
           }
-          console.log('Daily Habit fetched:', data, this.dailyHabitForm);
         }),
         catchError(error => {
           console.error('Error fetching daily habit:', error);
@@ -131,9 +109,7 @@ export class DailyComponent implements OnInit {
     }
 
     const actualHabit = this.dailyHabitForm.value;
-    console.log('actualHabit:', actualHabit); // Debug: Verifica los valores del formulario
 
-    console.log(actualHabit)
     this.dailyHabitService.updateActualHabit(1, actualHabit)
       .pipe(
         tap(data => {

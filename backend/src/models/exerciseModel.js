@@ -7,7 +7,6 @@ class Exercise {
         callback(err, null);
         return;
       }
-      console.log(results);
 
       callback(null, results);
     });
@@ -22,7 +21,6 @@ class Exercise {
         callback(err, null);
         return;
       }
-      console.log(results);
 
       callback(null, results);
     });

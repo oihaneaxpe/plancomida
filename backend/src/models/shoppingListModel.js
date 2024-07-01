@@ -23,7 +23,6 @@ class ShoppingList {
           if (err) {
             reject(err);
           } else {
-            console.log(result)
             resolve(result);
           }
         });
@@ -44,15 +43,6 @@ class ShoppingList {
       }
       callback(null, results);
     });
-
-    // const sql = `DELETE FROM talistacompra WHERE bajaInd = 0 AND idUsuario = 1;`;
-    // db.query(sql, (err, results) => {
-    //   if (err) {
-    //     callback(err, null);
-    //     return;
-    //   }
-    //   callback(null, results);
-    // });
   }
 }
 

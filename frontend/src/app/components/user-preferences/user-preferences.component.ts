@@ -54,7 +54,6 @@ export class UserPreferencesComponent implements OnInit {
   activityOptions: string[] = ['No Selección', 'Sedentario', 'Actividad ligera', 'Moderado', 'Intensa', 'Muy intensa'];
   dietOptions: string[] = ['Mediterránea', 'Vegano', 'Ovolacteovegetariano', 'Adelgazamiento'];
 
-
   selectedDate: Date | null = null;
 
   // Variable para almacenar la dieta seleccionada
@@ -84,8 +83,7 @@ export class UserPreferencesComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    this.initForm();
-    
+    this.initForm();    
     this.fetchUserPreferences(1);
   }
 
@@ -99,8 +97,6 @@ export class UserPreferencesComponent implements OnInit {
       tipoEjercicioNombre: ['', Validators.required],
       idTipoDieta: ['', Validators.required],
       tipoDietaNombre: ['', Validators.required],
-      // healthConditions: this.fb.array([]),
-      // allergies: this.fb.array([])
       healthConditions: this.fb.array([], Validators.required), // Validador requerido para problemas de salud
       allergies: this.fb.array([], Validators.required) // Validador requerido para alergias
     });
@@ -147,8 +143,6 @@ export class UserPreferencesComponent implements OnInit {
         
             this.setHealthConditions(combinedProblemasSalud);
             this.setAllergies(combinedAlergias);
-
-            console.log('User preference data fetched:', data);
           }),
           catchError(error => {
             console.error('Error fetching user preference data', error);

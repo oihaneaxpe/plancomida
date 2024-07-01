@@ -13,7 +13,6 @@ class DailyHabitModel {
         callback(err, null);
         return;
       }
-      console.log(results);
 
       callback(null, results);
     });
@@ -39,7 +38,6 @@ class DailyHabitModel {
           return;
         }
 
-        console.log("results", results)
         // Si existen habitos, actualizamos
         if (results.length > 0) {
           const updateActualHabit = `UPDATE tahabito 

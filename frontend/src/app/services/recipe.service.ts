@@ -24,7 +24,6 @@ export class RecipeService {
   }
 
   getAllIngredients(idUser: number): Observable<any> {
-    console.log("iduser", idUser)
     return this.http.get(`${this.apiUrl}/ingredients/${idUser}`);
   }
 }

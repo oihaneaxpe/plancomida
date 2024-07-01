@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, RouterLink, RouterOutlet, Router } from '@angular/router';
+import { RouterLink, RouterOutlet, Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -61,7 +61,6 @@ export class LoginComponent implements OnInit {
     this.userService.login(loginData)
       .pipe(
         tap(data => {
-          console.log('User logged in successfully', data);
           this.authService.login(loginData.email, data.token);
           this.router.navigate(['/home']);
         }),
@@ -71,13 +70,5 @@ export class LoginComponent implements OnInit {
         })
       )
       .subscribe();
-  }
-  // onLogin() {
-  //   if (this.authService.login(this.email, this.password)) {
-  //     
-  //   } else {
-  //     alert('Credenciales incorrectas');
-  //   }
-  // }
-  
+  }  
 }

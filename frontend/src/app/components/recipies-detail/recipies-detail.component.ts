@@ -6,7 +6,6 @@ import { NavigationService } from '../../services/navigation.service';
 import { RecipeService } from '../../services/recipe.service';
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-// import { RecipeIngredient } from '../../models/recipe.model';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -52,8 +51,6 @@ export class RecipiesDetailComponent implements OnInit {
       .pipe(
         tap(data => {
           this.recipe = data;
-          // this.filteredRecipes = this.recipesAll;
-          console.log('Recipes fetched:', data);          
         }),
         catchError(error => {
           console.error('Error fetching recipes:', error);

@@ -62,7 +62,6 @@ exports.addRecipe = (req, res) => {
 };
 
 exports.getIngredientsForPlan = (req, res) => {
-  console.log("controller")
   const userId = req.params.id;
   Recipe.getIngredientsForPlan(userId, (err, recipes) => {
     if (err) {

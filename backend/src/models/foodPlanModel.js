@@ -15,7 +15,6 @@ class FoodPlan {
         callback(err, null);
         return;
       }
-      console.log(results);
 
       callback(null, results);
     });

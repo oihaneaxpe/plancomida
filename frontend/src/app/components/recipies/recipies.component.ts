@@ -20,7 +20,6 @@ import { AuthService } from '../../services/auth.service';
 import { NavigationService } from '../../services/navigation.service';
 import { RecipeService } from '../../services/recipe.service';
 
-// import { HttpClientModule } from '@angular/common/http'; 
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
@@ -42,7 +41,6 @@ import { throwError } from 'rxjs';
               , MatChipsModule
               , MatToolbarModule
               , AddRecipieComponent
-              // , HttpClientModule
           ],
   templateUrl: './recipies.component.html',
   styleUrl: './recipies.component.less'
@@ -72,7 +70,6 @@ export class RecipiesComponent implements OnInit {
       , idCategoria: number, idDificultad: number, baja: boolean
       , categoriaNombre: string, dificultadNombre: string, imgPath: string }[] = [];
 
-
   constructor(private router: Router, public dialog: MatDialog, public navService: NavigationService, public authService: AuthService, private recipeService: RecipeService) {}
 
   ngOnInit(): void {
@@ -85,7 +82,6 @@ export class RecipiesComponent implements OnInit {
         tap(data => {
           this.recipesAll = data;
           this.filteredRecipes = this.recipesAll;
-          console.log('Recipes fetched:', data, this.filteredRecipes);
         }),
         catchError(error => {
           console.error('Error fetching recipes:', error);
@@ -146,13 +142,9 @@ export class RecipiesComponent implements OnInit {
       // Filtrar por dificultad
       (this.selectedDifficulties.length === 0 || this.selectedDifficulties.includes(receta.dificultadNombre))
     );
-      
-    // Aquí puedes hacer algo con las recetas filtradas, como mostrarlas en la interfaz
-    console.log('Recetas encontradas:', this.filteredRecipes);
   }
 
   viewRecipeDetails(id: number) {
-    console.log("id", id)
     this.router.navigate(['/recipies-detail', id]);
   }
 }

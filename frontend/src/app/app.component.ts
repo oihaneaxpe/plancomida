@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterModule, Routes, RouterLink, RouterLinkActive, RouterOutlet, Router } from '@angular/router';
+import { RouterModule, RouterLink, RouterLinkActive, RouterOutlet, Router } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { RecipiesComponent } from './components/recipies/recipies.component';
 import { RecipiesDetailComponent } from './components/recipies-detail/recipies-detail.component';
@@ -7,8 +7,6 @@ import { UserPreferencesComponent } from './components/user-preferences/user-pre
 import { DailyComponent } from './components/daily/daily.component';
 import { ShoppingListComponent } from './components/shopping-list/shopping-list.component';
 import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
@@ -35,8 +33,6 @@ declare const $: any;
               , UserPreferencesComponent
               , DailyComponent
               , ShoppingListComponent
-              // ,BrowserModule,
-              //, BrowserAnimationsModule
               , MatSidenavModule
               , MatListModule
               , MatIconModule
@@ -44,12 +40,10 @@ declare const $: any;
               , MatButtonModule
               , MatMenuModule
               , HttpClientModule
-              // , BrowserModule
-              // , BrowserAnimationsModule
               , CommonModule
             ]
 })
-// , NavbarComponent, SidebarComponent, FoodPlanComponent
+
 export class AppComponent {
   title = 'Health Planner';
 
@@ -57,27 +51,16 @@ export class AppComponent {
   userName: string | null = null;
 
   constructor(public authService: AuthService, private router: Router) {
-    // Simula la lógica de inicio de sesión
     this.userName = localStorage.getItem('userName');
   }
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
-
-  goToAccountSettings() {
-    // Navegar a la página de configuración de la cuenta
-    this.router.navigate(['/account-settings']);
-  }
-
   
   isLoggedIn(): boolean {
     return !!localStorage.getItem('isLoggedIn');
   }
-
-  // navigateToLogin() {
-  //   this.router.navigate(['/login']);
-  // }
 
   navigateToUserPreferences() {
     this.router.navigate(['/user-preferences']);

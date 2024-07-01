@@ -11,8 +11,7 @@ class UserPreference {
       FROM tmpreferenciausuario
         LEFT JOIN tmtipoejercicio ON tmpreferenciausuario.idTipoEjercicio = tmtipoejercicio.idtmTipoEjercicio
         LEFT JOIN tmtipodieta ON tmpreferenciausuario.idTipoDieta = tmtipodieta.idtmTipoDieta
-      WHERE tmpreferenciausuario.idUsuario = ?
-      ;
+      WHERE tmpreferenciausuario.idUsuario = ?;
       `, [userId], (err, results) => {
       if (err) {
         callback(err, null);

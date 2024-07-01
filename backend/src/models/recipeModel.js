@@ -18,59 +18,59 @@ class Recipe {
 
   static addRecipe(recipeData, callback) {
     const getCategorySql = `SELECT idtmCategoria FROM tmCategoria WHERE nombre = ?`;
-  db.query(getCategorySql, [recipeData.category], (err, categoryResult) => {
-    if (err) {
-      callback(err, null);
-      return;
-    }
-
-    if (categoryResult.length === 0) {
-      callback(new Error('Categoría no encontrada'), null);
-      return;
-    }
-
-    const idCategoria = categoryResult[0].idtmCategoria;
-
-    // Luego, obtenemos el id de la dificultad
-    const getDifficultySql = `SELECT idtmDificultad FROM tmDificultad WHERE nombre = ?`;
-    db.query(getDifficultySql, [recipeData.difficulty], (err, difficultyResult) => {
+    db.query(getCategorySql, [recipeData.category], (err, categoryResult) => {
       if (err) {
         callback(err, null);
         return;
       }
 
-      if (difficultyResult.length === 0) {
-        callback(new Error('Dificultad no encontrada'), null);
+      if (categoryResult.length === 0) {
+        callback(new Error('Categoría no encontrada'), null);
         return;
       }
 
-      const idDificultad = difficultyResult[0].idtmDificultad;
+      const idCategoria = categoryResult[0].idtmCategoria;
 
-      // Insertamos la receta en tmreceta
-      const insertRecipeSql = `
-        INSERT INTO tmreceta (titulo, subtitulo, tiempoPreparacionNbr, cantidadComensalNbr, idCategoria, idDificultad)
-        VALUES (?, ?, ?, ?, ?, ?)
-      `;
-
-      const params = [
-        recipeData.title,
-        recipeData.subtitle,
-        recipeData.preparationTime,
-        recipeData.servings,
-        idCategoria,
-        idDificultad
-      ];
-
-      db.query(insertRecipeSql, params, (err, result) => {
+      // Luego, obtenemos el id de la dificultad
+      const getDifficultySql = `SELECT idtmDificultad FROM tmDificultad WHERE nombre = ?`;
+      db.query(getDifficultySql, [recipeData.difficulty], (err, difficultyResult) => {
         if (err) {
           callback(err, null);
           return;
         }
 
-        callback(null, result);
+        if (difficultyResult.length === 0) {
+          callback(new Error('Dificultad no encontrada'), null);
+          return;
+        }
+
+        const idDificultad = difficultyResult[0].idtmDificultad;
+
+        // Insertamos la receta en tmreceta
+        const insertRecipeSql = `
+          INSERT INTO tmreceta (titulo, subtitulo, tiempoPreparacionNbr, cantidadComensalNbr, idCategoria, idDificultad)
+          VALUES (?, ?, ?, ?, ?, ?)
+        `;
+
+        const params = [
+          recipeData.title,
+          recipeData.subtitle,
+          recipeData.preparationTime,
+          recipeData.servings,
+          idCategoria,
+          idDificultad
+        ];
+
+        db.query(insertRecipeSql, params, (err, result) => {
+          if (err) {
+            callback(err, null);
+            return;
+          }
+
+          callback(null, result);
+        });
       });
     });
-  });
   }
 
   static addIngredients(recipeId, ingredients, callback) {

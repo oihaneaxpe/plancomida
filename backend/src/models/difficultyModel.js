@@ -7,7 +7,6 @@ class Difficulty {
         callback(err, null);
         return;
       }
-      console.log(results);
 
       callback(null, results);
     });

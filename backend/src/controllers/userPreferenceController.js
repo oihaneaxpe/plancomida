@@ -47,7 +47,6 @@ exports.getUserPreferenceWithDetails = (req, res) => {
 exports.saveUserPreference = (req, res) => {
   const userId = req.params.userId;
   const userPreference = req.body;
-
   
   UserPreference.saveUserPreferenceProperties(userId, userPreference, (err, result) => {
     if (err) {

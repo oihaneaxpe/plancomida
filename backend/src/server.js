@@ -27,7 +27,6 @@ app.use('/api', difficultyRoutes);
 app.use('/api', exerciseRoutes);
 app.use('/api', shoppingListRoutes);
 app.use('/api', foodPlanRoutes);
-// app.use('/api', userPreferenceRoutes);
 app.use('/api', userPreferenceRoutes);
 app.use('/api', dailyHabitRoutes);
 app.use('/api', userRoutes);

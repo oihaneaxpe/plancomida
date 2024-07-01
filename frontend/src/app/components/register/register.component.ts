@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, RouterLink, RouterOutlet, Router } from '@angular/router';
+import { RouterLink, RouterOutlet, Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -32,15 +32,14 @@ import { throwError } from 'rxjs';
             , MatToolbarModule
             , MatSidenavModule
             , MatListModule
-            , ReactiveFormsModule ],
+            , ReactiveFormsModule 
+          ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.less'
 })
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
-  //  email: string = '';
-  //  password: string = '';
-  // username: string =  '';
+
   constructor(private router: Router
                 , private userService: UserService
                 , private fb: FormBuilder) {}
@@ -59,12 +58,9 @@ export class RegisterComponent implements OnInit {
       return;
     }
     const userData = this.registerForm.value;
-    console.log(userData)
-    //const userData = { username: 'prueba', email: this.email, password: this.password };
     this.userService.register(userData)
     .pipe(
       tap(data => {
-        console.log('User registered successfully', data);
         this.router.navigate(['/login']);
       }),
       catchError(error => {
@@ -74,8 +70,4 @@ export class RegisterComponent implements OnInit {
     )
     .subscribe();
   }
-
-  //  get email() { return this.registerForm.get('email'); }
-  //  get username() { return this.registerForm.get('username'); }
-  //  get password() { return this.registerForm.get('password'); }
 }

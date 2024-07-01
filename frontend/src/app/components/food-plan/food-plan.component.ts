@@ -6,7 +6,7 @@ import { Router, RouterOutlet, RouterLink } from '@angular/router';
 
 import { NavigationService } from '../../services/navigation.service';
 import { FoodPalnService } from '../../services/food-paln.service';
-// import { HttpClientModule } from '@angular/common/http'; 
+
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
@@ -22,7 +22,9 @@ import { throwError } from 'rxjs';
 })
 export class FoodPlanComponent implements OnInit {
 
-  // daysOfWeek: string[] = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+  planification = [];
+  viewMode: 'grid' | 'detail' = 'grid'; // Por defecto, la visualización será en formato de grid
+
   daysOfWeek: { idDia: number, nombre: string }[] = [
     {idDia: 1, nombre: 'Lunes'},
     {idDia: 2, nombre: 'Martes'},
@@ -39,24 +41,22 @@ export class FoodPlanComponent implements OnInit {
     { idMomento: 3, nombre: 'Cena' }
   ];
 
-  viewMode: 'grid' | 'detail' = 'grid'; // Por defecto, la visualización será en formato de grid
-
+  mealsPerDay: { name: string, description: string }[] = [
+    { name: 'Desayuno', description: 'Descripción del desayuno' },
+    { name: 'Almuerzo', description: 'Descripción del almuerzo' },
+    { name: 'Cena', description: 'Descripción de la cena' }
+  ];
+ 
   constructor(private router: Router, public navService: NavigationService, private foodPlanService: FoodPalnService) { }
 
   ngOnInit(): void {
     this.fetchFoodPlan();
-    // throw new Error('Method not implemented.');
   }
-
-  planification = [];
 
   fetchFoodPlan(): void {
     this.foodPlanService.getFoodPlan()
       .pipe(
         tap(data => {
-          // this.recipesAll = data;
-          // this.filteredRecipes = this.recipesAll;
-          console.log('Food Plan fetched:', data);
           this.planification = data;
         }),
         catchError(error => {
@@ -67,45 +67,36 @@ export class FoodPlanComponent implements OnInit {
       .subscribe();
   }
 
+  filterByDay(meals: any[], day: number): any[] {
+    return meals.filter(meal => meal.idDia === day);
+  }
+
+  groupMealsByMomento(meals: any[]): any[] {
+    const grouped = meals.reduce((acc, meal) => {
+      if (!acc[meal.idMomento]) {
+        acc[meal.idMomento] = [];
+      }
+      acc[meal.idMomento].push(meal);
+      return acc;
+    }, {});
+    return Object.values(grouped);
+  }
+
+  hasMealsForMomento(meals: any[], momentoId: number): boolean {
+    return meals.some(meal => meal.idMomento === momentoId);
+  }
+
+  getMealsForDayAndMomento(dayId: number, momentoId: number): any[] {
+    const meals = this.filterByDay(this.planification, dayId);
+    const groupedMeals = this.groupMealsByMomento(meals);
+    return groupedMeals[momentoId] || [];
+  }
   
-    mealsPerDay: { name: string, description: string }[] = [
-        { name: 'Desayuno', description: 'Descripción del desayuno' },
-        { name: 'Almuerzo', description: 'Descripción del almuerzo' },
-        { name: 'Cena', description: 'Descripción de la cena' }
-    ];
-
-    filterByDay(meals: any[], day: number): any[] {
-      return meals.filter(meal => meal.idDia === day);
-    }
-
-
-    groupMealsByMomento(meals: any[]): any[] {
-      const grouped = meals.reduce((acc, meal) => {
-        if (!acc[meal.idMomento]) {
-          acc[meal.idMomento] = [];
-        }
-        acc[meal.idMomento].push(meal);
-        return acc;
-      }, {});
-      return Object.values(grouped);
-    }
+  getMomentoNames(): string[] {
+    return ['Desayuno', 'Almuerzo', 'Cena'];
+  }
   
-    hasMealsForMomento(meals: any[], momentoId: number): boolean {
-      return meals.some(meal => meal.idMomento === momentoId);
-    }
-
-
-    getMealsForDayAndMomento(dayId: number, momentoId: number): any[] {
-      const meals = this.filterByDay(this.planification, dayId);
-      const groupedMeals = this.groupMealsByMomento(meals);
-      return groupedMeals[momentoId] || [];
-    }
-  
-    getMomentoNames(): string[] {
-      return ['Desayuno', 'Almuerzo', 'Cena'];
-    }
   toggleViewMode() {
     this.viewMode = this.viewMode === 'grid' ? 'detail' : 'grid'; // Cambiar entre grid y detail
   }
-
 }

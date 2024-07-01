@@ -7,8 +7,6 @@ class Category {
         callback(err, null);
         return;
       }
-      console.log("aa")
-      console.log(results);
 
       callback(null, results);
     });

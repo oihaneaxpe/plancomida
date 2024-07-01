@@ -16,7 +16,7 @@ import { NavigationService } from '../../services/navigation.service';
 import { RecipeService } from '../../services/recipe.service';
 import { CategoryService } from '../../services/category.service';
 import { DifficultyService } from '../../services/difficulty.service';
-// import { HttpClientModule } from '@angular/common/http'; // Importar HttpClientModule
+
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
@@ -80,7 +80,6 @@ export class AddRecipieComponent {
   ngOnInit(): void {
     this.fetchCategory();
     this.fetchDifficulty();
-
   }
 
   fetchCategory(): void {
@@ -88,7 +87,6 @@ export class AddRecipieComponent {
       .pipe(
         tap(data => {
           this.categories = data;
-          console.log('Category fetched:', data);
         }),
         catchError(error => {
           console.error('Error fetching category:', error);
@@ -103,7 +101,6 @@ export class AddRecipieComponent {
       .pipe(
         tap(data => {
           this.difficulties = data;
-          console.log('Difficulty fetched:', data);
         }),
         catchError(error => {
           console.error('Error fetching difficulty:', error);
@@ -123,15 +120,6 @@ export class AddRecipieComponent {
       };
     }
   }
-
-  // toggleIngredient(ingredient: string): void {
-  //   const index = this.recipe.ingredients.indexOf(ingredient);
-  //   if (index === -1) {
-  //     this.recipe.ingredients.push(ingredient);
-  //   } else {
-  //     this.recipe.ingredients.splice(index, 1);
-  //   }
-  // }
 
   saveRecipe(): void {
     this.recipeService.saveRecipe(this.recipe)

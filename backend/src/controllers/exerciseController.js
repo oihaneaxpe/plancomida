@@ -6,7 +6,6 @@ exports.getAllExercise = (req, res) => {
       res.status(500).json({ error: 'Error fetching exercise' });
       return;
     }
-    console.log("exercise", exercise);
     res.json(exercise);
   });
 };
