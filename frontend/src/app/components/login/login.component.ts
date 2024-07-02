@@ -11,7 +11,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { NotificationService } from '../../services/notification.service';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 import { catchError, tap } from 'rxjs/operators';
@@ -40,10 +40,12 @@ import { throwError } from 'rxjs';
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
 
-  constructor(private router: Router,
-              private userService: UserService,
-              private fb: FormBuilder,
-              private authService: AuthService) {}
+  constructor(private router: Router
+                , private userService: UserService
+                , private fb: FormBuilder
+                , private authService: AuthService
+                , private notificationService: NotificationService
+              ) {}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -66,7 +68,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/home']);
         }),
         catchError(error => {
-          console.error('Error logging in', error);
+          this.notificationService.showNotification('error', 'Error ', error.error.error);
           return throwError(error); // Re-throw the error to keep it observable chain
         })
       )

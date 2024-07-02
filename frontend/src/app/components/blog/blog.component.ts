@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationService } from '../../services/navigation.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-blog',
@@ -9,6 +10,7 @@ import { NavigationService } from '../../services/navigation.service';
   styleUrl: './blog.component.less'
 })
 export class BlogComponent {
-  constructor(public navService: NavigationService) { }
-
+  constructor(public navService: NavigationService
+              , private notificationService: NotificationService
+    ) { }
 }

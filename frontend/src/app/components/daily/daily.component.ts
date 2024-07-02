@@ -10,10 +10,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
-
 import { NavigationService } from '../../services/navigation.service';
+import { NotificationService } from '../../services/notification.service';
 import { DailyHabitService } from '../../services/daily-habit.service';
-
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { ExerciseService } from '../../services/exercise.service';
@@ -48,7 +47,8 @@ export class DailyComponent implements OnInit {
   constructor(public navService: NavigationService
               , private dailyHabitService: DailyHabitService
               , private exerciseService: ExerciseService
-              , private fb: FormBuilder,
+              , private fb: FormBuilder
+              , private notificationService: NotificationService
               ) 
   {                               
       this.userId = localStorage.getItem('userId');
@@ -76,7 +76,7 @@ export class DailyComponent implements OnInit {
           this.exercise = data;
         }),
         catchError(error => {
-          console.error('Error fetching exercise:', error);
+          this.notificationService.showNotification('error', 'Error ', error.error.error);
           return throwError(error); // Re-throw the error to keep it observable chain
         })
       )
@@ -100,7 +100,7 @@ export class DailyComponent implements OnInit {
           }
         }),
         catchError(error => {
-          console.error('Error fetching daily habit:', error);
+          this.notificationService.showNotification('error', 'Error ', error.error.error);
           return throwError(error); // Re-throw the error to keep it observable chain
         })
       )
@@ -109,7 +109,6 @@ export class DailyComponent implements OnInit {
 
   saveDailyLog() {
     if (this.dailyHabitForm.invalid) {
-      console.log('Form is invalid');
       return;
     }
 
@@ -117,11 +116,11 @@ export class DailyComponent implements OnInit {
 
     this.dailyHabitService.updateActualHabit(this.userId, actualHabit)
       .pipe(
-        tap(data => {
-          console.log('Daily habit updated:', data);
+        tap(response => {
+          this.notificationService.showNotification('success', 'Actualizado', response.message);
         }),
         catchError(error => {
-          console.error('Error updating dialy habit:', error);
+          this.notificationService.showNotification('error', 'Error ', error.error.error);
           return throwError(error); // Re-throw the error to keep it observable chain
         })
       )

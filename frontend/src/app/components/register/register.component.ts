@@ -12,6 +12,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { NotificationService } from '../../services/notification.service';
+
 import { UserService } from '../../services/user.service';
 
 import { catchError, tap } from 'rxjs/operators';
@@ -42,7 +44,9 @@ export class RegisterComponent implements OnInit {
 
   constructor(private router: Router
                 , private userService: UserService
-                , private fb: FormBuilder) {}
+                , private fb: FormBuilder
+                , private notificationService: NotificationService
+            ) {}
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
@@ -54,7 +58,6 @@ export class RegisterComponent implements OnInit {
 
   register(): void {
     if (this.registerForm.invalid) {
-      console.log("invalid", this.registerForm.value)
       return;
     }
     const userData = this.registerForm.value;
@@ -64,7 +67,7 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/login']);
       }),
       catchError(error => {
-        console.error('Error registering user', error);
+        this.notificationService.showNotification('error', 'Error ', error.error.error);
         return throwError(error); // Re-throw the error to keep it observable chain
       })
     )

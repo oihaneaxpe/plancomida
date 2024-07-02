@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NavigationService } from '../../services/navigation.service';
-
+import { NotificationService } from '../../services/notification.service';
 import { RecipeService } from '../../services/recipe.service';
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
@@ -31,8 +31,10 @@ export class RecipiesDetailComponent implements OnInit {
   recipeId: number | null = null; 
 
   constructor(public navService: NavigationService
-    , private recipeService: RecipeService
-    , private route: ActivatedRoute,) { 
+                , private recipeService: RecipeService
+                , private route: ActivatedRoute
+                , private notificationService: NotificationService
+    ) { 
     
   }
 
@@ -42,7 +44,7 @@ export class RecipiesDetailComponent implements OnInit {
       this.recipeId = +id; // El símbolo '+' convierte el string a number
       this.fetchRecipeById(this.recipeId);
     } else {
-      console.error('ID is null');
+      this.notificationService.showNotification('error', 'Error ', 'Receta no encontrada');
     }    
   }
 
@@ -53,7 +55,7 @@ export class RecipiesDetailComponent implements OnInit {
           this.recipe = data;
         }),
         catchError(error => {
-          console.error('Error fetching recipes:', error);
+          this.notificationService.showNotification('error', 'Error ', error.error.error);
           return throwError(error); // Re-throw the error to keep it observable chain
         })
       )

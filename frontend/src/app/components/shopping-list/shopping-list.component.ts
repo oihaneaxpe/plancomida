@@ -14,6 +14,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { NavigationService } from '../../services/navigation.service';
+import { NotificationService } from '../../services/notification.service';
+
 import { ShoppingListService } from '../../services/shopping-list.service';
 import { RecipeService } from '../../services/recipe.service';
 
@@ -51,7 +53,9 @@ export class ShoppingListComponent implements OnInit {
   constructor(public dialog: MatDialog
               , public navService: NavigationService
               , private shoppingListService: ShoppingListService
-              , private recipeService: RecipeService) { 
+              , private recipeService: RecipeService
+              , private notificationService: NotificationService
+              ) { 
                 
       this.userId = localStorage.getItem('userId');
 
@@ -89,7 +93,7 @@ export class ShoppingListComponent implements OnInit {
           this.shoppingList = data;
         }),
         catchError(error => {
-          console.error('Error fetching shopping list:', error);
+          this.notificationService.showNotification('error', 'Error ', error.error.error);
           return throwError(error); // Re-throw the error to keep it observable chain
         })
       )
@@ -97,31 +101,35 @@ export class ShoppingListComponent implements OnInit {
   }
 
   saveShoppingList(): void {
-    this.deleteShoppingList(this.userId); 
-    this.addShoppingList(this.userId); 
+    if (this.deleteShoppingList(this.userId)) {
+      if (this.addShoppingList(this.userId)) {
+        this.notificationService.showNotification('success', 'Actualizado', 'Shopping list updated succesfully');
+      }
+    }
+     
   }
-  addShoppingList(userId: number): void {
+  addShoppingList(userId: number): any {
     this.shoppingListService.saveShoppingList(userId, this.shoppingList)
       .pipe(
         tap(response => {
-          console.log('Shopping list saved successfully:', response);
+          return true;
         }),
         catchError(error => {
-          console.error('Error saving shopping list:', error);
+          this.notificationService.showNotification('error', 'Error ', error.error.error);
           return throwError(error); // Re-throw the error to keep the observable chain
         })
       )
       .subscribe();
   }
 
-  deleteShoppingList(userId: number): void {
+  deleteShoppingList(userId: number): any {
     this.shoppingListService.deleteShoppingList(userId)
       .pipe(
         tap(response => {
-          console.log('Shopping list removed successfully:', response);
+          return true;
         }),
         catchError(error => {
-          console.error('Error removing shopping list:', error);
+          this.notificationService.showNotification('error', 'Error ', error.error.error);
           return throwError(error); // Re-throw the error to keep the observable chain
         })
       )
@@ -174,10 +182,9 @@ export class ShoppingListComponent implements OnInit {
       .pipe(
         tap(data => {
           this.shoppingList = data;
-          console.log('All ingredients:', this.shoppingList);
         }),
         catchError(error => {
-          console.error('Error fetching food plan ingredients:', error);
+          this.notificationService.showNotification('error', 'Error ', error.error.error);
           return throwError(error); // Re-throw the error to keep it observable chain
         })
       )

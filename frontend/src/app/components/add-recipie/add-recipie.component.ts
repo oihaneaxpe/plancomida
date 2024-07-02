@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { MatDialog, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
@@ -10,13 +9,11 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatIcon } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
-
 import { NavigationService } from '../../services/navigation.service';
-
+import { NotificationService } from '../../services/notification.service';
 import { RecipeService } from '../../services/recipe.service';
 import { CategoryService } from '../../services/category.service';
 import { DifficultyService } from '../../services/difficulty.service';
-
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
@@ -75,7 +72,9 @@ export class AddRecipieComponent {
   constructor(public navService: NavigationService
     , private recipeService: RecipeService
     , private categoryService: CategoryService
-    , private difficultyService: DifficultyService) {
+    , private difficultyService: DifficultyService
+    , private notificationService: NotificationService
+    ) {
       this.userId = localStorage.getItem('userId');
     }
 
@@ -91,7 +90,7 @@ export class AddRecipieComponent {
           this.categories = data;
         }),
         catchError(error => {
-          console.error('Error fetching category:', error);
+          this.notificationService.showNotification('error', 'Error ', error.error.error);
           return throwError(error); // Re-throw the error to keep it observable chain
         })
       )
@@ -105,7 +104,7 @@ export class AddRecipieComponent {
           this.difficulties = data;
         }),
         catchError(error => {
-          console.error('Error fetching difficulty:', error);
+          this.notificationService.showNotification('error', 'Error ', error.error.error);
           return throwError(error); // Re-throw the error to keep it observable chain
         })
       )
@@ -127,12 +126,11 @@ export class AddRecipieComponent {
     this.recipeService.saveRecipe(this.userId, this.recipe)
       .pipe(
         tap(response => {
-          console.log('Recipe saved successfully:', response);
-          // Optionally, reset the form or navigate to another page
+          this.notificationService.showNotification('success', 'Actualizado', response.message);
           this.resetForm();
         }),
         catchError(error => {
-          console.error('Error saving recipe:', error);
+          this.notificationService.showNotification('error', 'Error ', error.error.error);
           return throwError(error); // Re-throw the error to keep the observable chain
         })
       )

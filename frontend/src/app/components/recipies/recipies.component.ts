@@ -12,14 +12,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatToolbarModule } from '@angular/material/toolbar';
-
 import { AddRecipieComponent } from '../add-recipie/add-recipie.component';
 import { RecipiesDetailComponent } from '../recipies-detail/recipies-detail.component';
-
 import { AuthService } from '../../services/auth.service';
 import { NavigationService } from '../../services/navigation.service';
+import { NotificationService } from '../../services/notification.service';
 import { RecipeService } from '../../services/recipe.service';
-
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
@@ -61,7 +59,6 @@ export class RecipiesComponent implements OnInit {
   categories: string[] = ['Entrante', 'Primero', 'Segundo', 'Postre']; 
   difficulties: string[] = ['Fácil', 'Intermedio', 'Difícil', 'Muy difícil']; 
 
-  
   recipesAll: { idtmReceta: number, titulo: string, tiempoPreparacionNbr: number, cantidadComensalNbr: number
     , idCategoria: number, idDificultad: number, baja: boolean
     , categoriaNombre: string, dificultadNombre: string, imgPath: string }[] = [];
@@ -70,7 +67,13 @@ export class RecipiesComponent implements OnInit {
       , idCategoria: number, idDificultad: number, baja: boolean
       , categoriaNombre: string, dificultadNombre: string, imgPath: string }[] = [];
 
-  constructor(private router: Router, public dialog: MatDialog, public navService: NavigationService, public authService: AuthService, private recipeService: RecipeService) {}
+  constructor(private router: Router
+                , public dialog: MatDialog
+                , public navService: NavigationService
+                , public authService: AuthService
+                , private recipeService: RecipeService
+                , private notificationService: NotificationService
+              ) {}
 
   ngOnInit(): void {
     this.fetchRecipes();
@@ -84,7 +87,7 @@ export class RecipiesComponent implements OnInit {
           this.filteredRecipes = this.recipesAll;
         }),
         catchError(error => {
-          console.error('Error fetching recipes:', error);
+          this.notificationService.showNotification('error', 'Error ', error.error.error);
           return throwError(error); // Re-throw the error to keep it observable chain
         })
       )

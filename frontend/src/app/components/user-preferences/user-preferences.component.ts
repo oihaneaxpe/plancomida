@@ -9,11 +9,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatIcon } from '@angular/material/icon';
 import { MatDialog, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
-
 import { NavigationService } from '../../services/navigation.service';
+import { NotificationService } from '../../services/notification.service';
 import { UserPreferenceService } from '../../services/user-preference.service';
-// import { ToastrService } from 'ngx-toastr';
-
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
@@ -79,12 +77,10 @@ export class UserPreferencesComponent implements OnInit {
                 , public navService: NavigationService
                 , private userPreferenceService: UserPreferenceService
                 , private fb: FormBuilder
-                // , private toastr: ToastrService
+                , private notificationService: NotificationService
                 ) {
     this.selectedDate = new Date(); // Inicializa con la fecha actual si lo deseas
     this.userId = localStorage.getItem('userId');
-    // this.toastr.success('Datos actualizados correctamente', 'Éxito');
-
   }
   
   ngOnInit(): void {
@@ -149,7 +145,7 @@ export class UserPreferencesComponent implements OnInit {
             this.setAllergies(combinedAlergias);
           }),
           catchError(error => {
-            console.error('Error fetching user preference data', error);
+            this.notificationService.showNotification('error', 'Error ', error.error.error);
             return throwError(error); // Re-throw the error to keep it observable chain
           })
         )
@@ -189,11 +185,10 @@ export class UserPreferencesComponent implements OnInit {
     this.userPreferenceService.saveUserPreference(userId, preferences)
       .pipe(
         tap(response => {
-          console.log('User Preference saved successfully:', response);
-          // this.toastr.success('Hello world!', 'Toastr fun!');
+          this.notificationService.showNotification('success', 'Actualizado', response.message);
         }),
         catchError(error => {
-          console.error('Error saving User Preference:', error);
+          this.notificationService.showNotification('error', 'Error ', error.error.error);
           return throwError(error); // Re-throw the error to keep the observable chain
         })
       )

@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
-
 import { NavigationService } from '../../services/navigation.service';
+import { NotificationService } from '../../services/notification.service';
 import { FoodPalnService } from '../../services/food-plan.service';
-
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
@@ -48,7 +47,9 @@ export class FoodPlanComponent implements OnInit {
  
   constructor(private router: Router
               , public navService: NavigationService
-              , private foodPlanService: FoodPalnService) {
+              , private foodPlanService: FoodPalnService
+              , private notificationService: NotificationService
+            ) {
       this.userId = localStorage.getItem('userId');
   }
 
@@ -63,7 +64,7 @@ export class FoodPlanComponent implements OnInit {
           this.planification = data;
         }),
         catchError(error => {
-          console.error('Error fetching Food Plan:', error);
+          this.notificationService.showNotification('error', 'Error ', error.error.error);
           return throwError(error); // Re-throw the error to keep it observable chain
         })
       )

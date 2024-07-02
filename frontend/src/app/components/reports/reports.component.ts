@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationService } from '../../services/navigation.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-reports',
@@ -9,6 +10,8 @@ import { NavigationService } from '../../services/navigation.service';
   styleUrl: './reports.component.less'
 })
 export class ReportsComponent {
-  constructor(public navService: NavigationService) { }
+  constructor(public navService: NavigationService
+              , private notificationService: NotificationService
+    ) { }
 
 }
