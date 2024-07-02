@@ -17,6 +17,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { AddRecipieComponent } from './components/add-recipie/add-recipie.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { authGuard } from './auth.guard';
+// import { ToastrModule } from 'ngx-toastr/public_api';
+
 
 export const routes: Routes = [
     //{
@@ -66,6 +68,12 @@ export const routes: Routes = [
       BrowserModule,
       RouterModule.forRoot(routes) // Configura las rutas aquí
       , RouterLink, RouterLinkActive, RouterOutlet
+      // , ToastrModule.forRoot({
+      //   timeOut: 3000,
+      //   positionClass: 'toast-top-right',
+      //   preventDuplicates: true,
+      //   closeButton: true
+      // }),
     ],
     providers: [],
     // bootstrap: [AppComponent]

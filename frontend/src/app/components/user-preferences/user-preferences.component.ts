@@ -12,6 +12,7 @@ import { MatDialog, MatDialogContent, MatDialogActions } from '@angular/material
 
 import { NavigationService } from '../../services/navigation.service';
 import { UserPreferenceService } from '../../services/user-preference.service';
+// import { ToastrService } from 'ngx-toastr';
 
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
@@ -77,10 +78,13 @@ export class UserPreferencesComponent implements OnInit {
   constructor(public dialog: MatDialog
                 , public navService: NavigationService
                 , private userPreferenceService: UserPreferenceService
-                , private fb: FormBuilder,
+                , private fb: FormBuilder
+                // , private toastr: ToastrService
                 ) {
     this.selectedDate = new Date(); // Inicializa con la fecha actual si lo deseas
     this.userId = localStorage.getItem('userId');
+    // this.toastr.success('Datos actualizados correctamente', 'Éxito');
+
   }
   
   ngOnInit(): void {
@@ -186,6 +190,7 @@ export class UserPreferencesComponent implements OnInit {
       .pipe(
         tap(response => {
           console.log('User Preference saved successfully:', response);
+          // this.toastr.success('Hello world!', 'Toastr fun!');
         }),
         catchError(error => {
           console.error('Error saving User Preference:', error);

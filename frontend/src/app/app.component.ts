@@ -26,7 +26,8 @@ declare const $: any;
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.less',
-    imports: [RouterModule, RouterOutlet
+    imports: [RouterModule
+              , RouterOutlet
               , RouterLink
               , RouterLinkActive
               , HomeComponent
