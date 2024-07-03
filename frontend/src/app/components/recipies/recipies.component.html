@@ -87,10 +87,9 @@
 
 <div *ngIf="isList; else gridLayout">
     <!-- Aquí va tu diseño para la vista de lista -->
-    <div class="row" style="margin: 0px 20px;">
-        <div class="card support-bar overflow-hidden col-md-6 col-xs-12 card-list"
+    <div class="row">
+        <div class="card support-bar overflow-hidden col-lg-6 col-md-6 col-sm-12 col-xs-12 card-list"
              *ngFor="let recipe of filteredRecipes">
-             <!-- (click)="viewRecipeDetails(recipe.idtmReceta)" -->
               <a [routerLink]="['/recipies-detail', recipe.idtmReceta]">
             <div class="row">
               <div class="col-md-2 col-sm-2 col-xs-12" style="padding: 0px;">

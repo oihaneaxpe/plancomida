@@ -1,4 +1,3 @@
-//import { NgModule } from '@angular/core';
 import { RouterModule, Routes, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NgModule } from '@angular/core';
@@ -17,7 +16,6 @@ import { RegisterComponent } from './components/register/register.component';
 import { AddRecipieComponent } from './components/add-recipie/add-recipie.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { authGuard } from './auth.guard';
-// import { ToastrModule } from 'ngx-toastr/public_api';
 
 
 export const routes: Routes = [

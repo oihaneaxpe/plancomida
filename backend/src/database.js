@@ -1,13 +1,15 @@
+require('dotenv').config();
 const mysql = require('mysql2');
 
 class Database {
   constructor() {
+    
     if (!Database.instance) {
       this.connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'oihane',
-        password: 'Oihane@001',
-        database: 'planificaciondecomidas'
+        host: process.env.DATABASE_HOST,
+        user: process.env.DATABASE_USER,
+        password: process.env.DATABASE_PASSWORD,
+        database: process.env.DATABASE_NAME
       });
 
       Database.instance = this;
