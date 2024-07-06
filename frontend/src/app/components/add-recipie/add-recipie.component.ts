@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
@@ -12,6 +12,7 @@ import { MatListModule } from '@angular/material/list';
 import { NavigationService } from '../../services/navigation.service';
 import { NotificationService } from '../../services/notification.service';
 import { RecipeService } from '../../services/recipe.service';
+import { UploadService } from '../../services/upload.service';
 import { CategoryService } from '../../services/category.service';
 import { DifficultyService } from '../../services/difficulty.service';
 import { catchError, tap } from 'rxjs/operators';
@@ -47,6 +48,7 @@ interface Step {
 })
 export class AddRecipieComponent {
   userId: any;
+  imagePath!: string;
   recipe = {
     image: '',
     title: '',
@@ -74,6 +76,7 @@ export class AddRecipieComponent {
     , private categoryService: CategoryService
     , private difficultyService: DifficultyService
     , private notificationService: NotificationService
+    , private uploadService: UploadService
     ) {
       this.userId = localStorage.getItem('userId');
     }
@@ -111,18 +114,33 @@ export class AddRecipieComponent {
       .subscribe();
   }
 
-  onFileChange(event: any): void {
-    const reader = new FileReader();
-    if (event.target.files && event.target.files.length) {
-      const [file] = event.target.files;
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.recipe.image = reader.result as string;
+  onFileChange(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.recipe.image = file;
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.recipe.image = e.target.result;
       };
+      reader.readAsDataURL(file);
+
+    this.uploadService.uploadImage(file)
+    .pipe(
+      tap(response => {
+        this.imagePath = response.filePath;
+      }),
+      catchError(error => {
+        this.notificationService.showNotification('error', 'Error ', error.error.error);
+        return throwError(error); // Re-throw the error to keep the observable chain
+      })
+    )
+    .subscribe();
     }
   }
 
+
   saveRecipe(): void {
+    
     this.recipeService.saveRecipe(this.userId, this.recipe)
       .pipe(
         tap(response => {

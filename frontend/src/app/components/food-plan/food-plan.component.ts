@@ -20,17 +20,19 @@ import { throwError } from 'rxjs';
 })
 export class FoodPlanComponent implements OnInit {
   userId: any;
-  planification = [];
+  planification: any = [];
+  recipes: any = [];
+
   viewMode: 'grid' | 'detail' = 'grid'; // Por defecto, la visualización será en formato de grid
 
   daysOfWeek: { idDia: number, nombre: string }[] = [
-    {idDia: 1, nombre: 'Lunes'},
-    {idDia: 2, nombre: 'Martes'},
-    {idDia: 3, nombre: 'Miércoles'},
-    {idDia: 4, nombre: 'Jueves'},
-    {idDia: 5, nombre: 'Viernes'},
-    {idDia: 6, nombre: 'Sábado'},
-    {idDia: 7, nombre: 'Domingo'},
+    { idDia: 1, nombre: 'Lunes' },
+    { idDia: 2, nombre: 'Martes' },
+    { idDia: 3, nombre: 'Miércoles' },
+    { idDia: 4, nombre: 'Jueves' },
+    { idDia: 5, nombre: 'Viernes' },
+    { idDia: 6, nombre: 'Sábado' },
+    { idDia: 7, nombre: 'Domingo' },
   ];
 
   momentsOfDay = [
@@ -39,36 +41,58 @@ export class FoodPlanComponent implements OnInit {
     { idMomento: 3, nombre: 'Cena' }
   ];
 
-  mealsPerDay: { name: string, description: string }[] = [
-    { name: 'Desayuno', description: 'Descripción del desayuno' },
-    { name: 'Almuerzo', description: 'Descripción del almuerzo' },
-    { name: 'Cena', description: 'Descripción de la cena' }
-  ];
- 
-  constructor(private router: Router
-              , public navService: NavigationService
-              , private foodPlanService: FoodPalnService
-              , private notificationService: NotificationService
-            ) {
-      this.userId = localStorage.getItem('userId');
+  constructor(private router: Router,
+              public navService: NavigationService,
+              private foodPlanService: FoodPalnService,
+              private notificationService: NotificationService) {
+    this.userId = localStorage.getItem('userId');
   }
 
   ngOnInit(): void {
-    this.fetchFoodPlan(this.userId);
+    this.generateWeeklyPlan();
   }
 
-  fetchFoodPlan(userId: number): void {
-    this.foodPlanService.getFoodPlan(userId)
-      .pipe(
-        tap(data => {
-          this.planification = data;
-        }),
-        catchError(error => {
-          this.notificationService.showNotification('error', 'Error ', error.error.error);
-          return throwError(error); // Re-throw the error to keep it observable chain
-        })
-      )
-      .subscribe();
+  generateWeeklyPlan(): void {
+    this.foodPlanService.getRecipes().pipe(
+      tap(recipes => {
+        this.recipes = recipes;
+        this.planification = this.createWeeklyPlan();
+        console.log(this.planification)
+      }),
+      catchError(error => {
+        this.notificationService.showNotification('error', 'Error', error.error.error);
+        return throwError(error); // Re-throw the error to keep the observable chain
+      })
+    ).subscribe();
+  }
+
+  createWeeklyPlan(): any[] {
+    let planId = 1;
+    const mealPlan = [];
+    for (let day of this.daysOfWeek) {
+      for (let momento of this.momentsOfDay) {
+        const recipe = this.getRandomRecipe();
+        if (recipe) {
+          console.log("recipe", recipe)
+          mealPlan.push({
+            idUsuario: this.userId,
+            idDia: day.idDia,
+            idMomento: momento.idMomento,
+            idReceta: recipe.idtmReceta,
+            titulo: recipe.titulo,
+            diaNombre: day.nombre,
+            momentoNombre: momento.nombre
+          });
+        }
+      }
+    }
+    return mealPlan;
+  }
+
+  getRandomRecipe(): any {
+    if (this.recipes.length === 0) return null;
+    const randomIndex = Math.floor(Math.random() * this.recipes.length);
+    return this.recipes[randomIndex];
   }
 
   filterByDay(meals: any[], day: number): any[] {
@@ -95,11 +119,11 @@ export class FoodPlanComponent implements OnInit {
     const groupedMeals = this.groupMealsByMomento(meals);
     return groupedMeals[momentoId] || [];
   }
-  
+
   getMomentoNames(): string[] {
     return ['Desayuno', 'Almuerzo', 'Cena'];
   }
-  
+
   toggleViewMode() {
     this.viewMode = this.viewMode === 'grid' ? 'detail' : 'grid'; // Cambiar entre grid y detail
   }

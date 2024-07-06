@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors'); // Importa el paquete cors
+const path = require('path');
 const bodyParser = require('body-parser');
 const recipeRoutes = require('./routes/recipeRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
@@ -10,6 +11,7 @@ const userPreferenceRoutes = require('./routes/userPreferenceRoutes');
 const foodPlanRoutes = require('./routes/foodPlanRoutes');
 const dailyHabitRoutes = require('./routes/userRoutes'); 
 const userRoutes = require('./routes/dailyHabitRoutes'); 
+const uploadRoutes = require('./routes/uploadRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -22,6 +24,7 @@ app.use(bodyParser.json());
 
 // Configuración de rutas
 app.use('/api', recipeRoutes);
+app.use('/api', uploadRoutes);
 app.use('/api', categoryRoutes);
 app.use('/api', difficultyRoutes);
 app.use('/api', exerciseRoutes);
@@ -31,11 +34,9 @@ app.use('/api', userPreferenceRoutes);
 app.use('/api', dailyHabitRoutes);
 app.use('/api', userRoutes);
 
-
-// Ruta de prueba
-app.get('/', (req, res) => {
-  res.send('¡Hola mundo desde Express!');
-});
+// Servir archivos estáticos desde la carpeta 'uploads'
+// app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Manejo de errores 404 (Not Found)
 app.use((req, res, next) => {

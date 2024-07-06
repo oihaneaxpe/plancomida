@@ -24,7 +24,6 @@ class Database {
         console.error('Error al conectar con la base de datos:', err);
         return;
       }
-      console.log('Conexión exitosa a la base de datos MySQL');
     });
   }
 
@@ -32,7 +31,6 @@ class Database {
     this.connection.query(sql, params, callback);
   }
 
-  // Otros métodos para interactuar con la base de datos
 }
 
 module.exports = new Database();
