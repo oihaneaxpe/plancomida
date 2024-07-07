@@ -66,8 +66,8 @@ class Recipe {
 
         // Insertamos la receta en tmreceta
         const insertRecipeSql = `
-          INSERT INTO tmreceta (titulo, subtitulo, tiempoPreparacionNbr, cantidadComensalNbr, idCategoria, idDificultad, idUsuario, esEstandar)
-          VALUES (?, ?, ?, ?, ?, ?, ?, 0)
+          INSERT INTO tmreceta (titulo, subtitulo, tiempoPreparacionNbr, cantidadComensalNbr, idCategoria, idDificultad, idUsuario, esEstandar, imgPath)
+          VALUES (?, ?, ?, ?, ?, ?, ?, 0, ?)
         `;
 
         const params = [
@@ -77,7 +77,8 @@ class Recipe {
           recipeData.servings,
           idCategoria,
           idDificultad,
-          userId
+          userId,
+          recipeData.imagePath
         ];
 
         db.query(insertRecipeSql, params, (err, result) => {

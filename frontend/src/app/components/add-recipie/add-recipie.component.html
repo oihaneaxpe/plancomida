@@ -1,24 +1,26 @@
 <div class="add-recipe-page">
-    <h2>Añadir Nueva Receta</h2>
-    <form>
-
+  <h2>Añadir Nueva Receta</h2>
+  <form [formGroup]="recipeForm">
     <div class="row">
-    <!-- Imagen de la receta -->
+      <!-- Imagen de la receta -->
       <div class="form-group col-md-12 col-sm-12 col-xs-12">
-        <input type="file" (change)="onFileChange($event)" accept="image/*" id="file-input" class="file-input">
+        <input type="file" (change)="onFileChange($event)" accept="image/*" id="file-input" class="file-input" />
         <label for="file-input" class="file-input-label">
           <mat-icon>photo_camera</mat-icon>
           <span>Seleccionar Imagen</span>
         </label>
-        <img *ngIf="recipe.image" [src]="recipe.image" alt="Imagen de la receta" class="recipe-image-preview">
+        <img *ngIf="recipeForm.get('image')?.value" [src]="recipeForm.get('image')?.value" alt="Imagen de la receta" class="recipe-image-preview" />
       </div>
-      
+
       <!-- Título de la receta -->
       <div class="form-group col-md-12 col-sm-12 col-xs-12">
         <div class="row">
-          <label for="title">Titulo de la receta:</label>
+          <label for="title">Titulo de la receta: <span class="required">*</span></label>
           <mat-form-field appearance="outline" class="full-width custom-field">
-            <input matInput [(ngModel)]="recipe.title" name="title">
+            <input matInput formControlName="title" />
+            <mat-error *ngIf="recipeForm.get('title')?.invalid && (recipeForm.get('title')?.dirty || recipeForm.get('title')?.touched)">
+              <span *ngIf="recipeForm.get('title')?.hasError('required')">El titulo es requerido.</span>
+            </mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -26,118 +28,88 @@
       <!-- Subtítulo de la receta -->
       <div class="form-group col-md-12 col-sm-12 col-xs-12">
         <div class="row">
-          <label for="title">Subtitulo:</label>
+          <label for="subtitle">Subtitulo:</label>
           <mat-form-field appearance="outline" class="full-width custom-field">
-            <input matInput [(ngModel)]="recipe.subtitle" name="subtitle">
+            <input matInput formControlName="subtitle" />
           </mat-form-field>
         </div>
       </div>
-  
+
       <!-- Tiempo de preparación -->
       <div class="form-group col-md-6 col-sm-12 col-xs-12">
         <div class="row">
-          <label for="preparationTime">Tiempo de preparación (minutos):</label>
+          <label for="preparationTime">Tiempo de preparación (minutos): <span class="required">*</span></label>
           <mat-form-field appearance="outline" class="full-width custom-field">
-            <input matInput type="number" [(ngModel)]="recipe.preparationTime" name="preparationTime">
+            <input matInput type="number" formControlName="preparationTime" />
+            <mat-error *ngIf="recipeForm.get('preparationTime')?.invalid && (recipeForm.get('preparationTime')?.dirty || recipeForm.get('preparationTime')?.touched)">
+              <span *ngIf="recipeForm.get('preparationTime')?.hasError('required')">Indica el tiempo de preparación.</span>
+            </mat-error>
           </mat-form-field>
         </div>
-      </div> 
+      </div>
 
       <!-- Cantidad de comensales -->
       <div class="form-group col-md-6 col-sm-12 col-xs-12">
         <div class="row">
-          <label for="servings">Cantidad de comensales:</label>
+          <label for="servings">Cantidad de comensales: <span class="required">*</span></label>
           <mat-form-field appearance="outline" class="full-width custom-field">
-            <input matInput type="number" [(ngModel)]="recipe.servings" name="servings">
+            <input matInput type="number" formControlName="servings" />
+            <mat-error *ngIf="recipeForm.get('servings')?.invalid && (recipeForm.get('servings')?.dirty || recipeForm.get('servings')?.touched)">
+              <span *ngIf="recipeForm.get('servings')?.hasError('required')">Indica el número de comensales.</span>
+            </mat-error>
           </mat-form-field>
         </div>
-      </div> 
+      </div>
 
-<!-- Categoría -->
-<div class="form-group col-md-6 col-sm-12 col-xs-12">
-  <div class="row">
-      <label for="category">Categoría:</label>
-      <mat-form-field appearance="outline" class="full-width custom-field">
-          <mat-select [(ngModel)]="recipe.category" name="category">
-              <mat-option *ngFor="let category of categories" [value]="category.nombre">
-                  {{ category.nombre }}
-              </mat-option>
-          </mat-select>
-      </mat-form-field>
-  </div>
-</div>
-
-  <!-- Nivel de dificultad -->
-  <div class="form-group col-md-6 col-sm-12 col-xs-12">
-    <div class="row">
-      <label for="difficulty">Nivel de dificultad:</label>
-      <mat-form-field appearance="outline" class="full-width custom-field">
-        <mat-select [(ngModel)]="recipe.difficulty" name="difficulty">
-            <mat-option *ngFor="let difficulty of difficulties" [value]="difficulty.nombre">
-                {{ difficulty.nombre }}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-    </div>
-  </div> 
-
-</div>
-        
-   
-<div class="row">
-    <div class="form-group col-md-12 col-sm-12 col-xs-12">
+      <!-- Categoría -->
+      <div class="form-group col-md-6 col-sm-12 col-xs-12">
         <div class="row">
-            <label for="ingredients">Ingredientes:</label>
-            <div class="col-md-12">
-                  <mat-list>
-                    <mat-list-item *ngFor="let item of this.recipe.ingredients; let i = index">
-                      <mat-checkbox [(ngModel)]="item.checked" name="ingcheckbox">{{item.item}} </mat-checkbox>
-                      <button mat-icon-button (click)="ingDeleteFromList(i)">
-                        <mat-icon>delete</mat-icon>
-                      </button>
-                    </mat-list-item>
-                  </mat-list>
-            </div>
+          <label for="idCategory">Categoría: <span class="required">*</span></label>
+          <mat-form-field appearance="outline" class="full-width custom-field">
+            <mat-select formControlName="category">
+              <mat-option *ngFor="let category of categories" [value]="category.nombre">
+                {{ category.nombre }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="recipeForm.get('category')?.invalid && (recipeForm.get('category')?.dirty || recipeForm.get('category')?.touched)">
+              <span *ngIf="recipeForm.get('category')?.hasError('required')">Selecciona la categoría.</span>
+            </mat-error>
+          </mat-form-field>
         </div>
-    </div>
+      </div>
 
-    <div class="form-group col-md-12 col-sm-12 col-xs-12">
-          <div class="col-md-12">
-            <mat-card>
-                <mat-card-header class="header-txt-color">
-                  <mat-card-title>Agregar Ingrediente</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                  <mat-form-field class="row">
-                    <div class="form-group col-md-12">
-                        <div class="row">
-                            <label for="select">Nuevo Producto:</label>
-                            <mat-form-field appearance="outline" class="full-width custom-field">
-                                <input matInput placeholder="Nuevo producto" type="string" [(ngModel)]="newIngredient" name="newIngredient">
-                            </mat-form-field>
-                        </div>
-                    </div> 
-                    <button mat-icon-button matSuffix class="btnAdd" (click)="addIngredient()">
-                      <mat-icon>add</mat-icon>
-                    </button>
-                  </mat-form-field>
-                </mat-card-content>
-              </mat-card>
+      <!-- Nivel de dificultad -->
+      <div class="form-group col-md-6 col-sm-12 col-xs-12">
+        <div class="row">
+          <label for="idDifficulty">Nivel de dificultad: <span class="required">*</span></label>
+          <mat-form-field appearance="outline" class="full-width custom-field">
+            <mat-select formControlName="difficulty">
+              <mat-option *ngFor="let difficulty of difficulties" [value]="difficulty.nombre">
+                {{ difficulty.nombre }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="recipeForm.get('difficulty')?.invalid && (recipeForm.get('difficulty')?.dirty || recipeForm.get('difficulty')?.touched)">
+              <span *ngIf="recipeForm.get('difficulty')?.hasError('required')">Selecciona la dificultad.</span>
+            </mat-error>
+          </mat-form-field>
         </div>
-    </div>
-</div>
+      </div>
 
-    <div class="row">
+      <!-- Ingredientes -->
+      <div class="row">
         <div class="form-group col-md-12 col-sm-12 col-xs-12">
             <div class="row">
-                <label for="ingredients">Pasos de elaboración:</label>
-                <div class="col-md-12">
+                <label for="ingredients">Ingredientes: <span class="required">*</span></label>
+                <div class="col-md-12" formArrayName="ingredients">
                     <mat-list>
-                        <mat-list-item *ngFor="let item of this.recipe.steps; let i = index">
-                          <mat-checkbox [(ngModel)]="item.checked" name="stepcheckbox">{{item.item}} </mat-checkbox>
-                          <button mat-icon-button (click)="stepDeleteFromList(i)">
-                            <mat-icon>delete</mat-icon>
-                          </button>
+                        <mat-list-item *ngFor="let ingredient of ingredients.controls; let i = index" [formGroupName]="i">
+                            <mat-form-field class="full-width custom-field">
+                              <mat-checkbox name="ingredientcheckbox" checked="true"></mat-checkbox>
+                              <input matInput formControlName="item" [readonly]="true" placeholder="Ingrediente">  
+                                <button mat-icon-button matSuffix (click)="ingDeleteFromList(i)" class="btn-delete-icon">
+                                  <mat-icon>delete</mat-icon>
+                              </button>
+                            </mat-form-field>                            
                         </mat-list-item>
                     </mat-list>
                 </div>
@@ -147,39 +119,71 @@
             <div class="col-md-12">
                 <mat-card>
                     <mat-card-header class="header-txt-color">
-                    <mat-card-title>Agregar paso</mat-card-title>
+                        <mat-card-title>Agregar ingrediente</mat-card-title>
                     </mat-card-header>
                     <mat-card-content>
-                    <mat-form-field class="row">
-                        <div class="form-group col-md-12">
-                            <div class="row">
-                                <label for="select">Nuevo paso:</label>
-                                <mat-form-field appearance="outline" class="full-width custom-field">
-                                    <input matInput placeholder="Nuevo paso" type="string" [(ngModel)]="newStep" name="newstep">
-                                </mat-form-field>
-                            </div>
-                        </div> 
-                        <button mat-icon-button matSuffix (click)="addStep()">
-                        <mat-icon>add</mat-icon>
-                        </button>
-                    </mat-form-field>
+                        <mat-form-field class="full-width custom-field">
+                            <input matInput formControlName="newIngredient" placeholder="Nuevo ingrediente">
+                            <button mat-icon-button matSuffix (click)="addIngredient()">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </mat-form-field>
                     </mat-card-content>
                 </mat-card>
             </div>
         </div>
-    </div>     
+      </div>
 
-    </form>
-    <div id="buttons" class="col-md-12 col-xs-12 text-right">
-        <div class="row top_tiles" style="margin: 10px 0;">
-            <div class="actionBar2">
-                <div class="col-md-12 col-sm-12 col-xs-12 button-actions">
-                    <input id="saveAll" type="button" class="btn btn-info" value="Guardar" (click)="saveRecipe()">
-                    <input id="goBack" type="button" class="btn btn-info" value="Volver" (click)="navService.goBack()">
+      <!-- Pasos -->
+      <div class="row">
+        <div class="form-group col-md-12 col-sm-12 col-xs-12">
+            <div class="row">
+                <label for="steps">Pasos de elaboración: <span class="required">*</span></label>
+                <div class="col-md-12" formArrayName="steps">
+                    <mat-list>
+                        <mat-list-item *ngFor="let step of steps.controls; let i = index" [formGroupName]="i">
+                            <mat-form-field class="full-width custom-field">
+                              <mat-checkbox name="stepcheckbox" checked="true"></mat-checkbox>
+                              <input matInput formControlName="item" [readonly]="true" placeholder="Paso de elaboración">  
+                                <button mat-icon-button matSuffix (click)="stepDeleteFromList(i)" class="btn-delete-icon">
+                                  <mat-icon>delete</mat-icon>
+                              </button>
+                            </mat-form-field>                            
+                        </mat-list-item>
+                    </mat-list>
                 </div>
             </div>
-        </div>    
+        </div>
+        <div class="form-group col-md-12 col-sm-12 col-xs-12">
+            <div class="col-md-12">
+                <mat-card>
+                    <mat-card-header class="header-txt-color">
+                        <mat-card-title>Agregar paso</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <mat-form-field class="full-width custom-field">
+                            <input matInput formControlName="newStep" placeholder="Nuevo paso">
+                            <button mat-icon-button matSuffix (click)="addStep()">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </mat-form-field>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+      </div>
     </div>
+  </form>
 
+  <div id="buttons" class="col-md-12 col-xs-12 text-right">
+    <div class="row top_tiles" style="margin: 10px 0;">
+        <div class="actionBar2">
+            <div class="col-md-12 col-sm-8 col-xs-12 button-actions">
+                <input id="saveAll" type="button" class="btn btn-info" value="Guardar" (click)="saveRecipe()">
+                <input id="goBack" type="button" class="btn btn-info" value="Volver" (click)="navService.goBack()">
+            </div>
+        </div>
+    </div>    
   </div>
-  
+
+</div>
