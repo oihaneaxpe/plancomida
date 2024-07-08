@@ -2,7 +2,7 @@
       <h2>Planificación</h2>
 </div>
     <div class="col-md-12 text-right btn-panel-options">
-        <button mat-icon-button (click)="toggleViewMode()">
+        <button mat-icon-button (click)="toggleViewMode()" #tooltip="matTooltip" matTooltip="Modo de visualización">
           <mat-icon>{{ viewMode === 'grid' ? 'grid_view' : 'view_list' }}</mat-icon>
         </button>
       </div>

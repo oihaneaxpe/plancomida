@@ -4,19 +4,19 @@
 <div class="row col-md-12">
   <div class="text-right btn-panel-options">
     <span *ngIf="authService.isLoggedIn()">
-      <button mat-icon-button [routerLink]="['/add-recipe']">
+      <button mat-icon-button [routerLink]="['/add-recipe']" #tooltip="matTooltip" matTooltip="Añadir receta">
         <mat-icon>add</mat-icon>
       </button>
     </span> 
     
-    <button mat-icon-button (click)="toggleSortOrder()">
+    <button mat-icon-button (click)="toggleSortOrder()" #tooltip="matTooltip" matTooltip="Ordenación">
       <mat-icon>{{ isAscOrder ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
     </button>
-    <button mat-icon-button (click)="toggleView()">
+    <button mat-icon-button (click)="toggleView()" #tooltip="matTooltip" matTooltip="Modo de visualización">
       <mat-icon>{{ isList ? 'grid_view' : 'view_list' }}</mat-icon>
     </button>
     <!-- <span class="container"> -->
-      <button mat-icon-button (click)="toggleFilters()">
+      <button mat-icon-button (click)="toggleFilters()" #tooltip="matTooltip" matTooltip="Filtros">
         <mat-icon>filter_list</mat-icon>
       </button>
       <div class="overlay" *ngIf="filtersVisible" (click)="toggleFilters()"></div>

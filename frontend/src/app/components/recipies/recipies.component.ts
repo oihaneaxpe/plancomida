@@ -13,6 +13,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { AddRecipieComponent } from '../add-recipie/add-recipie.component';
 import { RecipiesDetailComponent } from '../recipies-detail/recipies-detail.component';
 import { AuthService } from '../../services/auth.service';
@@ -40,6 +41,7 @@ import { throwError } from 'rxjs';
               , MatChipsModule
               , MatToolbarModule
               , MatCheckbox
+              , MatTooltipModule
               , AddRecipieComponent
           ],
   templateUrl: './recipies.component.html',

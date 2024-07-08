@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
-import { Router, RouterLink } from '@angular/router';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { NavigationService } from '../../services/navigation.service';
 import { NotificationService } from '../../services/notification.service';
 import { FoodPalnService } from '../../services/food-plan.service';
@@ -13,8 +14,9 @@ import { throwError } from 'rxjs';
   selector: 'app-food-plan',
   standalone: true,
   imports: [CommonModule
-            , MatIcon
             , RouterLink
+            , MatIcon        
+            , MatTooltipModule
           ],
   templateUrl: './food-plan.component.html',
   styleUrl: './food-plan.component.less'
@@ -42,8 +44,7 @@ export class FoodPlanComponent implements OnInit {
     { idMomento: 3, nombre: 'Cena' }
   ];
 
-  constructor(private router: Router,
-              public navService: NavigationService,
+  constructor(public navService: NavigationService,
               private foodPlanService: FoodPalnService,
               private recipeService: RecipeService,
               private notificationService: NotificationService) {
@@ -51,7 +52,21 @@ export class FoodPlanComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.generateWeeklyPlan();
+    this.fetchFoodPlan(this.userId);
+  }
+
+  fetchFoodPlan(idUser: number): void {
+    this.foodPlanService.getFoodPlan(idUser)
+      .pipe(
+        tap(data => {
+          this.planification = data;
+        }),
+        catchError(error => {
+          console.error('Error fetching Food Plan:', error);
+          return throwError(error); // Re-throw the error to keep it observable chain
+        })
+      )
+      .subscribe();
   }
 
   generateWeeklyPlan(): void {
