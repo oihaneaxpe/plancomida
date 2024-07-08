@@ -1,4 +1,7 @@
 const Recipe = require('../models/recipeModel');
+const RecipeBuilder = require('../builders/recipeBuilder');
+const Director = require('../builders/director');
+const ConcreteRecipeBuilder = require('../builders/concreteRecipeBuilder');
 
 exports.getAllStandardRecipes = (req, res) => {
   Recipe.getAllStandardRecipes((err, recipes) => {
@@ -56,8 +59,11 @@ exports.addRecipe = (req, res) => {
   const userId = req.params.id;
   const recipeData = req.body;
 
+  const director = new Director(new ConcreteRecipeBuilder());
+  const newRecipe = director.constructRecipe(recipeData);
+  
   // Step 1: Add the recipe
-  Recipe.addRecipe(userId, recipeData, (err, recipeResult) => {
+  Recipe.addRecipe(userId, newRecipe, (err, recipeResult) => {
     if (err) {
       console.error('Error adding recipe:', err);
       res.status(500).json({ error: 'Error adding recipe' });
@@ -65,8 +71,8 @@ exports.addRecipe = (req, res) => {
     }
 
     const recipeId = recipeResult.insertId;
-    const ingredients = recipeData.ingredients;
-    const steps = recipeData.steps;
+    const ingredients = newRecipe.ingredients;
+    const steps = newRecipe.steps;
 
     // Step 2: Add ingredients for the recipe
     Recipe.addIngredients(recipeId, ingredients, (err, ingredientsResult) => {

@@ -15,6 +15,7 @@ import { RecipeService } from '../../services/recipe.service';
 import { UploadService } from '../../services/upload.service';
 import { CategoryService } from '../../services/category.service';
 import { DifficultyService } from '../../services/difficulty.service';
+import { ConcreteRecipeBuilder } from '../../models/concrete-recipe-builder';
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
@@ -204,7 +205,7 @@ export class AddRecipieComponent {
         .subscribe();
     }
   }
-
+  
   resetForm() {
     this.recipeForm.reset();
     this.recipeForm.markAsUntouched(); // Desmarcar todos los controles como tocados

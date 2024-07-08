@@ -1,6 +1,18 @@
 const db = require('../database');
 
 class Recipe {
+  constructor() {
+    this.title = '';
+    this.subtitle = '';
+    this.preparationTime = 0;
+    this.servings = 0;
+    this.category = '';
+    this.difficulty = '';
+    this.ingredients = [];
+    this.steps = [];
+    this.imagePath = '';
+  }
+
   static getAllRecipesByUserId(userId, callback) {
     db.query(`SELECT tmreceta.idtmReceta, tmreceta.titulo, tmreceta.subtitulo, tmreceta.tiempoPreparacionNbr
                 , tmreceta.cantidadComensalNbr, tmreceta.idCategoria, tmreceta.idDificultad
@@ -57,7 +69,7 @@ class Recipe {
 
       const idCategoria = categoryResult[0].idtmCategoria;
 
-      // Luego, obtenemos el id de la dificultad
+      // Obtenemos el id de la dificultad
       const getDifficultySql = `SELECT idtmDificultad FROM tmDificultad WHERE nombre = ?`;
       db.query(getDifficultySql, [recipeData.difficulty], (err, difficultyResult) => {
         if (err) {
