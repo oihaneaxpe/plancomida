@@ -113,7 +113,7 @@
               <div class="card-body pb-0 col-md-5 col-sm-5 col-xs-6">
                   <h5 class="m-0">{{ recipe.titulo }}</h5>
               </div>
-              <div class="card-footer col-md-5 col-sm-5 col-xs-6">
+              <div class="card-footer card-footer-list col-md-5 col-sm-5 col-xs-6">
                   <div class="row text-center recipe-detail">
                       <div class="col-md-4 col-sm-4 col-xs-4">
                           <h4 class="m-0">
@@ -152,18 +152,19 @@
 </div>
 
 <ng-template #gridLayout>
-    <!-- Aquí va tu diseño para la vista de cuadrícula -->
-    <div class="row">      
-        <div class="col-md-4 col-sm-6 col-xs-6" *ngFor="let recipe of filteredRecipes" (click)="viewRecipeDetails(recipe.idtmReceta)">
-          <div class="card support-bar overflow-hidden">
-            <div>
-              <img class="img-responsive" style="width: 100%;" [src]="recipe.imgPath" />
+  <!-- Aquí va tu diseño para la vista de cuadrícula -->
+  <div class="row">      
+      <div class="col-md-4 col-sm-6 col-xs-6 recipe-element" *ngFor="let recipe of filteredRecipes">
+        <a [routerLink]="['/recipies-detail', recipe.idtmReceta]">
+          <div class="card support-bar overflow-hidden card-grid">
+            <div class="img-container">
+              <img class="img-responsive img-card-grid" [src]="recipe.imgPath" />
             </div>
-            <div class="card-body pb-0" style="padding: 10px;">
+            <div class="card-body pb-0">
               <h5 class="m-0">{{ recipe.titulo }}</h5>
             </div>
-            <div class="card-footer">
-              <div class="row text-center">
+            <div class="card-footer card-footer-grid">
+              <div class="row text-center recipe-detail">
                 <div class="col-md-4 col-sm-4">
                   <h5 class="m-0">
                     <i class="fa fa-clock" aria-hidden="true"></i>
@@ -185,7 +186,9 @@
               </div>
             </div>
           </div>
-        </div>
-    </div>
+        </a>
+      </div>
+  </div>
 </ng-template>
+
 

@@ -63,7 +63,7 @@ export class RecipiesComponent implements OnInit {
   selectedFilters: string[] = [];
 
   // TODO: Consultar categorias y dificultad en BD  
-  categories: string[] = ['Entrante', 'Primero', 'Segundo', 'Postre']; 
+  categories: string[] = ['Desayuno', 'Entrante', 'Primero', 'Segundo', 'Postre']; 
   difficulties: string[] = ['Fácil', 'Intermedio', 'Difícil', 'Muy difícil']; 
 
   recipesAll: { idtmReceta: number, titulo: string, tiempoPreparacionNbr: number, cantidadComensalNbr: number
