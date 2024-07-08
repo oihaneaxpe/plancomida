@@ -2,7 +2,11 @@ const db = require('../database');
 
 class Recipe {
   static getAllRecipesByUserId(userId, callback) {
-    db.query(`SELECT tmreceta.*, tmcategoria.nombre as categoriaNombre, tmdificultad.nombre as dificultadNombre
+    db.query(`SELECT tmreceta.idtmReceta, tmreceta.titulo, tmreceta.subtitulo, tmreceta.tiempoPreparacionNbr
+                , tmreceta.cantidadComensalNbr, tmreceta.idCategoria, tmreceta.idDificultad
+                , CAST(tmreceta.esEstandar AS UNSIGNED) AS esEstandar, tmreceta.idUsuario
+                , CAST(tmreceta.bajaInd AS UNSIGNED) AS bajaInd, tmreceta.imgPath
+                , tmcategoria.nombre as categoriaNombre, tmdificultad.nombre as dificultadNombre
               FROM tmreceta 
                 INNER JOIN tmcategoria ON tmreceta.idCategoria = tmcategoria.idtmCategoria
                 INNER JOIN tmdificultad ON tmreceta.idDificultad = tmdificultad.idtmDificultad
@@ -19,7 +23,11 @@ class Recipe {
   }
 
   static getAllStandardRecipes(callback) {
-    db.query(`SELECT tmreceta.*, tmcategoria.nombre as categoriaNombre, tmdificultad.nombre as dificultadNombre
+    db.query(`SELECT tmreceta.idtmReceta, tmreceta.titulo, tmreceta.subtitulo, tmreceta.tiempoPreparacionNbr
+                , tmreceta.cantidadComensalNbr, tmreceta.idCategoria, tmreceta.idDificultad
+                , CAST(tmreceta.esEstandar AS UNSIGNED) AS esEstandar, tmreceta.idUsuario
+                , CAST(tmreceta.bajaInd AS UNSIGNED) AS bajaInd, tmreceta.imgPath
+                , tmcategoria.nombre as categoriaNombre, tmdificultad.nombre as dificultadNombre
               FROM tmreceta 
                 INNER JOIN tmcategoria ON tmreceta.idCategoria = tmcategoria.idtmCategoria
                 INNER JOIN tmdificultad ON tmreceta.idDificultad = tmdificultad.idtmDificultad

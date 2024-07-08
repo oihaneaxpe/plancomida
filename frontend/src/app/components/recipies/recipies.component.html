@@ -31,9 +31,6 @@
             <mat-form-field appearance="fill">
               <mat-label>Búsqueda por título</mat-label>
               <input matInput placeholder="Buscar" [(ngModel)]="searchQuery">
-              <!-- <button mat-button name="btn-search" *ngIf="searchQuery" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
-                <mat-icon>close</mat-icon>
-              </button> -->
             </mat-form-field> 
       
             <!-- DIFICULTAD - Filtros de Opciones Múltiples -->
@@ -59,6 +56,24 @@
                         <mat-option *ngFor="let category of categories" [value]="category">{{ category }}</mat-option>
                       </mat-select>
                   </mat-form-field>
+              </div>
+            </div>
+
+            <!-- RECETAS -->
+            <div class="form-group col-md-12">
+              <div class="row">
+                  <label for="select" class="text-left">Recetas:</label>
+                  <form class="text-left checkbox-recipe-filter">
+                    <!-- Recetas estándares -->
+                    <mat-checkbox  name="standard" [(ngModel)]="selectedStandardRecipe">
+                      <mat-icon class="checkbox-icon">emoji_events</mat-icon> Estandar
+                    </mat-checkbox>
+            
+                    <!-- Recetas añadidas por el usuario registrado -->
+                    <mat-checkbox name="added" [(ngModel)]="selectedAddedRecipe">
+                      <mat-icon class="checkbox-icon">account_circle</mat-icon> Añadidos por mí
+                    </mat-checkbox>
+                  </form>
               </div>
             </div>
       

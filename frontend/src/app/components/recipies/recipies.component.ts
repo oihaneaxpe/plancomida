@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCheckbox } from '@angular/material/checkbox';
 import { AddRecipieComponent } from '../add-recipie/add-recipie.component';
 import { RecipiesDetailComponent } from '../recipies-detail/recipies-detail.component';
 import { AuthService } from '../../services/auth.service';
@@ -38,12 +39,14 @@ import { throwError } from 'rxjs';
               , MatSelectModule
               , MatChipsModule
               , MatToolbarModule
+              , MatCheckbox
               , AddRecipieComponent
           ],
   templateUrl: './recipies.component.html',
   styleUrl: './recipies.component.less'
 })
 export class RecipiesComponent implements OnInit {
+  userId: any;
   isList = true;
   filtersVisible: boolean = false;
   isAscOrder = true; // Variable para controlar el orden ascendente o descendente
@@ -52,6 +55,8 @@ export class RecipiesComponent implements OnInit {
   selectedCategories: string[] = [];
   selectedDifficulties: string[] = [];
   selectedMoment: string[] = [];
+  selectedStandardRecipe: boolean = true;
+  selectedAddedRecipe: boolean = false;
 
   selectedFilters: string[] = [];
 
@@ -61,11 +66,11 @@ export class RecipiesComponent implements OnInit {
 
   recipesAll: { idtmReceta: number, titulo: string, tiempoPreparacionNbr: number, cantidadComensalNbr: number
     , idCategoria: number, idDificultad: number, baja: boolean
-    , categoriaNombre: string, dificultadNombre: string, imgPath: string }[] = [];
+    , categoriaNombre: string, dificultadNombre: string, imgPath: string, esEstandar: number }[] = [];
 
   filteredRecipes: { idtmReceta: number, titulo: string, tiempoPreparacionNbr: number, cantidadComensalNbr: number
       , idCategoria: number, idDificultad: number, baja: boolean
-      , categoriaNombre: string, dificultadNombre: string, imgPath: string }[] = [];
+      , categoriaNombre: string, dificultadNombre: string, imgPath: string, esEstandar: number }[] = [];
 
   constructor(private router: Router
                 , public dialog: MatDialog
@@ -73,18 +78,22 @@ export class RecipiesComponent implements OnInit {
                 , public authService: AuthService
                 , private recipeService: RecipeService
                 , private notificationService: NotificationService
-              ) {}
+              ) {
+                this.userId = localStorage.getItem('userId');
+              }
 
   ngOnInit(): void {
-    this.fetchRecipes();
+    this.fetchRecipes(this.userId);
   }
 
-  fetchRecipes(): void {
-    this.recipeService.getRecipes()
+  fetchRecipes(idUser: number): void {
+    this.recipeService.getRecipes(idUser)
       .pipe(
         tap(data => {
           this.recipesAll = data;
           this.filteredRecipes = this.recipesAll;
+          this.sortRecipesByTitle();
+          this.search();
         }),
         catchError(error => {
           this.notificationService.showNotification('error', 'Error ', error.error.error);
@@ -143,8 +152,15 @@ export class RecipiesComponent implements OnInit {
       // Filtrar por momento del día
       // (this.selectedMoment.length === 0 || this.selectedMoment.includes(receta.momento)) &&
       // Filtrar por dificultad
-      (this.selectedDifficulties.length === 0 || this.selectedDifficulties.includes(receta.dificultadNombre))
+      (this.selectedDifficulties.length === 0 || this.selectedDifficulties.includes(receta.dificultadNombre)) &&
+      // Filtrar por estándar de receta (esEstandar)
+      (
+        (this.selectedStandardRecipe && receta.esEstandar === 1) ||
+        (this.selectedAddedRecipe && receta.esEstandar === 0) ||
+        (this.selectedStandardRecipe && this.selectedAddedRecipe)
+      )
     );
+    this.sortRecipesByTitle();
   }
 
   viewRecipeDetails(id: number) {

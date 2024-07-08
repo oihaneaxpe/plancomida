@@ -5,6 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 import { NavigationService } from '../../services/navigation.service';
 import { NotificationService } from '../../services/notification.service';
 import { FoodPalnService } from '../../services/food-plan.service';
+import { RecipeService } from '../../services/recipe.service';
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
@@ -44,6 +45,7 @@ export class FoodPlanComponent implements OnInit {
   constructor(private router: Router,
               public navService: NavigationService,
               private foodPlanService: FoodPalnService,
+              private recipeService: RecipeService,
               private notificationService: NotificationService) {
     this.userId = localStorage.getItem('userId');
   }
@@ -53,11 +55,10 @@ export class FoodPlanComponent implements OnInit {
   }
 
   generateWeeklyPlan(): void {
-    this.foodPlanService.getRecipes().pipe(
+    this.recipeService.getRecipes(this.userId).pipe(
       tap(recipes => {
         this.recipes = recipes;
         this.planification = this.createWeeklyPlan();
-        console.log(this.planification)
       }),
       catchError(error => {
         this.notificationService.showNotification('error', 'Error', error.error.error);
@@ -67,13 +68,11 @@ export class FoodPlanComponent implements OnInit {
   }
 
   createWeeklyPlan(): any[] {
-    let planId = 1;
     const mealPlan = [];
     for (let day of this.daysOfWeek) {
       for (let momento of this.momentsOfDay) {
         const recipe = this.getRandomRecipe();
         if (recipe) {
-          console.log("recipe", recipe)
           mealPlan.push({
             idUsuario: this.userId,
             idDia: day.idDia,

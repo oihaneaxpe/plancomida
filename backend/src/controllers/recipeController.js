@@ -3,10 +3,39 @@ const Recipe = require('../models/recipeModel');
 exports.getAllStandardRecipes = (req, res) => {
   Recipe.getAllStandardRecipes((err, recipes) => {
     if (err) {
-      res.status(500).json({ error: 'Error fetching recipes' });
+      res.status(500).json({ error: 'Error fetching standard recipes' });
       return;
     }
     res.json(recipes);
+  });
+};
+
+exports.getAllRecipes = (req, res) => {
+  const userId = req.params.id;
+  let allRecipes = [];
+
+  // Obtener todas las recetas estándar
+  Recipe.getAllStandardRecipes((err, standardRecipes) => {
+    if (err) {
+      res.status(500).json({ error: 'Error fetching recipes' });
+      return;
+    }
+    
+    // Agregar las recetas estándar al array allRecipes
+    allRecipes = allRecipes.concat(standardRecipes);
+
+    // Obtener las recetas por usuario
+    Recipe.getAllRecipesByUserId(userId, (err, userRecipes) => {
+      if (err) {
+        res.status(500).json({ error: 'Error fetching user recipes' });
+        return;
+      }
+      
+      // Agregar las recetas por usuario al array allRecipes
+      allRecipes = allRecipes.concat(userRecipes);
+
+      res.json(allRecipes);
+    });
   });
 };
 
