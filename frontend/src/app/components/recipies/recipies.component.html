@@ -105,12 +105,12 @@
     <div class="row">
         <div class="card support-bar overflow-hidden col-lg-6 col-md-6 col-sm-12 col-xs-12 card-list"
              *ngFor="let recipe of filteredRecipes">
-              <a [routerLink]="['/recipies-detail', recipe.idtmReceta]">
-            <div class="row">
-              <div class="col-md-2 col-sm-2 col-xs-12" style="padding: 0px;">
-                  <img class="img-responsive img-card-list" style="width: 100%;" [src]="recipe.imgPath" />
+          <a [routerLink]="['/recipies-detail', recipe.idtmReceta]">
+            <div class="row" id="recipe-element">
+              <div class="col-md-2 col-sm-2 col-xs-12 img-div">
+                  <img class="img-responsive img-card-list" [src]="recipe.imgPath" />
               </div>
-              <div class="card-body pb-0 col-md-5 col-sm-5 col-xs-6" style="padding: 0px 10px; margin: auto;">
+              <div class="card-body pb-0 col-md-5 col-sm-5 col-xs-6">
                   <h5 class="m-0">{{ recipe.titulo }}</h5>
               </div>
               <div class="card-footer col-md-5 col-sm-5 col-xs-6">
@@ -136,7 +136,7 @@
                   </div>
               </div>
             </div>
-            </a>
+          </a>
         </div>
     </div>
 </div>
