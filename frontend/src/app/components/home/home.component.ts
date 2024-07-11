@@ -33,7 +33,7 @@ export class HomeComponent {
 
   homeButtons = [
     {
-      imgPath: '/assets/images/home/food-plan.jpeg',
+      imgPath: '/assets/images/home/food-plan.png',
       title: 'Planificación',
       description: 'Planifica tus menús semanales.',
       icon: 'event_note',

@@ -86,18 +86,60 @@ export class FoodPlanComponent implements OnInit {
     const mealPlan = [];
     for (let day of this.daysOfWeek) {
       for (let momento of this.momentsOfDay) {
-        const recipe = this.getRandomRecipe();
-        if (recipe) {
-          mealPlan.push({
-            idUsuario: this.userId,
-            idDia: day.idDia,
-            idMomento: momento.idMomento,
-            idReceta: recipe.idtmReceta,
-            titulo: recipe.titulo,
-            diaNombre: day.nombre,
-            momentoNombre: momento.nombre
-          });
+        console.log("momento", momento)
+        if (momento.idMomento == 1) { // desayuno
+          const recipeDesayuno = this.getRandomRecipeByCategory('Desayuno');
+          if (recipeDesayuno) {
+            mealPlan.push({
+              idUsuario: this.userId,
+              idDia: day.idDia,
+              idMomento: momento.idMomento,
+              idReceta: recipeDesayuno.idtmReceta,
+              titulo: recipeDesayuno.titulo,
+              diaNombre: day.nombre,
+              momentoNombre: momento.nombre
+            });
+          }
         }
+        else {
+          const recipePrimero = this.getRandomRecipeByCategory('Primero');
+          if (recipePrimero) {
+            mealPlan.push({
+              idUsuario: this.userId,
+              idDia: day.idDia,
+              idMomento: momento.idMomento,
+              idReceta: recipePrimero.idtmReceta,
+              titulo: recipePrimero.titulo,
+              diaNombre: day.nombre,
+              momentoNombre: momento.nombre
+            });
+          }
+          const recipeSegundo = this.getRandomRecipeByCategory('Segundo');
+          if (recipeSegundo) {
+            mealPlan.push({
+              idUsuario: this.userId,
+              idDia: day.idDia,
+              idMomento: momento.idMomento,
+              idReceta: recipeSegundo.idtmReceta,
+              titulo: recipeSegundo.titulo,
+              diaNombre: day.nombre,
+              momentoNombre: momento.nombre
+            });
+          }
+          const recipePostre = this.getRandomRecipeByCategory('Postre');
+          if (recipePostre) {
+            mealPlan.push({
+              idUsuario: this.userId,
+              idDia: day.idDia,
+              idMomento: momento.idMomento,
+              idReceta: recipePostre.idtmReceta,
+              titulo: recipePostre.titulo,
+              diaNombre: day.nombre,
+              momentoNombre: momento.nombre
+            });
+          }
+        }
+        
       }
     }
     return mealPlan;
@@ -108,6 +150,19 @@ export class FoodPlanComponent implements OnInit {
     const randomIndex = Math.floor(Math.random() * this.recipes.length);
     return this.recipes[randomIndex];
   }
+  
+  getRandomRecipeByCategory(category: string): any {
+    // Filtrar recetas por categoría
+    const filteredRecipes = this.recipes.filter((recipe: any) => recipe.categoriaNombre === category);
+  console.log(filteredRecipes, this.recipes)
+    // Verificar si hay recetas disponibles en la categoría
+    if (filteredRecipes.length === 0) return null;
+  
+    // Seleccionar una receta aleatoria de las filtradas
+    const randomIndex = Math.floor(Math.random() * filteredRecipes.length);
+    return filteredRecipes[randomIndex];
+  }
+  
 
   filterByDay(meals: any[], day: number): any[] {
     return meals.filter(meal => meal.idDia === day);

@@ -13,7 +13,7 @@ class Recipe {
     this.imagePath = '';
   }
 
-  static getAllRecipesByUserId(userId, callback) {
+  static async getAllRecipesByUserId(userId, callback) {
     db.query(`SELECT tmreceta.idtmReceta, tmreceta.titulo, tmreceta.subtitulo, tmreceta.tiempoPreparacionNbr
                 , tmreceta.cantidadComensalNbr, tmreceta.idCategoria, tmreceta.idDificultad
                 , CAST(tmreceta.esEstandar AS UNSIGNED) AS esEstandar, tmreceta.idUsuario
@@ -34,7 +34,7 @@ class Recipe {
     });
   }
 
-  static getAllStandardRecipes(callback) {
+  static async getAllStandardRecipes(callback) {
     db.query(`SELECT tmreceta.idtmReceta, tmreceta.titulo, tmreceta.subtitulo, tmreceta.tiempoPreparacionNbr
                 , tmreceta.cantidadComensalNbr, tmreceta.idCategoria, tmreceta.idDificultad
                 , CAST(tmreceta.esEstandar AS UNSIGNED) AS esEstandar, tmreceta.idUsuario
@@ -54,7 +54,7 @@ class Recipe {
     });
   }
 
-  static addRecipe(userId, recipeData, callback) {
+  static async addRecipe(userId, recipeData, callback) {
     const getCategorySql = `SELECT idtmCategoria FROM tmCategoria WHERE nombre = ?`;
     db.query(getCategorySql, [recipeData.category], (err, categoryResult) => {
       if (err) {
@@ -113,7 +113,7 @@ class Recipe {
     });
   }
 
-  static addIngredients(recipeId, ingredients, callback) {
+  static async addIngredients(recipeId, ingredients, callback) {
     const sql = 'INSERT INTO tmrecetaingrediente (idReceta, nombre) VALUES ?';
     const values = ingredients.map(ingredient => [recipeId, ingredient.item]);
   
@@ -126,7 +126,7 @@ class Recipe {
     });
   }
 
-  static addSteps(recipeId, steps, callback) {
+  static async addSteps(recipeId, steps, callback) {
     const sql = 'INSERT INTO tmrecetastep (idReceta, descripcion) VALUES ?';
     const values = steps.map(step => [recipeId, step.item]);
   
@@ -142,7 +142,7 @@ class Recipe {
     
   }
 
-  static getRecipeById(id, callback) {
+  static async getRecipeById(id, callback) {
     // Query para obtener la información generica de la receta seleccionada
     const queryGeneric = `SELECT tmreceta.*, tmcategoria.nombre as categoriaNombre, tmdificultad.nombre as dificultadNombre
     FROM tmreceta 
@@ -192,7 +192,7 @@ class Recipe {
     });
   }  
 
-  static getIngredientsForPlan(userId, callback) {
+  static async getIngredientsForPlan(userId, callback) {
     db.query(`SELECT DISTINCT tmrecetaingrediente.nombre as item, 0 as checked 
               FROM tmrecetaingrediente 
                 INNER JOIN taplanificacion ON tmrecetaingrediente.idReceta = taplanificacion.idReceta

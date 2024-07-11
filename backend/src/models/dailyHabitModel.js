@@ -1,7 +1,7 @@
 const db = require('../database');
 
 class DailyHabitModel {
-  static getActualHabit(userId, callback) {
+  static async getActualHabit(userId, callback) {
     db.query(`SELECT idtahabito, idUsuario, aguaNbr, horasSueno, idTipoEjercicio, tmtipoejercicio.nombre as nombreEjercicio, CAST(meditacionInd AS UNSIGNED) AS meditacionInd
               , CAST(comidaSaludableInd AS UNSIGNED) AS comidaSaludableInd, notas
               , CAST(tahabito.bajaInd AS UNSIGNED) AS bajaInd
@@ -17,7 +17,7 @@ class DailyHabitModel {
       callback(null, results);
     });
   }
-  static updateActualHabit(userId, actualHabitData, callback) {
+  static async updateActualHabit(userId, actualHabitData, callback) {
     const params = [
       actualHabitData.aguaNbr,
       actualHabitData.horasSueno,

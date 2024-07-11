@@ -2,7 +2,7 @@ const db = require('../database');
 const bcrypt = require('bcrypt');
 
 class User {
-  static registerUser(userData, callback) {
+  static async registerUser(userData, callback) {
     const { username, email, password } = userData;
 
     // Generar un hash para la contraseña
@@ -23,7 +23,7 @@ class User {
     });
   } 
 
-  static findByEmail(email, callback) {
+  static async findByEmail(email, callback) {
     const query = `SELECT * FROM tmusuario WHERE email = ? AND bajaInd = 0`;
     db.query(query, [email], (err, results) => {
       if (err || results.length === 0) {

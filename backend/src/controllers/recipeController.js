@@ -3,8 +3,8 @@ const RecipeBuilder = require('../builders/recipeBuilder');
 const Director = require('../builders/director');
 const ConcreteRecipeBuilder = require('../builders/concreteRecipeBuilder');
 
-exports.getAllStandardRecipes = (req, res) => {
-  Recipe.getAllStandardRecipes((err, recipes) => {
+exports.getAllStandardRecipes = async (req, res) => {
+  await Recipe.getAllStandardRecipes((err, recipes) => {
     if (err) {
       res.status(500).json({ error: 'Error fetching standard recipes' });
       return;
@@ -13,12 +13,12 @@ exports.getAllStandardRecipes = (req, res) => {
   });
 };
 
-exports.getAllRecipes = (req, res) => {
+exports.getAllRecipes = async (req, res) => {
   const userId = req.params.id;
   let allRecipes = [];
 
   // Obtener todas las recetas estándar
-  Recipe.getAllStandardRecipes((err, standardRecipes) => {
+  await Recipe.getAllStandardRecipes(async (err, standardRecipes) => {
     if (err) {
       res.status(500).json({ error: 'Error fetching recipes' });
       return;
@@ -28,7 +28,7 @@ exports.getAllRecipes = (req, res) => {
     allRecipes = allRecipes.concat(standardRecipes);
 
     // Obtener las recetas por usuario
-    Recipe.getAllRecipesByUserId(userId, (err, userRecipes) => {
+    await Recipe.getAllRecipesByUserId(userId, (err, userRecipes) => {
       if (err) {
         res.status(500).json({ error: 'Error fetching user recipes' });
         return;
@@ -42,10 +42,10 @@ exports.getAllRecipes = (req, res) => {
   });
 };
 
-exports.getRecipeById = (req, res) => {
+exports.getRecipeById = async (req, res) => {
   const recipeId = req.params.id;
   // Step 1: Get the recipe generic information
-  Recipe.getRecipeById(recipeId, (err, result) => {
+  await Recipe.getRecipeById(recipeId, (err, result) => {
     if (err) {
       res.status(500).json({ error: 'Error retrieving recipe detail' });
       return;
@@ -55,7 +55,7 @@ exports.getRecipeById = (req, res) => {
   });
 };
 
-exports.addRecipe = (req, res) => {
+exports.addRecipe = async (req, res) => {
   const userId = req.params.id;
   const recipeData = req.body;
 
@@ -63,7 +63,7 @@ exports.addRecipe = (req, res) => {
   const newRecipe = director.constructRecipe(recipeData);
   
   // Step 1: Add the recipe
-  Recipe.addRecipe(userId, newRecipe, (err, recipeResult) => {
+  await Recipe.addRecipe(userId, newRecipe, async (err, recipeResult) => {
     if (err) {
       console.error('Error adding recipe:', err);
       res.status(500).json({ error: 'Error adding recipe' });
@@ -75,7 +75,7 @@ exports.addRecipe = (req, res) => {
     const steps = newRecipe.steps;
 
     // Step 2: Add ingredients for the recipe
-    Recipe.addIngredients(recipeId, ingredients, (err, ingredientsResult) => {
+    await Recipe.addIngredients(recipeId, ingredients, async (err, ingredientsResult) => {
       if (err) {
         console.error('Error adding ingredients:', err);
         res.status(500).json({ error: 'Error adding ingredients' });
@@ -83,7 +83,7 @@ exports.addRecipe = (req, res) => {
       }
 
       // Step 3: Add steps for the recipe
-      Recipe.addSteps(recipeId, steps, (err, stepsResult) => {
+      await Recipe.addSteps(recipeId, steps, (err, stepsResult) => {
         if (err) {
           console.error('Error adding steps:', err);
           res.status(500).json({ error: 'Error adding steps' });
@@ -97,9 +97,9 @@ exports.addRecipe = (req, res) => {
   });
 };
 
-exports.getIngredientsForPlan = (req, res) => {
+exports.getIngredientsForPlan = async (req, res) => {
   const userId = req.params.id;
-  Recipe.getIngredientsForPlan(userId, (err, recipes) => {
+  await Recipe.getIngredientsForPlan(userId, (err, recipes) => {
     if (err) {
       res.status(500).json({ error: 'Error fetching food plan ingredients' });
       return;

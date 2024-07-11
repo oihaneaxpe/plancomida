@@ -1,10 +1,10 @@
 const DailyHabit = require('../models/dailyHabitModel');
 const Exercise = require('../models/exerciseModel');
 
-exports.getActualHabit = (req, res) => {
+exports.getActualHabit = async (req, res) => {
   const userId = req.params.id;
   
-  DailyHabit.getActualHabit(userId, (err, dailyHabit) => {
+  await DailyHabit.getActualHabit(userId, (err, dailyHabit) => {
     if (err) {
       res.status(500).json({ error: 'Error fetching daily habit' });
       return;
@@ -13,13 +13,13 @@ exports.getActualHabit = (req, res) => {
   });
 };
 
-exports.updateActualHabit = (req, res) => {
+exports.updateActualHabit = async (req, res) => {
   const userId = req.params.id;
   const dailyHabitData = req.body;
 
   const exerciseName = dailyHabitData.nombreEjercicio;
   // Obtener el idTipoEjercicio utilizando el nombre del ejercicio
-  Exercise.getidExerciseByName(exerciseName, (err, exerciseResult) => {
+  await Exercise.getidExerciseByName(exerciseName, (err, exerciseResult) => {
     if (err) {
       res.status(500).json({ error: 'Error fetching exercise id' });
       return;

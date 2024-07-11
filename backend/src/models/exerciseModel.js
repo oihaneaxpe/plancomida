@@ -1,7 +1,7 @@
 const db = require('../database');
 
 class Exercise {
-  static getAllExercise(callback) {
+  static async getAllExercise(callback) {
     db.query(`SELECT * FROM tmtipoejercicio WHERE bajaInd = 0;`, (err, results) => {
       if (err) {
         callback(err, null);
@@ -12,7 +12,7 @@ class Exercise {
     });
   }
 
-  static getidExerciseByName(exercisename, callback) {
+  static async getidExerciseByName(exercisename, callback) {
     db.query(`SELECT idtmtipoejercicio as id 
               FROM tmtipoejercicio 
               WHERE bajaInd = 0 AND nombre = ?;`

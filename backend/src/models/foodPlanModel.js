@@ -1,7 +1,7 @@
 const db = require('../database');
 
 class FoodPlan {
-  static getPlanification(userId, callback) {
+  static async getPlanification(userId, callback) {
     db.query(`SELECT taplanificacion.*, tmreceta.titulo
     , tmdiasemana.nombre as diaNombre
     , tmmomento.nombre as momentoNombre

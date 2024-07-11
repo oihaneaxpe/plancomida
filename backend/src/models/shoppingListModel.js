@@ -1,7 +1,7 @@
 const db = require('../database');
 
 class ShoppingList {
-  static getAllShoppingList(userId, callback) {
+  static async getAllShoppingList(userId, callback) {
     db.query(`SELECT producto as item, CAST(compradoInd AS UNSIGNED) AS checked 
               FROM talistacompra WHERE bajaInd = 0 AND idUsuario = ?;
               `, [userId], (err, results) => {
@@ -13,7 +13,7 @@ class ShoppingList {
     });
   }
 
-  static saveShoppingList(userId, shoppingListData, callback) {
+  static async saveShoppingList(userId, shoppingListData, callback) {
     const sql = 'INSERT INTO talistacompra (producto, compradoInd, idUsuario) VALUES (?, ?, ?)';
     
     const promises = shoppingListData.map(itemData => {
@@ -34,7 +34,7 @@ class ShoppingList {
       .catch(err => callback(err, null));
   }
 
-  static deleteShoppingList(userId, callback) {
+  static async deleteShoppingList(userId, callback) {
     db.query(`DELETE FROM talistacompra WHERE bajaInd = 0 AND idUsuario = ?;
     `, [userId], (err, results) => {
       if (err) {
