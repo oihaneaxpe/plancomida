@@ -86,7 +86,6 @@ export class FoodPlanComponent implements OnInit {
     const mealPlan = [];
     for (let day of this.daysOfWeek) {
       for (let momento of this.momentsOfDay) {
-        console.log("momento", momento)
         if (momento.idMomento == 1) { // desayuno
           const recipeDesayuno = this.getRandomRecipeByCategory('Desayuno');
           if (recipeDesayuno) {
@@ -97,7 +96,8 @@ export class FoodPlanComponent implements OnInit {
               idReceta: recipeDesayuno.idtmReceta,
               titulo: recipeDesayuno.titulo,
               diaNombre: day.nombre,
-              momentoNombre: momento.nombre
+              momentoNombre: momento.nombre,
+              icono: 'free_breakfast'
             });
           }
         }
@@ -111,7 +111,8 @@ export class FoodPlanComponent implements OnInit {
               idReceta: recipePrimero.idtmReceta,
               titulo: recipePrimero.titulo,
               diaNombre: day.nombre,
-              momentoNombre: momento.nombre
+              momentoNombre: momento.nombre,
+              icono: 'restaurant_menu'
             });
           }
           const recipeSegundo = this.getRandomRecipeByCategory('Segundo');
@@ -123,7 +124,8 @@ export class FoodPlanComponent implements OnInit {
               idReceta: recipeSegundo.idtmReceta,
               titulo: recipeSegundo.titulo,
               diaNombre: day.nombre,
-              momentoNombre: momento.nombre
+              momentoNombre: momento.nombre,
+              icono: 'dinner_dining'
             });
           }
           const recipePostre = this.getRandomRecipeByCategory('Postre');
@@ -135,7 +137,8 @@ export class FoodPlanComponent implements OnInit {
               idReceta: recipePostre.idtmReceta,
               titulo: recipePostre.titulo,
               diaNombre: day.nombre,
-              momentoNombre: momento.nombre
+              momentoNombre: momento.nombre,
+              icono: 'cake'
             });
           }
         }
@@ -143,6 +146,10 @@ export class FoodPlanComponent implements OnInit {
       }
     }
     return mealPlan;
+  }
+
+  saveWeeklyPlan(): void {
+    console.log("save plan")
   }
 
   getRandomRecipe(): any {
@@ -154,7 +161,7 @@ export class FoodPlanComponent implements OnInit {
   getRandomRecipeByCategory(category: string): any {
     // Filtrar recetas por categoría
     const filteredRecipes = this.recipes.filter((recipe: any) => recipe.categoriaNombre === category);
-  console.log(filteredRecipes, this.recipes)
+
     // Verificar si hay recetas disponibles en la categoría
     if (filteredRecipes.length === 0) return null;
   

@@ -1,11 +1,11 @@
 <div class="row col-md-12 container-title">
-      <h2>Planificación</h2>
+  <h2>Planificación</h2>
 </div>
-    <div class="col-md-12 text-right btn-panel-options">
-        <button mat-icon-button (click)="toggleViewMode()" #tooltip="matTooltip" matTooltip="Modo de visualización">
-          <mat-icon>{{ viewMode === 'grid' ? 'grid_view' : 'view_list' }}</mat-icon>
-        </button>
-      </div>
+<div class="col-md-12 text-right btn-panel-options">
+  <button mat-icon-button (click)="toggleViewMode()" #tooltip="matTooltip" matTooltip="Modo de visualización">
+    <mat-icon>{{ viewMode === 'grid' ? 'grid_view' : 'view_list' }}</mat-icon>
+  </button>
+</div>
 <div class="meal-planner">
     <!-- Visualización en formato de grid -->
     <div *ngIf="viewMode === 'grid'">
@@ -20,7 +20,7 @@
                   <div  *ngFor="let meal of mealGroup">
                     <ng-container *ngIf="mealGroup.length > 0; else noPlan">
                       <a [routerLink]="['/recipies-detail', meal.idReceta]">
-                        <p>{{ meal.titulo }}</p>
+                        <p><mat-icon>{{ meal.icono }}</mat-icon> {{ meal.titulo }}</p>
                       </a>
                     </ng-container>
                   </div>
@@ -68,7 +68,7 @@
                 <ng-container *ngIf="mealGroup.length > 0; else noPlan">
                   <ng-container *ngFor="let meal of mealGroup">
                     <a [routerLink]="['/recipies-detail', meal.idReceta]">
-                      <p>{{ meal.titulo }}</p>
+                      <p><mat-icon>{{ meal.icono }}</mat-icon> {{ meal.titulo }}</p>
                     </a>
                   </ng-container>
                 </ng-container>
@@ -110,6 +110,7 @@
         <div class="actionBar2">
             <div class="col-md-12 col-sm-12 col-xs-12 button-actions">
                 <input id="generatePaln" type="button" class="btn btn-info" value="Nuevo" (click)="generateWeeklyPlan()">
+                <input id="savePlan" type="button" class="btn btn-info" value="Guardar" (click)="saveWeeklyPlan()">
                 <input id="goBack" type="button" class="btn btn-info" value="Volver" (click)="navService.goBack()">
             </div>
         </div>
