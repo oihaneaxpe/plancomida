@@ -149,7 +149,18 @@ export class FoodPlanComponent implements OnInit {
   }
 
   saveWeeklyPlan(): void {
-    console.log("save plan")
+    this.foodPlanService.savePlanification(this.userId, this.planification)
+      .pipe(
+        tap(response => {
+          this.notificationService.showNotification('success', 'Actualizado', 'Planificación semanal actualizado con éxito.');
+          return true;
+        }),
+        catchError(error => {
+          this.notificationService.showNotification('error', 'Error ', error.error.error);
+          return throwError(error); // Re-throw the error to keep the observable chain
+        })
+      )
+      .subscribe();
   }
 
   getRandomRecipe(): any {

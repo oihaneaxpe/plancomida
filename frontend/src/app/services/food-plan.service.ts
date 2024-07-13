@@ -20,4 +20,8 @@ export class FoodPalnService {
   getRecipes(): Observable<any[]> {
     return this.http.get<any[]>(this.recipesUrl);
   }
+
+  savePlanification(idUser: number, weekPlanification: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/update/${idUser}`, weekPlanification);
+  }
 }

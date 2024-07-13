@@ -26,6 +26,46 @@ class FoodPlan {
       callback(null, results);
     });
   }
+
+  static async updatePlanification(userId, weekPlanificationData, callback) {
+    try {
+      await this.deletePlanification(userId);
+      await this.savePlanification(userId, weekPlanificationData);
+      callback(null, { success: true });
+    } catch (err) {
+      callback(err, null);
+    }
+  }
+
+  static async deletePlanification(userId) {
+    return new Promise((resolve, reject) => {
+      db.query(`DELETE FROM taplanificacion WHERE bajaInd = 0 AND idUsuario = ?`, [userId], (err, results) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(results);
+        }
+      });
+    });
+  }
+
+  static async savePlanification(userId, weekPlanificationData) {
+    const sql = 'INSERT INTO taplanificacion (idUsuario, idDia, idMomento, idReceta) VALUES (?, ?, ?, ?)';
+    const promises = weekPlanificationData.map(itemData => {
+      return new Promise((resolve, reject) => {
+        db.query(sql, [userId, itemData.idDia, itemData.idMomento, itemData.idReceta], (err, result) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(result);
+          }
+        });
+      });
+    });
+
+    return Promise.all(promises);
+  }
 }
+
 
 module.exports = FoodPlan;
