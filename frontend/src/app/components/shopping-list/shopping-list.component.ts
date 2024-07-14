@@ -1,6 +1,5 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { MatMenu } from '@angular/material/menu';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -12,13 +11,11 @@ import { MatDialog, MatDialogActions, MatDialogContainer, MatDialogContent } fro
 import { MatListModule } from '@angular/material/list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSidenavModule } from '@angular/material/sidenav';
-
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { NavigationService } from '../../services/navigation.service';
 import { NotificationService } from '../../services/notification.service';
-
 import { ShoppingListService } from '../../services/shopping-list.service';
 import { RecipeService } from '../../services/recipe.service';
-
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
@@ -39,6 +36,7 @@ import { throwError } from 'rxjs';
     , MatDialogActions
     , MatDialogContent
     , MatSidenavModule
+    , MatTooltipModule
   ],
   templateUrl: './shopping-list.component.html',
   styleUrl: './shopping-list.component.less'

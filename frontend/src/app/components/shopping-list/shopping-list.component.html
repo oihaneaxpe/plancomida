@@ -50,9 +50,9 @@
         <div class="row top_tiles" style="margin: 10px 0;">
             <div class="actionBar2">
                 <div class="col-md-12 col-sm-8 col-xs-12 button-actions">
-                  <input id="saveAll" type="button" class="btn btn-info" value="Guardar" (click)="saveShoppingList()">
-                  <input id="generateList" type="button" class="btn btn-info" value="Generar Lista" (click)="generateShoppingList()">
-                  <input id="deleteAll" type="button" class="btn btn-info" value="Eliminar todo" (click)="openConfirmClearDialog()">
+                  <input id="saveAll" type="button" class="btn btn-info" value="Guardar" (click)="saveShoppingList()" #tooltip="matTooltip" matTooltip="Guardar lista de la compra">
+                  <input id="generateList" type="button" class="btn btn-info" value="Generar Lista" (click)="generateShoppingList()" #tooltip="matTooltip" matTooltip="Generar lista de la compra automáticamente">
+                  <input id="deleteAll" type="button" class="btn btn-info" value="Eliminar todo" (click)="openConfirmClearDialog()" #tooltip="matTooltip" matTooltip="Eliminar toda la lista">
                   <input id="goBack" type="button" class="btn btn-info" value="Volver" (click)="navService.goBack()">
                 </div>
             </div>
