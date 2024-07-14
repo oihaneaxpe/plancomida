@@ -4,7 +4,7 @@ exports.getPlanification = (req, res) => {
   const userId = req.params.id;
   FoodPlan.getPlanification(userId, (err, foodplan) => {
     if (err) {
-      res.status(500).json({ error: 'Error fetching planification' });
+      res.status(500).json({ error: 'Error obteniendo la planificación semanal' });
       return;
     }
     res.json(foodplan);
@@ -17,9 +17,9 @@ exports.updatePlanification = (req, res) => {
 
   FoodPlan.updatePlanification(userId, weekPlanificationData, (err, result) => {
     if (err) {
-      res.status(500).json({ error: 'Error updating planification' });
+      res.status(500).json({ error: 'Error actualizando la planificación semanal' });
       return;
     }
-    res.json({ message: 'Planification updated successfully', id: result.insertId });
+    res.json({ message: 'Planificación semanal actualizado con éxito', id: result.insertId });
   });
 };

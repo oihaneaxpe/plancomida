@@ -6,7 +6,7 @@ exports.getActualHabit = async (req, res) => {
   
   await DailyHabit.getActualHabit(userId, (err, dailyHabit) => {
     if (err) {
-      res.status(500).json({ error: 'Error fetching daily habit' });
+      res.status(500).json({ error: 'Error obteniendo los hábitos diarios' });
       return;
     }
     res.json(dailyHabit);
@@ -21,12 +21,12 @@ exports.updateActualHabit = async (req, res) => {
   // Obtener el idTipoEjercicio utilizando el nombre del ejercicio
   await Exercise.getidExerciseByName(exerciseName, (err, exerciseResult) => {
     if (err) {
-      res.status(500).json({ error: 'Error fetching exercise id' });
+      res.status(500).json({ error: 'Error obteniendo el identificador de tipo de ejercicio' });
       return;
     }
 
     if (exerciseResult.length === 0) {
-      res.status(404).json({ error: 'Exercise not found' });
+      res.status(404).json({ error: 'Ejercicio no encontrado' });
       return;
     }
 
@@ -36,11 +36,11 @@ exports.updateActualHabit = async (req, res) => {
     // Ahora actualiza o inserta el hábito diario
     DailyHabit.updateActualHabit(userId, dailyHabitData, (err, dailyHabitResult) => {
       if (err) {
-        res.status(500).json({ error: 'Error updating daily habit' });
+        res.status(500).json({ error: 'Error actualizando hábitos diarios' });
         return;
       }
 
-      res.json({ message: 'Daily habit updated successfully' });
+      res.json({ message: 'Hábitos diarios actualizados con éxito' });
     });
   });
 };

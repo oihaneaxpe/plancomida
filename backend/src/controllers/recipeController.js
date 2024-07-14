@@ -1,12 +1,11 @@
 const Recipe = require('../models/recipeModel');
-const RecipeBuilder = require('../builders/recipeBuilder');
 const Director = require('../builders/director');
 const ConcreteRecipeBuilder = require('../builders/concreteRecipeBuilder');
 
 exports.getAllStandardRecipes = async (req, res) => {
   await Recipe.getAllStandardRecipes((err, recipes) => {
     if (err) {
-      res.status(500).json({ error: 'Error fetching standard recipes' });
+      res.status(500).json({ error: 'Error obteniendo recetas estándares' });
       return;
     }
     res.json(recipes);
@@ -20,7 +19,7 @@ exports.getAllRecipes = async (req, res) => {
   // Obtener todas las recetas estándar
   await Recipe.getAllStandardRecipes(async (err, standardRecipes) => {
     if (err) {
-      res.status(500).json({ error: 'Error fetching recipes' });
+      res.status(500).json({ error: 'Error obteniendo recetas' });
       return;
     }
     
@@ -30,7 +29,7 @@ exports.getAllRecipes = async (req, res) => {
     // Obtener las recetas por usuario
     await Recipe.getAllRecipesByUserId(userId, (err, userRecipes) => {
       if (err) {
-        res.status(500).json({ error: 'Error fetching user recipes' });
+        res.status(500).json({ error: 'Error obteniendo recetas de usuario' });
         return;
       }
       
@@ -47,7 +46,7 @@ exports.getRecipeById = async (req, res) => {
   // Step 1: Get the recipe generic information
   await Recipe.getRecipeById(recipeId, (err, result) => {
     if (err) {
-      res.status(500).json({ error: 'Error retrieving recipe detail' });
+      res.status(500).json({ error: 'Error obteniendo el detalle de la receta' });
       return;
     }
 
@@ -65,8 +64,7 @@ exports.addRecipe = async (req, res) => {
   // Step 1: Add the recipe
   await Recipe.addRecipe(userId, newRecipe, async (err, recipeResult) => {
     if (err) {
-      console.error('Error adding recipe:', err);
-      res.status(500).json({ error: 'Error adding recipe' });
+      res.status(500).json({ error: 'Error añadiendo la receta' });
       return;
     }
 
@@ -77,21 +75,19 @@ exports.addRecipe = async (req, res) => {
     // Step 2: Add ingredients for the recipe
     await Recipe.addIngredients(recipeId, ingredients, async (err, ingredientsResult) => {
       if (err) {
-        console.error('Error adding ingredients:', err);
-        res.status(500).json({ error: 'Error adding ingredients' });
+        res.status(500).json({ error: 'Error añadiendo los ingredientes' });
         return;
       }
 
       // Step 3: Add steps for the recipe
       await Recipe.addSteps(recipeId, steps, (err, stepsResult) => {
         if (err) {
-          console.error('Error adding steps:', err);
-          res.status(500).json({ error: 'Error adding steps' });
+          res.status(500).json({ error: 'Error añadiendo los pasos de elaboración' });
           return;
         }
 
         // If recipe, ingredients, and steps were added successfully
-        res.json({ message: 'Recipe, ingredients, and steps added successfully' });
+        res.json({ message: 'Receta, ingredientes y pasos de elaboración añadidos con éxito' });
       });
     });
   });
@@ -101,7 +97,7 @@ exports.getIngredientsForPlan = async (req, res) => {
   const userId = req.params.id;
   await Recipe.getIngredientsForPlan(userId, (err, recipes) => {
     if (err) {
-      res.status(500).json({ error: 'Error fetching food plan ingredients' });
+      res.status(500).json({ error: 'Error obteniendo los ingredientes de la planificación semanal' });
       return;
     }
     res.json(recipes);
