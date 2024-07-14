@@ -105,11 +105,11 @@
                         <mat-list-item *ngFor="let ingredient of ingredients.controls; let i = index" [formGroupName]="i">
                             <mat-form-field class="full-width custom-field">
                               <mat-checkbox name="ingredientcheckbox" checked="true"></mat-checkbox>
-                              <input matInput formControlName="item" [readonly]="true" placeholder="Ingrediente">  
-                                <button mat-icon-button matSuffix (click)="ingDeleteFromList(i)" class="btn-delete-icon">
-                                  <mat-icon>delete</mat-icon>
+                              <textarea matInput formControlName="item" [readonly]="true" placeholder="Ingrediente" cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
+                              <button mat-icon-button matSuffix (click)="ingDeleteFromList(i)" class="btn-delete-icon">
+                                <mat-icon>delete</mat-icon>
                               </button>
-                            </mat-form-field>                            
+                            </mat-form-field>
                         </mat-list-item>
                     </mat-list>
                 </div>
@@ -144,9 +144,9 @@
                         <mat-list-item *ngFor="let step of steps.controls; let i = index" [formGroupName]="i">
                             <mat-form-field class="full-width custom-field">
                               <mat-checkbox name="stepcheckbox" checked="true"></mat-checkbox>
-                              <input matInput formControlName="item" [readonly]="true" placeholder="Paso de elaboración">  
-                                <button mat-icon-button matSuffix (click)="stepDeleteFromList(i)" class="btn-delete-icon">
-                                  <mat-icon>delete</mat-icon>
+                              <textarea matInput formControlName="item" [readonly]="true" placeholder="Paso de elaboración" cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
+                              <button mat-icon-button matSuffix (click)="stepDeleteFromList(i)" class="btn-delete-icon">
+                                <mat-icon>delete</mat-icon>
                               </button>
                             </mat-form-field>                            
                         </mat-list-item>
