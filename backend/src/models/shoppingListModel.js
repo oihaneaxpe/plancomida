@@ -15,10 +15,8 @@ class ShoppingList {
 
   static async saveShoppingList(userId, shoppingListData, callback) {
     const sql = 'INSERT INTO talistacompra (producto, compradoInd, idUsuario) VALUES (?, ?, ?)';
-    
     const promises = shoppingListData.map(itemData => {
       return new Promise((resolve, reject) => {
-        console.log("itemData", itemData.checked, "userId", userId)
         db.query(sql, [itemData.item, itemData.checked, userId], (err, result) => {
           if (err) {
             reject(err);

@@ -30,7 +30,6 @@ class User {
         callback(err || new Error('User not found'), null);
         return;
       }
-      console.log(results)
       callback(null, results[0]);
     });
   }

@@ -99,17 +99,15 @@ export class ShoppingListComponent implements OnInit {
   }
 
   saveShoppingList(): void {
-    if (this.deleteShoppingList(this.userId)) {
-      if (this.addShoppingList(this.userId)) {
-        this.notificationService.showNotification('success', 'Actualizado', 'Shopping list updated succesfully');
-      }
-    }
-     
+    this.deleteShoppingList(this.userId);
+    this.addShoppingList(this.userId);     
   }
+
   addShoppingList(userId: number): any {
     this.shoppingListService.saveShoppingList(userId, this.shoppingList)
       .pipe(
         tap(response => {
+          this.notificationService.showNotification('success', 'Actualizado', 'Lista de la compra actualizado con éxito');
           return true;
         }),
         catchError(error => {
