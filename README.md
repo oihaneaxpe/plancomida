@@ -49,15 +49,23 @@ Este proyecto está bajo la Licencia Creative Commons (BY-NC-SA) - mira el archi
 
 ![Pantalla principal](/img/home.png)
 
+### Planificación - lista
+
+![Planificación - lista](/img/planification-list.png)
+
+### Planificación - cuadrícula
+
+![Planificación - grid](/img/planification-grid.png)
+
 ### Lista de la compra
 
 ![Lista de la compra](/img/shopping-list.png)
 
-### Recetas (lista)
+### Recetas - lista
 
 ![Recetas - lista](/img/recipe-list.png)
 
-### Recetas (cuadricula)
+### Recetas - cuadrícula
 
 ![Recetas - grid](/img/recipe-grid.png)
 
